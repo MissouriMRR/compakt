@@ -4,9 +4,49 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width" />
+		<style>
+			body {
+				font-family: Arial, Helvetica, sans-serif;
+				background: linear-gradient(#2a764a, #25973f);
+				background-attachment: fixed;
+				margin: 0;
+			}
+            ul.nav {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                width: 100%;
+                display: flex;
+            }
+            ul.nav li {
+                float: left;
+            }
+            ul.nav li a,
+            ul.nav li span {
+                display: block;
+                color: black;
+                text-decoration: none;
+                text-align: center;
+                padding: 2em 2em;
+            }
+            ul.nav a:hover {
+                background-color: rgba(0, 0, 0, 0.1);
+            }
+		</style>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
+		<div style="background-color: white; display:flex;">
+			<ul class="nav">
+                <li style="margin-right: auto"><span><b>Multirotor Flight Logs</b></span></li>
+                <li class="spacer"></li>
+                <li><a href="/record">Flight Recorder</a></li>
+                <li><a href="/logs">Flight Logs</a></li>
+            </ul>
+		</div>
+        <div style="display: contents">
+		    %sveltekit.body%
+        </div>
 	</body>
 </html>
