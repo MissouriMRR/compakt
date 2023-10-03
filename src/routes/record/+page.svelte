@@ -5,11 +5,8 @@
 
 	let weatherdata: Promise<WeatherData | null>;
 
-	async function loadwx() {
+	async function loadwx() {/*
 		try {
-			const response = await fetch(
-				`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`
-			);
 			const data = await response.json();
 			setWeatherData(data);
 			setShowRecordButton(true);
@@ -22,7 +19,7 @@
 			});
 		} catch (error) {
 			console.error('Error fetching weather data:', error);
-		}
+		}*/
 	}
 </script>
 

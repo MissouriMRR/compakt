@@ -1,6 +1,15 @@
-// You should not import the general types from `@sveltejs/kit`.
 import type { RequestEvent, RequestHandler } from './$types'
 
-export function POST(req) {
+export const POST: RequestHandler = async ({ platform, request }: RequestEvent) => {
+    try {
+        const { location } = await request.json();
 
+        const weather = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=${platform?.env.WEATHER_API_KEY}&q=${location}&aqi=no`
+        );
+
+        return new Response(weather.body);
+    } catch (err) {
+        return new Response(null, { status: 500 });
+    }
 }
