@@ -3,49 +3,40 @@
 
 	let location = 'Rolla, MO';
 
-	let weatherdata: Promise<WeatherData | null>;
+    let resdata = "";
 
-	async function loadwx() {/*
+	async function loadwx() {
 		try {
+            const response = await fetch("/api/weather", {
+                method: 'POST',
+                body: JSON.stringify({ location })
+            });
 			const data = await response.json();
-			setWeatherData(data);
-			setShowRecordButton(true);
-			setFlightData({
-				location: data.location.name,
-				temperatureC: data.current.temp_c,
-				temperatureF: data.current.temp_f,
-				condition: data.current.condition.text,
-				elapsedTime: timer
-			});
+            resdata = JSON.stringify(data, undefined, 4);
 		} catch (error) {
 			console.error('Error fetching weather data:', error);
-		}*/
+		}
 	}
 </script>
 
-<div id="weatherpanel" on:submit={loadwx}>
-	<input type="text" id="location" placeholder="Location" value={location} />
-	<input type="submit" value="Load Weather Data" />
-</div>
-
-<div id="weatherdisplay">
-	{#await weatherdata}
-		<p>loading...</p>
-	{:then weather}
-		{#if weather}
-			<p>wx: {weather}</p>
-		{:else}
-			<p>Enter a city to load weather for your location</p>
-		{/if}
-	{:catch err}
-		<p>error: {err}</p>
-	{/await}
+<div id="flightform">
+    <h2 style="text-align: center">Flight Information</h2>
+    <h5 style="text-align: center; color: red; font-style: italic;">* required</h5>
+    <form id="weatherautofill" style="text-align: center" on:submit={loadwx}>
+        <label for="location">Enter your location to auto-fill some fields</label><br><br>
+        <input id="location" type="text" value={location}>
+        <input type="submit" value="Go">
+    </form>
+    <h3>Time & Location</h3>
+    <textarea>{resdata}</textarea>
 </div>
 
 <style>
-	#weatherpanel {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-	}
+    #flightform {
+        max-width: 100ch;
+        background-color: grey;
+        padding: 1em;
+        border-radius: 1em;
+        margin: auto;
+    }
 </style>
