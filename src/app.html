@@ -18,9 +18,10 @@
                 overflow: hidden;
                 width: 100%;
                 display: flex;
+                align-items: center;
             }
             ul.nav li {
-                float: left;
+               /* float: left; */
             }
             ul.nav li a,
             ul.nav li span {
@@ -28,10 +29,21 @@
                 color: black;
                 text-decoration: none;
                 text-align: center;
-                padding: 2em 2em;
+                padding: 0.5em 1em;
+                border-radius: 10px;
+                margin-right: 10px;
             }
             ul.nav a:hover {
                 background-color: rgba(0, 0, 0, 0.1);
+            }
+            #site-title {
+                font-size: 35px;
+                font-weight: 20px;
+            }
+            #hover-nav {
+                font-size: 25px;
+                border-color: black;
+                border: 2px solid transparent;
             }
             main {
                 padding: 2em;
@@ -42,10 +54,10 @@
 	<body data-sveltekit-preload-data="hover">
 		<div style="background-color: white; display:flex;">
 			<ul class="nav">
-                <li style="margin-right: auto"><span><b>Multirotor Flight Logs</b></span></li>
+                <li style="margin-right: auto"><span id="site-title"><b>Compakt</b></span></li>
                 <li class="spacer"></li>
-                <li><a href="/record">Flight Recorder</a></li>
-                <li><a href="/logs">Flight Logs</a></li>
+                <li><span id ="hover-nav"><a href="/record">Flight Recorder</a></span></li>
+                <li><span id ="hover-nav"><a href="/logs">Flight Logs</a></span></li>
             </ul>
 		</div>
         <main>
