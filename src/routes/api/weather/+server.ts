@@ -4,6 +4,8 @@ export const POST: RequestHandler = async ({ platform, request }: RequestEvent) 
     try {
         const { location } = await request.json();
 
+        console.log(platform);
+
         const weather = await fetch(
             `https://api.weatherapi.com/v1/current.json?key=${platform?.env.WEATHER_API_KEY}&q=${location}&aqi=no`
         );

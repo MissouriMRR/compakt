@@ -36,6 +36,7 @@
             ul.nav a:hover {
                 background-color: rgba(0, 0, 0, 0.1);
             }
+<<<<<<< HEAD
             #site-title {
                 font-size: 35px;
                 font-weight: 20px;
@@ -44,6 +45,10 @@
                 font-size: 25px;
                 border-color: black;
                 border: 2px solid transparent;
+=======
+            main {
+                padding: 2em;
+>>>>>>> app
             }
 		</style>
 		%sveltekit.head%
@@ -57,8 +62,8 @@
                 <li><span id ="hover-nav"><a href="/logs">Flight Logs</a></span></li>
             </ul>
 		</div>
-        <div style="display: contents">
+        <main>
 		    %sveltekit.body%
-        </div>
+        </main>
 	</body>
 </html>
