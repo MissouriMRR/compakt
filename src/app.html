@@ -37,16 +37,26 @@
                 background-color: rgba(0, 0, 0, 0.1);
             }
             #site-title {
+                font-family: Rockwell;
                 font-size: 35px;
-                font-weight: 20px;
             }
             #hover-nav {
-                font-size: 25px;
+                font-family: Proxima;
+                font-size: 30px;
                 border-color: black;
                 border: 2px solid transparent;
+                font-weight: bold;
             }
             main {
                 padding: 2em;
+            }
+            @font-face {
+                font-family: Rockwell;
+                src: url(rockwell_bold.ttf);
+            }
+            @font-face {
+                font-family: Proxima;
+                src: url(proxima_nova_font.otf);
             }
 		</style>
 		%sveltekit.head%
