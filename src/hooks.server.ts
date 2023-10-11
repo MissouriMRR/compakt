@@ -1,4 +1,4 @@
-import { dev } from '$app/environment';
+/*import { dev } from '$app/environment';
 import type { RequestEvent } from '@sveltejs/kit';
 
 export async function handle({ event, resolve }) {
@@ -14,3 +14,4 @@ export async function handle({ event, resolve }) {
 
     return await resolve(req);
 }
+*/
