@@ -1,8 +1,8 @@
-import { dev } from '$app/environment';
+/*import { dev } from '$app/environment';
 import type { RequestEvent } from '@sveltejs/kit';
 
 export async function handle({ event, resolve }) {
-    const req: RequestEvent<Partial<Record<string, string>>, string | null> = {
+    const req: typeof event = {
         ...event,
         platform: {
             ...event.platform
@@ -13,4 +13,4 @@ export async function handle({ event, resolve }) {
     }
 
     return await resolve(req);
-}
+}*/
