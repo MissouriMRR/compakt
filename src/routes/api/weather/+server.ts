@@ -1,13 +1,14 @@
 import type { RequestEvent, RequestHandler } from './$types'
+import { WEATHER_API_KEY } from '$env/static/private';
 
-export const POST: RequestHandler = async ({ platform, request }: RequestEvent) => {
+export const POST: RequestHandler = async ({ request }: RequestEvent) => {
     try {
         const { location } = await request.json();
 
-        console.log(platform);
+        console.log("using api key", WEATHER_API_KEY);
 
         const weather = await fetch(
-            `https://api.weatherapi.com/v1/current.json?key=${platform?.env.WEATHER_API_KEY}&q=${location}&aqi=no`
+            `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${location}&aqi=no`
         );
 
         return new Response(weather.body);
