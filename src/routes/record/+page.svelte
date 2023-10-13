@@ -26,10 +26,10 @@
 		const now = new Date();
 		return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 	}
-    function localdate() {
-        const now = new Date();
-        return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
-    }
+	function localdate() {
+		const now = new Date();
+		return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+	}
 </script>
 
 <div id="flightform">
@@ -44,32 +44,32 @@
 		<h3>Time & Location</h3>
 		<h4 style="text-align: left;">
 			<label for="date">Date</label>
-		<input type="date" id="date" value={date} />
-		<button
-			on:click={() => {
-				date = localdate();
-			}}>Today</button
-		>
+			<input type="date" id="date" value={date} />
+			<button
+				on:click={() => {
+					date = localdate();
+				}}>Today</button
+			>
 		</h4>
 
 		<h4 style="text-align: left;">
-		<label for="t_start">Start Time</label>
-		<input type="time" id="t_start" value={t_start} step="1" />
-		<button
-			on:click={() => {
-				t_start = localtime();
-			}}>Now</button
-		>
+			<label for="t_start">Start Time</label>
+			<input type="time" id="t_start" value={t_start} step="1" />
+			<button
+				on:click={() => {
+					t_start = localtime();
+				}}>Now</button
+			>
 		</h4>
 
 		<h4 style="text-align: left;">
-		<label for="t_end">End Time</label>
-		<input type="time" id="t_end" value={t_end} step="1" />
-		<button
-			on:click={() => {
-				t_end = localtime();
-			}}>Now</button
-		>
+			<label for="t_end">End Time</label>
+			<input type="time" id="t_end" value={t_end} step="1" />
+			<button
+				on:click={() => {
+					t_end = localtime();
+				}}>Now</button
+			>
 		</h4>
 	</form>
 </div>
