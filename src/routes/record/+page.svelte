@@ -42,17 +42,17 @@
 	</form>
 	<form id="flightinfo">
 		<h3>Time & Location</h3>
-		<label for="date">Date</label>
+		<h4 style="text-align: left;">
+			<label for="date">Date</label>
 		<input type="date" id="date" value={date} />
 		<button
 			on:click={() => {
 				date = localdate();
 			}}>Today</button
 		>
+		</h4>
 
-		<br />
-		<br />
-
+		<h4 style="text-align: left;">
 		<label for="t_start">Start Time</label>
 		<input type="time" id="t_start" value={t_start} step="1" />
 		<button
@@ -60,10 +60,9 @@
 				t_start = localtime();
 			}}>Now</button
 		>
+		</h4>
 
-		<br />
-		<br />
-
+		<h4 style="text-align: left;">
 		<label for="t_end">End Time</label>
 		<input type="time" id="t_end" value={t_end} step="1" />
 		<button
@@ -71,8 +70,8 @@
 				t_end = localtime();
 			}}>Now</button
 		>
+		</h4>
 	</form>
-	<textarea>{resdata}</textarea>
 </div>
 
 <style>
