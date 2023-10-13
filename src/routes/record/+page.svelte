@@ -41,8 +41,8 @@
 		<input type="submit" value="Go" />
 	</form>
 	<form id="flightinfo">
-		<h3>Time & Location</h3>
-		<h4 style="text-align: left;">
+		<h3 style="text-align: center;">Time & Date</h3>
+		<h4 style="text-align: center;">
 			<label for="date">Date</label>
 			<input type="date" id="date" value={date} />
 			<button
@@ -52,7 +52,7 @@
 			>
 		</h4>
 
-		<h4 style="text-align: left;">
+		<h4 style="text-align: center;">
 			<label for="t_start">Start Time</label>
 			<input type="time" id="t_start" value={t_start} step="1" />
 			<button
@@ -62,7 +62,7 @@
 			>
 		</h4>
 
-		<h4 style="text-align: left;">
+		<h4 style="text-align: center;">
 			<label for="t_end">End Time</label>
 			<input type="time" id="t_end" value={t_end} step="1" />
 			<button
