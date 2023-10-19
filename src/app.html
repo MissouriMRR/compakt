@@ -7,7 +7,7 @@
 		<style>
 			body {
 				font-family: Arial, Helvetica, sans-serif;
-				background: linear-gradient(#2a764a, #25973f);
+				background: linear-gradient(#21c447, #355542);
 				background-attachment: fixed;
 				margin: 0;
 			}
@@ -37,16 +37,26 @@
                 background-color: rgba(0, 0, 0, 0.1);
             }
             #site-title {
+                font-family: Rockwell;
                 font-size: 35px;
-                font-weight: 20px;
             }
             #hover-nav {
-                font-size: 25px;
+                font-family: Proxima;
+                font-size: 30px;
                 border-color: black;
                 border: 2px solid transparent;
+                font-weight: bold;
             }
             main {
                 padding: 2em;
+            }
+            @font-face {
+                font-family: Rockwell;
+                src: url(rockwell_bold.ttf);
+            }
+            @font-face {
+                font-family: Proxima;
+                src: url(proxima_nova_font.otf);
             }
 		</style>
 		%sveltekit.head%
@@ -54,8 +64,7 @@
 	<body data-sveltekit-preload-data="hover">
 		<div style="background-color: white; display:flex;">
 			<ul class="nav">
-                <li style="margin-right: auto"><span id="site-title"><b>Compakt</b></span></li>
-                <li class="spacer"></li>
+                <li style="margin-right: auto;"><span id="site-title"><img src="/favicon.png" alt="logo" width="40" height="40" style="margin-right: 1ch"/><b> Compakt</b></span></li>
                 <li><span id ="hover-nav"><a href="/record">Flight Recorder</a></span></li>
                 <li><span id ="hover-nav"><a href="/logs">Flight Logs</a></span></li>
             </ul>
