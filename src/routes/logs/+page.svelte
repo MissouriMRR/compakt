@@ -1,5 +1,6 @@
 <div id="flightform">
 	<h2 style="text-align: center">Flight Logs</h2>
+	<h3 style="text-align: center">No logs to display</h3>
 </div>
 
 <style>
