@@ -1,6 +1,7 @@
 <script>
   let flightLogs = [
     {
+      index: 0,
       date: '2023-10-17',
       location: 'Rolla',
       startTime: '3:00 PM',
@@ -15,6 +16,7 @@
 
   function addNewLog() {
     const newLog = {
+      index: flightLogs.length,
       date: 'New Date',
       location: 'New Location',
       startTime: 'New Start Time',
@@ -37,7 +39,7 @@
 <div id="flightform">
   <h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
   <div id="logs-container">
-    {#each flightLogs as log, i (log.date)}
+    {#each flightLogs as log, i (log.index)}
       <div class="flight-log">
         <div>
           <span>Date: {log.date}</span>
