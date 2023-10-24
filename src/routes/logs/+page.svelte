@@ -53,9 +53,9 @@
         </div>
         {#if log.expanded}
           <div class="log-info">
-          <span>Wind Speed: {log.windSpeed}</span>
-          <span>Temperature°F: {log.tempF}</span>
-          <span>Temperature°C: {log.tempC}</span>
+            <span>Wind Speed: {log.windSpeed}</span>
+            <span>Temperature°F: {log.tempF}</span>
+            <span>Temperature°C: {log.tempC}</span>
           </div>
         {/if}
       </div>
@@ -68,9 +68,9 @@
   <style>
     .flight-log {
       border: 1px solid #000000;
-    margin: 1em 0;
-    padding: 1em;
-    background-color: white;
+      margin: 1em 0;
+      padding: 1em;
+      background-color: white;
     }
     .expand-button {
     cursor: pointer;
