@@ -6,10 +6,13 @@
       location: 'Rolla',
       startTime: '3:00 PM',
       stopTime: '5:00 PM',
-      condition: 'Sunny',
-      windSpeed: '35 MPH',
       tempF: '70',
       tempC: '21.1',
+      windSpeed: '35 MPH',
+      windDirection: 'North',
+      windDegree: '180',
+      gustSpeed: '10 MPH',
+      Humidity: '5%',
       expanded: false,
     },
   ];
@@ -21,10 +24,13 @@
       location: 'New Location',
       startTime: 'New Start Time',
       stopTime: 'New Stop Time',
-      condition: 'New Condition Info',
-      windSpeed: 'New Wind Speed',
-      tempF: 'New Farenheit Temperature',
+      tempF: 'New Fahrenheit Temperature',
       tempC: 'New Celsius Temperature',
+      windSpeed: 'New Wind Speed',
+      windDirection: 'New Wind Direction',
+      windDegree: 'New Wind Degree',
+      gustSpeed: 'New Gust Speed',
+      Humidity: 'New Humidity',
       expanded: false,
     };
     flightLogs = [...flightLogs, newLog];
@@ -46,33 +52,34 @@
           <span>Location: {log.location}</span>
           <span>Start Time: {log.startTime}</span>
           <span>End Time: {log.stopTime}</span>
-          <span>Condition: {log.condition}</span>
           <button on:click={() => toggleExpansion(i)} class="expand-button">
             {log.expanded ? 'Collapse' : 'Expand'}
           </button>
         </div>
         {#if log.expanded}
           <div class="log-info">
-            <span>Wind Speed: {log.windSpeed}</span>
-            <span>Temperature°F: {log.tempF}</span>
-            <span>Temperature°C: {log.tempC}</span>
+            <span>Temperature°F: {log.tempF}<br>Temperature°C: {log.tempC}<br>Wind Speed: {log.windSpeed}<br>Wind Direction: {log.windDirection} </span>
+            <span>Wind Degree: {log.windDegree}<br>Gust Speed: {log.gustSpeed}<br>Humidity: {log.Humidity}</span>
           </div>
         {/if}
       </div>
     {/each}
   </div>
+  <h4 style="text-align: center;">
   <button on:click={addNewLog}>Add New Log</button>
 </div>
 
-  
-  <style>
-    .flight-log {
-      border: 1px solid #000000;
-      margin: 1em 0;
-      padding: 1em;
-      background-color: white;
-    }
-    .expand-button {
+<style>
+  .flight-log {
+    border: 1px solid #000000;
+    margin: 2em 0;
+    padding: 1.5em;
+    background-color: white;
+    max-width: 60%;
+    margin-left: 35ch;
+    text-align: center;
+  }
+  .expand-button {
     cursor: pointer;
   }
   .log-info {
@@ -85,4 +92,4 @@
   .flight-log span {
     flex: 1;
   }
-  </style>
+</style>
