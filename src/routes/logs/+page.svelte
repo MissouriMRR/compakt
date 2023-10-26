@@ -47,7 +47,7 @@
   <div id="logs-container">
     {#each flightLogs as log, i (log.index)}
       <div class="flight-log">
-        <div>
+        <div class="expand-details">
           <span>Date: {log.date}</span>
           <span>Location: {log.location}</span>
           <span>Start Time: {log.startTime}</span>
@@ -58,9 +58,9 @@
         </div>
         {#if log.expanded}
           <div class="log-info">
-            <span>Temperature°F: {log.tempF}<br>Temperature°C: {log.tempC}<br>Wind Speed: {log.windSpeed}<br>Wind Direction: {log.windDirection} </span>
-            <span>Wind Degree: {log.windDegree}<br>Gust Speed: {log.gustSpeed}<br>Humidity: {log.Humidity}</span>
-          </div>
+            <span><br>Temperature: {log.tempF}°F<br><br>Temperature: {log.tempC}°C<br><br>Wind Speed: {log.windSpeed}<br><br>Wind Direction: {log.windDirection} </span>
+            <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}</span>
+            </div>
         {/if}
       </div>
     {/each}
@@ -81,6 +81,9 @@
   }
   .expand-button {
     cursor: pointer;
+  }
+  .expand-details {
+    font-weight: bold;
   }
   .log-info {
     display: none;
