@@ -81,6 +81,6 @@
 		padding: 1em;
 		border-radius: 1em;
 		margin: auto;
-		font-family: "IBM Plex Sans";
+		font-family: Proxima;
 	}
 </style>
