@@ -37,7 +37,7 @@
 
 <div id="flightform">
 	<h2 style="text-align: center">Flight Information</h2>
-	<h4 style="text-align: center; color: red; font-style: italic;">* Required</h4>
+	<h4 style="text-align: center; color: red; -webkit-text-stroke: 0.5px black; font-style: italic;">* Required</h4>
 
 	<form id="weatherautofill" style="text-align: center" on:submit={loadWeatherData}>
 		<label for="location">Enter your location to auto-fill some fields</label><br /><br />
