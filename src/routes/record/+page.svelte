@@ -1,13 +1,22 @@
 <script lang="ts">
 	interface WeatherData {}
 
-	let location = 'Rolla, MO';
 	let resdata = '';
 	let weatherData = null as any;
 
-	let t_start = new Date().toISOString();
-	let t_end = new Date().toISOString();
-	let date = new Date().toDateString();
+	const currentData = {
+		date: new Date().toDateString(),
+		location: 'Rolla, MO',
+		startTime: new Date().toISOString(),
+		stopTime: new Date().toISOString(),
+		tempF: '',
+		tempC: '',
+		windSpeed: '',
+		windDirection: '',
+		windDegree: '',
+		gustSpeed: '',
+		Humidity: '',
+	};
 
 	async function loadWeatherData() {
 		try {
@@ -17,7 +26,6 @@
 			});
 			const data = await response.json();
 			resdata = JSON.stringify(data, undefined, 4);
-			console.log(resdata);
 		} catch (error) {
 			console.error('Error fetching weather data:', error);
 		}
@@ -41,7 +49,7 @@
 
 	<form id="weatherautofill" style="text-align: center" on:submit={loadWeatherData}>
 		<label for="location">Enter your location to auto-fill some fields</label><br /><br />
-		<input id="location" type="text" value={location} />
+		<input id="location" type="text" value={currentData.location} />
 		<input type="submit" value="Go" />
 	</form>
 
@@ -49,30 +57,30 @@
 		<h3 style="text-align: center;">Time & Date</h3>
 		<h4 style="text-align: center;">
 			<label for="date">Date</label>
-			<input type="date" id="date" value={date} />
+			<input type="date" id="date" value={currentData.date} />
 			<button
 				on:click={() => {
-					date = getLocalDate();
+					currentData.date = getLocalDate();
 				}}>Today</button
 			>
 		</h4>
 
 		<h4 style="text-align: center;">
 			<label for="t_start">Start Time</label>
-			<input type="time" id="t_start" value={t_start} step="1" />
+			<input type="time" id="t_start" value={currentData.startTime} step="1" />
 			<button
 				on:click={() => {
-					t_start = getLocalTime();
+					currentData.startTime = getLocalTime();
 				}}>Now</button
 			>
 		</h4>
 
 		<h4 style="text-align: center;">
 			<label for="t_end">End Time</label>
-			<input type="time" id="t_end" value={t_end} step="1" />
+			<input type="time" id="t_end" value={currentData.stopTime} step="1" />
 			<button
 				on:click={() => {
-					t_end = getLocalTime();
+					currentData.stopTime = getLocalTime();
 				}}>Now</button
 			>
 		</h4>

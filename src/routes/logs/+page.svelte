@@ -20,6 +20,7 @@
   function addNewLog() {
     const newLog = {
       index: flightLogs.length,
+      expanded: false,
       date: 'New Date',
       location: 'New Location',
       startTime: 'New Start Time',
@@ -31,7 +32,6 @@
       windDegree: 'New Wind Degree',
       gustSpeed: 'New Gust Speed',
       Humidity: 'New Humidity',
-      expanded: false,
     };
     flightLogs = [...flightLogs, newLog];
   }
