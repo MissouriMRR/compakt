@@ -70,13 +70,17 @@
 </div>
 
 <style>
+  #logs-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
   .flight-log {
     border: 1px solid #000000;
     margin: 2em 0;
     padding: 1.5em;
     background-color: white;
     max-width: 60%;
-    margin-left: 35ch;
     text-align: center;
   }
   .expand-button {
