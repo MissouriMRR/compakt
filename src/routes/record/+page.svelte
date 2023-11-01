@@ -25,7 +25,8 @@
 
 	function getLocalTime() {
 		const now = new Date();
-		return `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+		const p = (num: Number) => num.toString().padStart(2, '0');
+		return `${p(now.getHours())}:${p(now.getMinutes())}:${p(now.getSeconds())}`;
 	}
 
 	function getLocalDate() {
