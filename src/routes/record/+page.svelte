@@ -31,15 +31,16 @@
 		}
 	}
 
+	const pad = (num: Number) => num.toString().padStart(2, '0');
+
 	function getLocalTime() {
 		const now = new Date();
-		const p = (num: Number) => num.toString().padStart(2, '0');
-		return `${p(now.getHours())}:${p(now.getMinutes())}:${p(now.getSeconds())}`;
+		return `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
 	}
 
 	function getLocalDate() {
 		const now = new Date();
-		return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+		return `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 	}
 </script>
 
