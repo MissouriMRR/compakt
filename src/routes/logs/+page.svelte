@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   let flightLogs = [
     {
       index: 0,
@@ -36,8 +36,7 @@
     flightLogs = [...flightLogs, newLog];
   }
 
-  /** @param {number} index */
-  function toggleExpansion(index) {
+  function toggleExpansion(index: number) {
     flightLogs[index].expanded = !flightLogs[index].expanded;
   }
 </script>
