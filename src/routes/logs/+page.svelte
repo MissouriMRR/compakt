@@ -57,8 +57,8 @@
         </div>
         {#if log.expanded}
           <div class="log-info">
-            <span><br>Temperature: {log.tempF}°F<br><br>Temperature: {log.tempC}°C<br><br>Wind Speed: {log.windSpeed}<br><br>Wind Direction: {log.windDirection} </span>
-            <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}</span>
+            <span><br>Temperature: {log.tempF}°F<br><br>Temperature: {log.tempC}°C<br><br>Wind Speed: {log.windSpeed}<br><br>Wind Direction: {log.windDirection}<br><br>Remote ID: </span>
+            <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}<br><br>Pilot ID: </span>
             </div>
         {/if}
       </div>
