@@ -24,7 +24,7 @@
 	};
 
 	const flightData = {
-		location: 'Rolla',
+		location: DEFAULT_LOC,
 		flightDate: extractDate(new Date())
 	} as FlightData;
 
@@ -71,56 +71,62 @@
 	}
 </script>
 
-<div id="flightform">
-	<h2 style="text-align: center">Flight Information</h2>
-	<h4 style="text-align: center; color: red; -webkit-text-stroke: 0.5px black; font-style: italic;">* Required</h4>
-
-	<form id="weatherautofill" style="text-align: center" on:submit={loadWeatherData}>
-		<label for="location">Enter your location to auto-fill some fields</label><br /><br />
-		<input id="location" type="text" value={flightData.location}/>
-		<input type="submit" value="Go" />
-	</form>
-
-	<form id="flightinfo">
-		<h3 style="text-align: center;">Time & Date</h3>
-		<h4 style="text-align: center;">
-			<label for="date">Date</label>
-			<input type="date" id="date" value={flightData.flightDate} />
-			<button
-				on:click={() => {
-					flightData.flightDate = extractDate(new Date());
-				}}>Today</button
-			>
-		</h4>
-
-		<h4 style="text-align: center;">
-			<label for="t_start">Start Time</label>
-			<input type="time" id="t_start" value={flightData.flightStartTime || ''} step="1" />
-			<button
-				on:click={() => {
-					flightData.flightStartTime = extractTime(new Date());
-				}}>Now</button
-			>
-		</h4>
-
-		<h4 style="text-align: center;">
-			<label for="t_end">End Time</label>
-			<input type="time" id="t_end" value={flightData.flightStopTime || ''} step="1" />
-			<button
-				on:click={() => {
-					flightData.flightStopTime = extractTime(new Date());
-				}}>Now</button
-			>
-		</h4>
-		
-		{#if flightData.weather}
-		<h3 style="text-align: center;">Weather</h3>
-		<h4 style="text-align: center;">
-			<div>
-				<div class = 'sectionContainer'>
-					<p class = 'sectionTitle'>Location: {flightData.location}</p>
+<div id="form-container">
+	<form id="flight-form">
+		<h2>Flight Information</h2>
+		<h3 id="required-text">* Required</h3>
+	
+		<div class="form-section">
+			<label id="location-hint" for="location-field">Enter your location to auto-fill some fields</label>
+			<div class="data-field">
+				<input class="field-entree" type="text" value={flightData.location}/>
+				<input type="button" value="Go" on:click={loadWeatherData}/>
+			</div>
+		</div>
+	
+		<div id="flightinfo">
+			<h3>Time & Date</h3>
+			<div class="form-section">
+				<label for="date">Date</label>
+				<div class="data-field">
+					<input class="field-entree" type="date" value={flightData.flightDate} />
+					<button
+						on:click={() => {
+							flightData.flightDate = extractDate(new Date());
+						}}>Today</button
+					>
 				</div>
-
+			</div>
+	
+			<div class="form-section">
+				<label for="t_start">Start Time</label>
+				<div class="data-field">
+					<input class="field-entree" type="time" id="t_start" value={flightData.flightStartTime || ''} step=1 />
+					<button
+						on:click={() => {
+							flightData.flightStartTime = extractTime(new Date());
+						}}>Now</button
+					>
+				</div>
+			</div>
+	
+			<div class="form-section">
+				<label for="t_end">End Time</label>
+				<div class="data-field">
+					<input class="field-entree" type="time" id="t_end" value={flightData.flightStopTime || ''} step="1" />
+					<button
+						on:click={() => {
+							flightData.flightStopTime = extractTime(new Date());
+						}}>Now</button
+					>
+				</div>
+			</div>
+			
+			{#if flightData.weather}
+			<h3>Weather</h3>
+			<div class="form-section">
+				<p class = 'sectionTitle'>Location: {flightData.location}</p>
+	
 				<div class = 'temperatureContainer'>
 					<p class = 'sectionTitle'>Temperature: {flightData.weather.temperatureF + '°F'}</p>
 				</div>
@@ -133,16 +139,53 @@
 					/>
 				</div>
 			</div>
-		</h4>
-		{/if}
+			{/if}
+		</div>
 	</form>
 </div>
 
 <style>
-  .sectionContainer {
-    margin-bottom: 10;
-		margin-top: 10;
-  }
+	#form-container {
+		align-items: top;
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+	#flight-form {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		width: 50%;
+	}
+	#required-text {
+		color: red;
+		font-style: italic;
+		text-align: center;
+		-webkit-text-stroke: 0.5px black;
+	}
+	h2, h3 {
+		text-align: center;
+		white-space: nowrap;
+	}
+	.form-section {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin: 0 10;
+	}
+	#location-hint {
+		white-space: nowrap;
+	}
+	.data-field {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin: 0.5em;
+	}
+	.field-entree {
+		margin-right: 0.5em;
+	}
 	.sectionRow {
 		display: flex;
 		flex-direction: row;
