@@ -12,12 +12,16 @@
 				margin: 0;
                 user-select: none;
 			}
+            div#spacer {
+                height: max(4em, 10vh);
+                width: 100%;
+            }
             div.nav {
                 align-items: center;
                 background-color: white;
                 display: flex;
                 flex-direction: row;
-                padding: 1em 0em;
+                height: max(4em, 10vh);
                 position: fixed;
                 width: 100%;
             }
@@ -91,6 +95,7 @@
                 <span id ="tab-text"><a id="tab-link" href="/logs">Flight Logs</a></span>
             </div>
         </div>
+        <div id="spacer"></div>
         <main>
 		    %sveltekit.body%
         </main>
