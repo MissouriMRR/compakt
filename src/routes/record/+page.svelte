@@ -72,11 +72,9 @@
 </script>
 
 <div id="info-container">
-	<div id="info-display">
-		<h2 style="color: silver;">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
-		<h3 style="color: silver; font-size: 25px;">S&T University Police - (573) 341-4300</h3>
-		<h3 style="color: silver; font-size: 25px;">Phelps Health - (573) 458-8899</h3>
-	</div>
+	<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
+	<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
+	<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
 </div>
 
 <div id="form-container">
@@ -155,19 +153,20 @@
 <style>
 	#info-container {
 		align-items: top;
-		display: flex;
-		justify-content: center;
-		width: 100%;
 		background-color: #2e2e2e;
 		border-radius: 20px;
-		margin-bottom: 5em
-	}
-	#info-display {
-		align-items: center;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		margin-bottom: 5em;
+		padding-left: 25%;
+		padding-right: 25%;
 		width: 50%;
+	}
+	.info-text {
+		color: silver;
+		font-size: 25px;
+		text-wrap: wrap;
 	}
 	#form-container {
 		align-items: top;
