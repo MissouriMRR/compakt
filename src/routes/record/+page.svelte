@@ -166,7 +166,7 @@
 	.info-text {
 		color: silver;
 		font-size: 25px;
-		text-wrap: wrap;
+		white-space: normal;
 	}
 	#form-container {
 		align-items: top;
