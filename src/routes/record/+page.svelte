@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { InfoVisible } from './stores.js'
+
 	const DEFAULT_LOC = 'Rolla, MO';
 
 	interface WeatherData {
@@ -71,10 +73,14 @@
 	}
 </script>
 
+
 <div id="info-container">
+	{#if $InfoVisible}
 	<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
 	<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
 	<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
+	{/if}
+	<button id="info-close" on:click={() => {$InfoVisible=!$InfoVisible}}>{$InfoVisible ? "˄" : "˅"}</button>
 </div>
 
 <div id="form-container">
@@ -152,21 +158,31 @@
 
 <style>
 	#info-container {
-		align-items: top;
+		align-items: center;
 		background-color: #2e2e2e;
-		border-radius: 20px;
+		border-radius: 0px 0px 20px 20px;
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
-		margin-bottom: 5em;
+		margin-bottom: 1em;
 		padding-left: 25%;
 		padding-right: 25%;
+		position: relative;
+		top: -32px;
 		width: 50%;
 	}
 	.info-text {
 		color: silver;
 		font-size: 25px;
 		white-space: normal;
+	}
+	button#info-close {
+		background-color: transparent;
+		border: none;
+		color: silver;
+		cursor: pointer;
+		font-size: 25px;
+		font-weight: bold;
+		outline: none;
 	}
 	#form-container {
 		align-items: top;
