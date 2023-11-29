@@ -40,7 +40,8 @@
     flightLogs[index].expanded = !flightLogs[index].expanded;
   }
 
-  let Select = false;
+  let ExportSelect = false;
+  let DeleteSelect = false;
 </script>
 
 <div id="flightform">
@@ -53,14 +54,17 @@
           <span>Location: {log.location}</span>
           <span>Start Time: {log.startTime}</span>
           <span>End Time: {log.stopTime}</span>
+          <div id="button">
           <button on:click={() => toggleExpansion(i)} class="expand-button">
             {log.expanded ? 'Collapse' : 'Expand'}
           </button>
+          Delete: <input type="checkbox" bind:checked={DeleteSelect}/>
+          </div>
         </div>
         {#if log.expanded}
           <div class="log-info">
             <span><br>Temperature: {log.tempF}°F<br><br>Temperature: {log.tempC}°C<br><br>Wind Speed: {log.windSpeed}<br><br>Wind Direction: {log.windDirection}<br><br>Remote ID: </span>
-            <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}<br><br>Pilot ID: <br><br>Select for Export: <input type="checkbox" bind:checked={Select} /></span>
+            <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}<br><br>Pilot ID: <br><br>Select for Export: <input type="checkbox" bind:checked={ExportSelect}/></span>
             </div>
         {/if}
       </div>
@@ -75,6 +79,9 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+  }
+  #button {
+    margin-left: 1ch;
   }
   .flight-log {
     border: 1px solid #000000;
