@@ -1,35 +1,17 @@
 <script lang="ts">
-	import { InfoVisible } from './stores.js'
+	import { FlightRecord, InfoVisible } from './stores.js'
+	import type { FlightData, WeatherData } from "./structs";
 
 	const DEFAULT_LOC = 'Rolla, MO';
 
-	interface WeatherData {
-		condition: string,
-		icon: string,
-		temperatureF: Number,
-		temperatureC: Number,
-		windSpeedMPH: Number,
-		windDirection: string,
-		windDegree: Number,
-		gustSpeedMPH: Number,
-		humidity: Number
-	};
-
-	interface FlightData {
-		location: string,
-		flightDate: string,
-		flightStartTime?: string,
-		flightStopTime?: string,
-		weather?: WeatherData,
-		pilotID?: Number,
-		remoteID?: string
-	};
-
-	const flightData = {
-		location: DEFAULT_LOC,
-		flightDate: extractDate(new Date())
-	} as FlightData;
-
+	if(!$FlightRecord.initialized) {
+		$FlightRecord = {
+			initialized: true,
+			location: DEFAULT_LOC,
+			flightDate: extractDate(new Date())
+		} as FlightData;
+	}
+	
 	async function loadWeatherData() {
 		try {
 			const response = await fetch('/api/weather', {
@@ -44,7 +26,7 @@
 				return;
 			}
 			
-			flightData.weather = {
+			$FlightRecord.weather = {
 				condition: data.current.condition.text,
 				icon: data.current.condition.icon,
 				temperatureF: data.current.temp_f,
@@ -71,16 +53,21 @@
 	function extractTime(date: Date) {
 		return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 	}
+
+	const toggleInfo = () => $InfoVisible = !$InfoVisible;
+	const updateDate = (date: Date) => $FlightRecord.flightDate = extractDate(date);
+	const updateStart = (time: Date) => $FlightRecord.flightStartTime = extractTime(time);
+	const updateEnd = (time: Date) => $FlightRecord.flightStopTime = extractTime(time);
 </script>
 
 
 <div id="info-container">
 	{#if $InfoVisible}
-	<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
-	<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
-	<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
+		<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
+		<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
+		<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
 	{/if}
-	<button id="info-close" on:click={() => {$InfoVisible=!$InfoVisible}}>{$InfoVisible ? "˄" : "˅"}</button>
+	<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? "˄" : "˅"}</button>
 </div>
 
 <div id="form-container">
@@ -91,7 +78,7 @@
 		<div class="form-section">
 			<label id="location-hint" for="location-field">Enter your location to auto-fill some fields</label>
 			<div class="data-field">
-				<input class="field-entree" type="text" value={flightData.location}/>
+				<input class="field-entree" type="text" bind:value={$FlightRecord.location} />
 				<input type="button" value="Go" on:click={loadWeatherData}/>
 			</div>
 		</div>
@@ -101,52 +88,40 @@
 			<div class="form-section">
 				<label for="date">Date</label>
 				<div class="data-field">
-					<input class="field-entree" type="date" value={flightData.flightDate} />
-					<button
-						on:click={() => {
-							flightData.flightDate = extractDate(new Date());
-						}}>Today</button
-					>
+					<input class="field-entree" type="date" value={$FlightRecord.flightDate} />
+					<button on:click={() => updateDate(new Date())}>Today</button>
 				</div>
 			</div>
 	
 			<div class="form-section">
 				<label for="t_start">Start Time</label>
 				<div class="data-field">
-					<input class="field-entree" type="time" id="t_start" value={flightData.flightStartTime || ''} step=1 />
-					<button
-						on:click={() => {
-							flightData.flightStartTime = extractTime(new Date());
-						}}>Now</button
-					>
+					<input class="field-entree" type="time" id="t_start" value={$FlightRecord.flightStartTime || ''} step=1 />
+					<button on:click={() => updateStart(new Date())}>Now</button>
 				</div>
 			</div>
 	
 			<div class="form-section">
 				<label for="t_end">End Time</label>
 				<div class="data-field">
-					<input class="field-entree" type="time" id="t_end" value={flightData.flightStopTime || ''} step="1" />
-					<button
-						on:click={() => {
-							flightData.flightStopTime = extractTime(new Date());
-						}}>Now</button
-					>
+					<input class="field-entree" type="time" id="t_end" value={$FlightRecord.flightStopTime || ''} step="1" />
+					<button on:click={() => updateEnd(new Date())}>Now</button>
 				</div>
 			</div>
 			
-			{#if flightData.weather}
+			{#if $FlightRecord.weather}
 			<h3>Weather</h3>
 			<div class="form-section">
-				<p class = 'sectionTitle'>Location: {flightData.location}</p>
+				<p class = 'sectionTitle'>Location: {$FlightRecord.location}</p>
 	
 				<div class = 'temperatureContainer'>
-					<p class = 'sectionTitle'>Temperature: {flightData.weather.temperatureF + '°F'}</p>
+					<p class = 'sectionTitle'>Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
 				</div>
 				<div class = 'sectionRow'>
-					<span class = 'sectionTitle'>Condition: {flightData.weather.condition}</span>
+					<span class = 'sectionTitle'>Condition: {$FlightRecord.weather.condition}</span>
 					<img
 						class='weatherIcon'
-						src={flightData.weather.icon}
+						src={$FlightRecord.weather.icon}
 						alt='Weather Icon'
 					/>
 				</div>
