@@ -19,7 +19,7 @@
 	<h1 style="font-size: 50px;">The Compakt Web App</h1>
 	<h1 style="font-size: 35px;">By:</h1>
 	<img
-    src="/Test.png"
+    src="/multirotorlogo.png"
     alt="logo"
     width="50%"
     height="auto"
