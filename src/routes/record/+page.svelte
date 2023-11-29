@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { FlightRecord, InfoVisible } from './stores.js'
-	import type { FlightData, WeatherData } from "./structs";
+	import { FlightRecord, InfoVisible } from '$lib/stores'
+	import type { FlightData, WeatherData } from "$lib/structs";
 
 	const DEFAULT_LOC = 'Rolla, MO';
 
