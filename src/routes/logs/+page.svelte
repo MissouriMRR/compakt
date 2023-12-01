@@ -36,6 +36,12 @@
     flightLogs = [...flightLogs, newLog];
   }
 
+  function deleteSelectedLogs() {
+    const deleteLog = {
+
+    }
+  }
+
   function toggleExpansion(index: number) {
     flightLogs[index].expanded = !flightLogs[index].expanded;
   }
@@ -46,6 +52,7 @@
 
 <div id="flightform">
   <h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
+  <span id="delete-Logs-Button"><button on:click={deleteSelectedLogs}><span id="delete-Logs-Text">Delete Selected Logs</button></span>
   <div id="logs-container">
     {#each flightLogs as log, i (log.index)}
       <div class="flight-log">
@@ -58,14 +65,16 @@
           <button on:click={() => toggleExpansion(i)} class="expand-button">
             {log.expanded ? 'Collapse' : 'Expand'}
           </button>
-          Delete: <input type="checkbox" bind:checked={DeleteSelect}/>
+          <div id="select">
+          <span id="deletion-checkbox">Delete: <br><input type="checkbox" bind:checked={DeleteSelect}/></span>
+          </div>
           </div>
         </div>
         {#if log.expanded}
           <div class="log-info">
             <span><br>Temperature: {log.tempF}°F<br><br>Temperature: {log.tempC}°C<br><br>Wind Speed: {log.windSpeed}<br><br>Wind Direction: {log.windDirection}<br><br>Remote ID: </span>
             <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}<br><br>Pilot ID: <br><br>Select for Export: <input type="checkbox" bind:checked={ExportSelect}/></span>
-            </div>
+          </div>
         {/if}
       </div>
     {/each}
@@ -106,5 +115,21 @@
   }
   .flight-log span {
     flex: 1;
+  }
+  #deletion-checkbox {
+    margin-left: 2ch;
+    text-align: center;
+  }
+  #delete-Logs-Button {
+    align-self: right;
+    position: absolute;
+    right: 30px;
+    top: 100px;
+    width: 100px;
+  }
+  #delete-Logs-Text {
+    color: red;
+    font-family: Proxima;
+    font-weight: bold;
   }
 </style>
