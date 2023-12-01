@@ -158,6 +158,7 @@
 		font-size: 25px;
 		font-weight: bold;
 		outline: none;
+		width: 200%;
 	}
 	#form-container {
 		align-items: top;
