@@ -60,17 +60,16 @@
 	const updateEnd = (time: Date) => $FlightRecord.flightStopTime = extractTime(time);
 </script>
 
-
-<div id="info-container">
-	{#if $InfoVisible}
-		<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
-		<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
-		<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
-	{/if}
-	<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? "˄" : "˅"}</button>
-</div>
-
 <div id="form-container">
+	<div id="info-container">
+		{#if $InfoVisible}
+			<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
+			<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
+			<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
+		{/if}
+		<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? "˄" : "˅"}</button>
+	</div>
+
 	<form id="flight-form">
 		<h2>Flight Information</h2>
 		<h3 id="required-text">* Required</h3>
@@ -138,16 +137,15 @@
 		border-radius: 0px 0px 20px 20px;
 		display: flex;
 		flex-direction: column;
-		margin-bottom: 1em;
-		padding-left: 25%;
-		padding-right: 25%;
-		position: relative;
-		top: -32px;
-		width: 50%;
+		position: fixed;
+		top: max(4em, 10vh);
+		width: 80vw;
 	}
 	.info-text {
 		color: silver;
 		font-size: 25px;
+		padding-left: 5em;
+		padding-right: 5em;
 		white-space: normal;
 	}
 	button#info-close {
@@ -158,7 +156,7 @@
 		font-size: 25px;
 		font-weight: bold;
 		outline: none;
-		width: 200%;
+		width: 100%;
 	}
 	#form-container {
 		align-items: top;
