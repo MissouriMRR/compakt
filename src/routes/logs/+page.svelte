@@ -1,4 +1,10 @@
 <script lang="ts">
+  const logVisualProps = {
+    expanded: false,
+    deleteSelected: false,
+    exportSelected: false
+  };
+
   let flightLogs = [{
       index: 0,
       date: '2023-10-17',
@@ -12,17 +18,12 @@
       windDegree: '180',
       gustSpeed: '10 MPH',
       Humidity: '5%',
-      expanded: false,
-      deleteSelected: false,
-      exportSelected: false
+      ...logVisualProps
   }];
 
   function addNewLog() {
     const newLog = {
       index: flightLogs.length,
-      expanded: false,
-      deleteSelected: false,
-      exportSelected: false,
       date: 'New Date',
       location: 'New Location',
       startTime: 'New Start Time',
@@ -34,6 +35,7 @@
       windDegree: 'New Wind Degree',
       gustSpeed: 'New Gust Speed',
       Humidity: 'New Humidity',
+      ...logVisualProps
     };
     flightLogs = [...flightLogs, newLog]; // For svelte reactivity
   }
