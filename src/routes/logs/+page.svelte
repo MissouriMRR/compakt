@@ -108,7 +108,7 @@
     margin: 2em 0;
     padding: 1.5em;
     background-color: white;
-    max-width: 60%;
+    width: 70vw;
     text-align: center;
   }
   .expand-button {
