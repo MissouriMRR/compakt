@@ -3,7 +3,7 @@
   const logVisualProps = {
     expanded: false,
     deleteSelected: false,
-    exportSelected: true
+    exportSelected: false
   };
 
   let flightLogs = [{
