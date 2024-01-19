@@ -13,17 +13,12 @@
                 overflow: hidden;
                 user-select: none;
 			}
-            div#spacer {
-                height: max(4em, 10vh);
-                width: 100%;
-            }
             div.nav {
                 align-items: center;
                 background-color: white;
                 display: flex;
                 flex-direction: row;
-                height: max(4em, 10vh);
-                position: fixed;
+                height: 10vh;
                 width: 100%;
             }
             div.title {
@@ -66,9 +61,10 @@
                 background-color: rgba(0, 0, 0, 0.1);
             }
             main {
-                height: calc(100vh - max(4em, 10vh));
+                height: 80vh;
                 overflow: auto;
-                padding: 2em;
+                padding: 5vb;
+                width: 100vw;
             }
             @font-face {
                 font-family: Rockwell;
@@ -98,7 +94,6 @@
                 <span id ="tab-text"><a id="tab-link" href="/logs">Flight Logs</a></span>
             </div>
         </div>
-        <div id="spacer"></div>
         <main>
 		    %sveltekit.body%
         </main>
