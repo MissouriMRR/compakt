@@ -22,7 +22,7 @@
       ...logVisualProps
   }];
 
-  function addNewLog() {
+  async function addNewLog() {
     const newLog = {
       index: flightLogs.length,
       date: 'New Date',
@@ -39,6 +39,11 @@
       ...logVisualProps
     };
     flightLogs = [...flightLogs, newLog]; // For svelte reactivity
+
+    // const response = await fetch('/api/logs', {
+		// 	method: 'POST',
+		// 	body: JSON.stringify(newLog)
+		// });
   }
 
   function deleteSelectedLogs() {
