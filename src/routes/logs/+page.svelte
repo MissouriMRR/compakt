@@ -41,6 +41,19 @@
   function deleteSelectedLogs() {
     const confirmation = confirm("Are you sure you want to delete these logs? They cannot be recovered.")
     if(!confirmation) return;
+
+    const flightLogsNext = [];
+
+    for(const log of flightLogs) {
+      if(!log.deleteSelected) {
+        flightLogsNext.push({
+          ...log,
+          index: flightLogsNext.length
+        });
+      }
+    }
+
+    flightLogs = [...flightLogsNext];
   }
 
   function toggleExpansion(index: number) {
