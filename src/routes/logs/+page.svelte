@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CsvDataService } from '$lib/data'
   const logVisualProps = {
     expanded: false,
     deleteSelected: false,
@@ -59,21 +60,21 @@
   }
 
   function exportSelectedLogs() {
-    const confirmation = confirm("Are you sure you want to delete these logs? They cannot be recovered.")
-    if(!confirmation) return;
-
-    const flightLogsNext = [];
+    const flightLogsExport = [];
 
     for(const log of flightLogs) {
-      if(!log.deleteSelected) {
-        flightLogsNext.push({
-          ...log,
-          index: flightLogsNext.length
-        });
+      if(!log.exportSelected) continue;
+      const logEntry = {
+        ...log,
+        index: flightLogsExport.length
       }
+      for(const key of Object.keys(logVisualProps)) {
+        delete logEntry[key]
+      }
+      flightLogsExport.push(logEntry);
     }
 
-    flightLogs = [...flightLogsNext];
+    CsvDataService.exportToCsv('log_data.csv', flightLogsExport);
   }
 
   function toggleExpansion(index: number) {
