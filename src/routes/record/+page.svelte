@@ -1,31 +1,31 @@
 <script lang="ts">
-	import { FlightRecord, InfoVisible } from '$lib/stores'
-	import type { FlightData, WeatherData } from "$lib/structs";
+	import { FlightRecord, InfoVisible } from '$lib/stores';
+	import type { FlightData, WeatherData } from '$lib/structs';
 
 	const DEFAULT_LOC = 'Rolla, MO';
 
-	if(!$FlightRecord.initialized) {
+	if (!$FlightRecord.initialized) {
 		$FlightRecord = {
 			initialized: true,
 			location: DEFAULT_LOC,
 			flightDate: extractDate(new Date())
 		} as FlightData;
 	}
-	
+
 	async function loadWeatherData() {
 		try {
 			const response = await fetch('/api/weather', {
 				method: 'POST',
 				body: JSON.stringify({ location })
 			});
-			
+
 			const data = await response.json();
 
-			if(data.error) {
-				console.error("[Weather API] API Error:", data.error.message);
+			if (data.error) {
+				console.error('[Weather API] API Error:', data.error.message);
 				return;
 			}
-			
+
 			$FlightRecord.weather = {
 				condition: data.current.condition.text,
 				icon: data.current.condition.icon,
@@ -38,7 +38,7 @@
 				humidity: data.current.humidity
 			} as WeatherData;
 		} catch (error) {
-			console.error("[Weather API]", error);
+			console.error('[Weather API]', error);
 		}
 	}
 
@@ -54,34 +54,38 @@
 		return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 	}
 
-	const toggleInfo = () => $InfoVisible = !$InfoVisible;
-	const updateDate = (date: Date) => $FlightRecord.flightDate = extractDate(date);
-	const updateStart = (time: Date) => $FlightRecord.flightStartTime = extractTime(time);
-	const updateEnd = (time: Date) => $FlightRecord.flightStopTime = extractTime(time);
+	const toggleInfo = () => ($InfoVisible = !$InfoVisible);
+	const updateDate = (date: Date) => ($FlightRecord.flightDate = extractDate(date));
+	const updateStart = (time: Date) => ($FlightRecord.flightStartTime = extractTime(time));
+	const updateEnd = (time: Date) => ($FlightRecord.flightStopTime = extractTime(time));
 </script>
 
 <div id="form-container">
 	<div id="info-container">
 		{#if $InfoVisible}
-			<h2 class="info-text">IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:</h2>
+			<h2 class="info-text">
+				IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:
+			</h2>
 			<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
 			<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
 		{/if}
-		<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? "˄" : "˅"}</button>
+		<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? '˄' : '˅'}</button>
 	</div>
 
 	<form id="flight-form">
 		<h2>Flight Information</h2>
 		<h3 id="required-text">* Required</h3>
-	
+
 		<div class="form-section">
-			<label id="location-hint" for="location-field">Enter your location to auto-fill some fields</label>
+			<label id="location-hint" for="location-field"
+				>Enter your location to auto-fill some fields</label
+			>
 			<div class="data-field">
 				<input class="field-entree" type="text" bind:value={$FlightRecord.location} />
-				<input type="button" value="Go" on:click={loadWeatherData}/>
+				<input type="button" value="Go" on:click={loadWeatherData} />
 			</div>
 		</div>
-	
+
 		<div id="flightinfo">
 			<h3>Time & Date</h3>
 			<div class="form-section">
@@ -91,40 +95,48 @@
 					<button on:click={() => updateDate(new Date())}>Today</button>
 				</div>
 			</div>
-	
+
 			<div class="form-section">
 				<label for="t_start">Start Time</label>
 				<div class="data-field">
-					<input class="field-entree" type="time" id="t_start" value={$FlightRecord.flightStartTime || ''} step=1 />
+					<input
+						class="field-entree"
+						type="time"
+						id="t_start"
+						value={$FlightRecord.flightStartTime || ''}
+						step="1"
+					/>
 					<button on:click={() => updateStart(new Date())}>Now</button>
 				</div>
 			</div>
-	
+
 			<div class="form-section">
 				<label for="t_end">End Time</label>
 				<div class="data-field">
-					<input class="field-entree" type="time" id="t_end" value={$FlightRecord.flightStopTime || ''} step="1" />
+					<input
+						class="field-entree"
+						type="time"
+						id="t_end"
+						value={$FlightRecord.flightStopTime || ''}
+						step="1"
+					/>
 					<button on:click={() => updateEnd(new Date())}>Now</button>
 				</div>
 			</div>
-			
+
 			{#if $FlightRecord.weather}
-			<h3>Weather</h3>
-			<div class="form-section">
-				<p class = 'sectionTitle'>Location: {$FlightRecord.location}</p>
-	
-				<div class = 'temperatureContainer'>
-					<p class = 'sectionTitle'>Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
+				<h3>Weather</h3>
+				<div class="form-section">
+					<p class="sectionTitle">Location: {$FlightRecord.location}</p>
+
+					<div class="temperatureContainer">
+						<p class="sectionTitle">Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
+					</div>
+					<div class="sectionRow">
+						<span class="sectionTitle">Condition: {$FlightRecord.weather.condition}</span>
+						<img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" />
+					</div>
 				</div>
-				<div class = 'sectionRow'>
-					<span class = 'sectionTitle'>Condition: {$FlightRecord.weather.condition}</span>
-					<img
-						class='weatherIcon'
-						src={$FlightRecord.weather.icon}
-						alt='Weather Icon'
-					/>
-				</div>
-			</div>
 			{/if}
 		</div>
 	</form>
@@ -176,7 +188,8 @@
 		text-align: center;
 		-webkit-text-stroke: 0.5px black;
 	}
-	h2, h3 {
+	h2,
+	h3 {
 		text-align: center;
 		white-space: nowrap;
 	}
@@ -205,21 +218,21 @@
 		align-items: center;
 		justify-content: center;
 	}
-  .sectionTitle {
-    font-size: 16;
-    font-weight: 'bold';
-  }
-  .temperatureContainer {
+	.sectionTitle {
+		font-size: 16;
+		font-weight: 'bold';
+	}
+	.temperatureContainer {
 		margin-bottom: 10;
 		margin-top: 10;
-    flex-direction: 'row';
-    align-items: 'center';
-  }
-  .weatherIcon {
+		flex-direction: 'row';
+		align-items: 'center';
+	}
+	.weatherIcon {
 		display: inline-block;
-    width: 2em;
-    height: 2em;
-    margin-left: 10;
+		width: 2em;
+		height: 2em;
+		margin-left: 10;
 		margin-right: 10;
-  }
+	}
 </style>
