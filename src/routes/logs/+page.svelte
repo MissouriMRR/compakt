@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
+	import { FlightRecord } from '$lib/stores';
+	import type { FlightLog, VisualProperties } from '$lib/structs';
+
 	const logVisualProps = {
 		expanded: false,
 		deleteSelected: false,
 		exportSelected: false
-	};
+	} as VisualProperties;
 
 	let flightLogs = [
 		{
@@ -19,12 +22,13 @@
 			windDirection: 'North',
 			windDegree: '180',
 			gustSpeed: '10 MPH',
-			Humidity: '5%',
-			...logVisualProps
+			humidity: '5%',
+			vProps: {...logVisualProps},
 		}
-	];
+	] as FlightLog[];
 
 	async function addNewLog() {
+		console.log($FlightRecord);
 		const newLog = {
 			index: flightLogs.length,
 			date: 'New Date',
@@ -37,9 +41,9 @@
 			windDirection: 'New Wind Direction',
 			windDegree: 'New Wind Degree',
 			gustSpeed: 'New Gust Speed',
-			Humidity: 'New Humidity',
-			...logVisualProps
-		};
+			humidity: 'New Humidity',
+			vProps: {...logVisualProps},
+		} as FlightLog;
 		flightLogs = [...flightLogs, newLog]; // For svelte reactivity
 
 		// const response = await fetch('/api/logs', {
@@ -57,7 +61,7 @@
 		const flightLogsNext = [];
 
 		for (const log of flightLogs) {
-			if (!log.deleteSelected) {
+			if (!log.vProps.deleteSelected) {
 				flightLogsNext.push({
 					...log,
 					index: flightLogsNext.length
@@ -72,14 +76,11 @@
 		const flightLogsExport = [];
 
 		for (const log of flightLogs) {
-			if (!log.exportSelected) continue;
+			if (!log.vProps.exportSelected) continue;
 			const logEntry = {
 				...log,
 				index: flightLogsExport.length
 			};
-			for (const key of Object.keys(logVisualProps)) {
-				delete logEntry[key];
-			}
 			flightLogsExport.push(logEntry);
 		}
 
@@ -87,7 +88,7 @@
 	}
 
 	function toggleExpansion(index: number) {
-		flightLogs[index].expanded = !flightLogs[index].expanded;
+		flightLogs[index].vProps.expanded = !flightLogs[index].vProps.expanded;
 	}
 </script>
 
@@ -115,16 +116,16 @@
 					<span>End Time: {log.stopTime}</span>
 					<div id="button">
 						<button on:click={() => toggleExpansion(i)} class="expand-button">
-							{log.expanded ? 'Collapse' : 'Expand'}
+							{log.vProps.expanded ? 'Collapse' : 'Expand'}
 						</button>
 						<div id="select">
 							<span id="deletion-checkbox"
-								>Delete: <br /><input type="checkbox" bind:checked={log.deleteSelected} /></span
+								>Delete: <br /><input type="checkbox" bind:checked={log.vProps.deleteSelected} /></span
 							>
 						</div>
 					</div>
 				</div>
-				{#if log.expanded}
+				{#if log.vProps.expanded}
 					<div class="log-info">
 						<span>
 							<br />Temperature: {log.tempF}°F<br />
@@ -136,9 +137,9 @@
 						<span>
 							<br />Wind Degree: {log.windDegree}°<br />
 							<br />Gust Speed: {log.gustSpeed}<br />
-							<br />Humidity: {log.Humidity}<br />
+							<br />Humidity: {log.humidity}<br />
 							<br />Pilot ID: <br />
-							<br />Select for Export: <input type="checkbox" bind:checked={log.exportSelected} />
+							<br />Select for Export: <input type="checkbox" bind:checked={log.vProps.exportSelected} />
 						</span>
 					</div>
 				{/if}

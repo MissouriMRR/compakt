@@ -20,3 +20,25 @@ export interface FlightData {
 	pilotID?: number;
 	remoteID?: string;
 }
+
+export interface FlightLog {
+	index: number,
+	date: string,
+	location: string,
+	startTime: string,
+	stopTime: string,
+	tempF: string,
+	tempC: string,
+	windSpeed: string,
+	windDirection: string,
+	windDegree: string,
+	gustSpeed: string,
+	humidity: string,
+	vProps: VisualProperties
+}
+
+export interface VisualProperties {
+	expanded: boolean,
+	deleteSelected: boolean,
+	exportSelected: boolean
+}
