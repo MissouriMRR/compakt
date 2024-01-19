@@ -1,6 +1,5 @@
 <script lang="ts">
-  let flightLogs = [
-    {
+  let flightLogs = [{
       index: 0,
       date: '2023-10-17',
       location: 'Rolla',
@@ -14,13 +13,16 @@
       gustSpeed: '10 MPH',
       Humidity: '5%',
       expanded: false,
-    },
-  ];
+      deleteSelected: false,
+      exportSelected: false
+  }];
 
   function addNewLog() {
     const newLog = {
       index: flightLogs.length,
       expanded: false,
+      deleteSelected: false,
+      exportSelected: false,
       date: 'New Date',
       location: 'New Location',
       startTime: 'New Start Time',
@@ -33,21 +35,18 @@
       gustSpeed: 'New Gust Speed',
       Humidity: 'New Humidity',
     };
-    flightLogs = [...flightLogs, newLog];
+    flightLogs = [...flightLogs, newLog]; // For svelte reactivity
   }
 
   function deleteSelectedLogs() {
-    const deleteLog = {
-
-    }
+    const confirmation = confirm("Are you sure you want to delete these logs? They cannot be recovered.")
+    if(!confirmation) return;
   }
 
   function toggleExpansion(index: number) {
     flightLogs[index].expanded = !flightLogs[index].expanded;
   }
 
-  let ExportSelect = false;
-  let DeleteSelect = false;
 </script>
 
 <div id="flightform">
@@ -66,14 +65,26 @@
             {log.expanded ? 'Collapse' : 'Expand'}
           </button>
           <div id="select">
-          <span id="deletion-checkbox">Delete: <br><input type="checkbox" bind:checked={DeleteSelect}/></span>
+          <span id="deletion-checkbox">Delete: <br><input type="checkbox" bind:checked={log.deleteSelected}/></span>
           </div>
           </div>
         </div>
         {#if log.expanded}
           <div class="log-info">
-            <span><br>Temperature: {log.tempF}°F<br><br>Temperature: {log.tempC}°C<br><br>Wind Speed: {log.windSpeed}<br><br>Wind Direction: {log.windDirection}<br><br>Remote ID: </span>
-            <span><br>Wind Degree: {log.windDegree}°<br><br>Gust Speed: {log.gustSpeed}<br><br>Humidity: {log.Humidity}<br><br>Pilot ID: <br><br>Select for Export: <input type="checkbox" bind:checked={ExportSelect}/></span>
+            <span>
+              <br>Temperature: {log.tempF}°F<br>
+              <br>Temperature: {log.tempC}°C<br>
+              <br>Wind Speed: {log.windSpeed}<br>
+              <br>Wind Direction: {log.windDirection}<br>
+              <br>Remote ID:
+            </span>
+            <span>
+              <br>Wind Degree: {log.windDegree}°<br>
+              <br>Gust Speed: {log.gustSpeed}<br>
+              <br>Humidity: {log.Humidity}<br>
+              <br>Pilot ID: <br>
+              <br>Select for Export: <input type="checkbox" bind:checked={log.exportSelected}/>
+            </span>
           </div>
         {/if}
       </div>
