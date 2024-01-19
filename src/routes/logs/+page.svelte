@@ -2,7 +2,7 @@
   const logVisualProps = {
     expanded: false,
     deleteSelected: false,
-    exportSelected: false
+    exportSelected: true
   };
 
   let flightLogs = [{
@@ -58,6 +58,24 @@
     flightLogs = [...flightLogsNext];
   }
 
+  function exportSelectedLogs() {
+    const confirmation = confirm("Are you sure you want to delete these logs? They cannot be recovered.")
+    if(!confirmation) return;
+
+    const flightLogsNext = [];
+
+    for(const log of flightLogs) {
+      if(!log.deleteSelected) {
+        flightLogsNext.push({
+          ...log,
+          index: flightLogsNext.length
+        });
+      }
+    }
+
+    flightLogs = [...flightLogsNext];
+  }
+
   function toggleExpansion(index: number) {
     flightLogs[index].expanded = !flightLogs[index].expanded;
   }
@@ -66,7 +84,18 @@
 
 <div id="flightform">
   <h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
-  <span id="delete-Logs-Button"><button on:click={deleteSelectedLogs}><span id="delete-Logs-Text">Delete Selected Logs</button></span>
+  <div id="logs-action-container">
+    <span id="logs-action-button">
+      <button on:click={deleteSelectedLogs}>
+        <span id="delete-logs-text">Delete Selected Logs</span>
+      </button>
+    </span>
+    <span id="logs-action-button">
+      <button on:click={exportSelectedLogs}>
+        <span id="export-logs-text">Export Selected Logs</span>
+      </button>
+    </span>
+  </div>
   <div id="logs-container">
     {#each flightLogs as log, i (log.index)}
       <div class="flight-log">
@@ -146,15 +175,25 @@
     margin-left: 2ch;
     text-align: center;
   }
-  #delete-Logs-Button {
-    align-self: right;
-    position: absolute;
+  #logs-action-container {
     right: 30px;
-    top: 100px;
+    top: 15vh;
+    align-self: right;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+  }
+  #logs-action-button {
+    margin: 5px;
     width: 100px;
   }
-  #delete-Logs-Text {
+  #delete-logs-text {
     color: red;
+    font-family: Proxima;
+    font-weight: bold;
+  }
+  #export-logs-text {
+    color: blue;
     font-family: Proxima;
     font-weight: bold;
   }
