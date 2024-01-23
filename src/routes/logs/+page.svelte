@@ -80,7 +80,7 @@
 			const logEntry = {
 				...log,
 				index: flightLogsExport.length
-			};
+			} as FlightLog;
 			flightLogsExport.push(logEntry);
 		}
 
