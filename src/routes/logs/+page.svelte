@@ -22,6 +22,7 @@
 			windDegree: '180',
 			gustSpeed: '10 MPH',
 			humidity: '5%',
+			indexNumber: 1,
 			vProps: {...logVisualProps},
 		}
 	] as FlightLog[];
@@ -41,6 +42,7 @@
 			windDegree: 'New Wind Degree',
 			gustSpeed: 'New Gust Speed',
 			humidity: 'New Humidity',
+			indexNumber: 0,
 			vProps: {...logVisualProps},
 		} as FlightLog;
 		flightLogs = [...flightLogs, newLog]; // For svelte reactivity
@@ -138,6 +140,7 @@
 							<br />Gust Speed: {log.gustSpeed}<br />
 							<br />Humidity: {log.humidity}<br />
 							<br />Pilot ID: <br />
+							<br />Index Number: <br />
 						</span>
 					</div>
 				{/if}

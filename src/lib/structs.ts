@@ -8,6 +8,7 @@ export interface WeatherData {
 	windDegree: number;
 	gustSpeedMPH: number;
 	humidity: number;
+	indexNumber: number;
 }
 
 export interface FlightData {
@@ -19,6 +20,7 @@ export interface FlightData {
 	weather?: WeatherData;
 	pilotID?: number;
 	remoteID?: string;
+	indexNumber: number;
 }
 
 export interface FlightLog {
@@ -34,6 +36,7 @@ export interface FlightLog {
 	windDegree: string,
 	gustSpeed: string,
 	humidity: string,
+	indexNumber: number, // This index number refers to the number of flight logs that have been created and is display in the logs section //
 	vProps: VisualProperties
 }
 
