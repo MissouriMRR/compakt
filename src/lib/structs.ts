@@ -39,6 +39,5 @@ export interface FlightLog {
 
 export interface VisualProperties {
 	expanded: boolean,
-	deleteSelected: boolean,
-	exportSelected: boolean
+	selected: boolean,
 }

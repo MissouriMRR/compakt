@@ -5,8 +5,7 @@
 
 	const logVisualProps = {
 		expanded: false,
-		deleteSelected: false,
-		exportSelected: false
+		selected: false,
 	} as VisualProperties;
 
 	let flightLogs = [
@@ -61,7 +60,7 @@
 		const flightLogsNext = [];
 
 		for (const log of flightLogs) {
-			if (!log.vProps.deleteSelected) {
+			if (!log.vProps.selected) {
 				flightLogsNext.push({
 					...log,
 					index: flightLogsNext.length
@@ -76,7 +75,7 @@
 		const flightLogsExport = [];
 
 		for (const log of flightLogs) {
-			if (!log.vProps.exportSelected) continue;
+			if (!log.vProps.selected) continue;
 			const logEntry = {
 				...log,
 				index: flightLogsExport.length
@@ -118,11 +117,11 @@
 						<button on:click={() => toggleExpansion(i)} class="expand-button">
 							{log.vProps.expanded ? 'Collapse' : 'Expand'}
 						</button>
-						<div id="select">
-							<span id="deletion-checkbox"
-								>Delete: <br /><input type="checkbox" bind:checked={log.vProps.deleteSelected} /></span
-							>
-						</div>
+						<input
+							id="select-checkbox"
+							type="checkbox"
+							bind:checked={log.vProps.selected}
+						/>
 					</div>
 				</div>
 				{#if log.vProps.expanded}
@@ -139,7 +138,6 @@
 							<br />Gust Speed: {log.gustSpeed}<br />
 							<br />Humidity: {log.humidity}<br />
 							<br />Pilot ID: <br />
-							<br />Select for Export: <input type="checkbox" bind:checked={log.vProps.exportSelected} />
 						</span>
 					</div>
 				{/if}
@@ -184,9 +182,11 @@
 	.flight-log span {
 		flex: 1;
 	}
-	#deletion-checkbox {
+	#select-checkbox {
+		height: 2em;
 		margin-left: 2ch;
 		text-align: center;
+		width: 2em;
 	}
 	#logs-action-container {
 		right: 30px;
