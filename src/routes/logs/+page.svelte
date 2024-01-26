@@ -22,7 +22,6 @@
 			windDegree: '180',
 			gustSpeed: '10 MPH',
 			humidity: '5%',
-			indexNumber: 1,
 			vProps: {...logVisualProps},
 		}
 	] as FlightLog[];
@@ -31,26 +30,36 @@
 		console.log($FlightRecord);
 		const newLog = {
 			index: flightLogs.length,
-			date: 'New Date',
-			location: 'New Location',
-			startTime: 'New Start Time',
-			stopTime: 'New Stop Time',
-			tempF: 'New Fahrenheit Temperature',
-			tempC: 'New Celsius Temperature',
-			windSpeed: 'New Wind Speed',
-			windDirection: 'New Wind Direction',
-			windDegree: 'New Wind Degree',
-			gustSpeed: 'New Gust Speed',
-			humidity: 'New Humidity',
-			indexNumber: 0,
+			date: $FlightRecord.flightDate,
+			location: $FlightRecord.location,
+			startTime: $FlightRecord.flightStartTime,
+			stopTime: $FlightRecord.flightStopTime,
+			tempF: $FlightRecord.weather?.temperatureF,
+			tempC: $FlightRecord.weather?.temperatureC,
+			windSpeed: $FlightRecord.weather?.windSpeedMPH,
+			windDirection: $FlightRecord.weather?.windDirection,
+			windDegree: $FlightRecord.weather?.windDegree,
+			gustSpeed: $FlightRecord.weather?.gustSpeedMPH,
+			humidity: $FlightRecord.weather?.humidity,
 			vProps: {...logVisualProps},
 		} as FlightLog;
 		flightLogs = [...flightLogs, newLog]; // For svelte reactivity
 
-		// const response = await fetch('/api/logs', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(newLog)
-		// });
+		// try {
+		// 	const response = await fetch('/api/logs', {
+		// 		method: 'POST',
+		// 		body: JSON.stringify(newLog)
+		// 	});
+
+		// 	const data = await response.json();
+
+		// 	if (data.error) {
+		// 		console.error('[Log Write]', data.error.message);
+		// 		return;
+		// 	}
+		// } catch (error) {
+		// 	console.error('[Log Write]', error);
+		// }
 	}
 
 	function deleteSelectedLogs() {
@@ -133,14 +142,13 @@
 							<br />Temperature: {log.tempC}°C<br />
 							<br />Wind Speed: {log.windSpeed}<br />
 							<br />Wind Direction: {log.windDirection}<br />
-							<br />Remote ID:
+							<br />Remote ID: <br />
 						</span>
 						<span>
 							<br />Wind Degree: {log.windDegree}°<br />
 							<br />Gust Speed: {log.gustSpeed}<br />
 							<br />Humidity: {log.humidity}<br />
 							<br />Pilot ID: <br />
-							<br />Index Number: <br />
 						</span>
 					</div>
 				{/if}

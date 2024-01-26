@@ -29,14 +29,13 @@ export interface FlightLog {
 	location: string,
 	startTime: string,
 	stopTime: string,
-	tempF: string,
-	tempC: string,
-	windSpeed: string,
-	windDirection: string,
-	windDegree: string,
-	gustSpeed: string,
-	humidity: string,
-	indexNumber: number, // This index number refers to the number of flight logs that have been created and is display in the logs section //
+	tempF?: string,
+	tempC?: string,
+	windSpeed?: string,
+	windDirection?: string,
+	windDegree?: string,
+	gustSpeed?: string,
+	humidity?: string,
 	vProps: VisualProperties
 }
 
