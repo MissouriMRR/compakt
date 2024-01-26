@@ -75,14 +75,14 @@
 	<form id="flight-form">
 		<h2>Flight Information</h2>
 		<!-- <h3 id="required-text">* Required</h3> -->
-		<h6>Enter your location to auto-fill some fields</h6>
+		<h6>Enter your location to fetch weather data</h6>
 		<h3>Location</h3>
 		<div class="form-section">
 			<div class="data-field">
 				<label for="location">City</label>
 				<div class="field-container">
 					<input class="field-entree" id="location" type="text" bind:value={$FlightRecord.location} />
-					<input class="field-button" type="button" value="Go" on:click={loadWeatherData} />
+					<input class="field-button" type="button" value="Get Weather" on:click={loadWeatherData} />
 				</div>
 			</div>
 		</div>
