@@ -87,6 +87,21 @@
 			</div>
 		</div>
 
+		{#if $FlightRecord.weather}
+			<h3>Weather</h3>
+			<div class="form-section">
+				<p class="weather-label">Location: {$FlightRecord.location}</p>
+
+				<div class="temperature-container">
+					<p class="weather-label">Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
+				</div>
+				<div class="section-container">
+					<span class="weather-label">Condition: {$FlightRecord.weather.condition}</span>
+					<img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" />
+				</div>
+			</div>
+		{/if}
+
 		<h3>Time & Date</h3>
 		<div class="form-section">
 			<div class="data-field">
@@ -141,21 +156,6 @@
 				</div>
 			</div>
 		</div>
-
-		{#if $FlightRecord.weather}
-			<h3>Weather</h3>
-			<div class="form-section">
-				<p class="sectionTitle">Location: {$FlightRecord.location}</p>
-
-				<div class="temperatureContainer">
-					<p class="sectionTitle">Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
-				</div>
-				<div class="sectionRow">
-					<span class="sectionTitle">Condition: {$FlightRecord.weather.condition}</span>
-					<img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" />
-				</div>
-			</div>
-		{/if}
 	</form>
 </div>
 
@@ -228,7 +228,7 @@
 	.form-section {
 		align-items: center;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: center;
 		margin: 0 10;
 	}
@@ -253,20 +253,20 @@
 		padding-left: 1ch;
 		padding-right: 1ch;
 	}
-	.sectionRow {
+	.section-container {
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
 	}
-	.sectionTitle {
+	.weather-label {
 		font-size: 16;
 		font-weight: 'bold';
 	}
-	.temperatureContainer {
+	.temperature-container {
 		margin-bottom: 10;
 		margin-top: 10;
-		flex-direction: 'row';
+		flex-direction: row;
 		align-items: 'center';
 	}
 	.weatherIcon {
