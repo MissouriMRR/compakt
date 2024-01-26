@@ -16,7 +16,7 @@
 		try {
 			const response = await fetch('/api/weather', {
 				method: 'POST',
-				body: JSON.stringify({ location })
+				body: JSON.stringify({ location: $FlightRecord.location })
 			});
 
 			const data = await response.json();
