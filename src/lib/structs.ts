@@ -36,6 +36,8 @@ export interface FlightLog {
 	windDegree?: string,
 	gustSpeed?: string,
 	humidity?: string,
+	pilotID?: string,
+	remoteID?: string,
 	vProps: VisualProperties
 }
 

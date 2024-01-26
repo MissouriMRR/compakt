@@ -74,20 +74,20 @@
 
 	<form id="flight-form">
 		<h2>Flight Information</h2>
-		<h3 id="required-text">* Required</h3>
+		<!-- <h3 id="required-text">* Required</h3> -->
 
 		<div class="form-section">
-			<label id="location-hint" for="location-field"
-				>Enter your location to auto-fill some fields</label
-			>
+			<label id="location-hint" for="location-field">
+				Enter your location to auto-fill some fields
+			</label>
 			<div class="data-field">
 				<input class="field-entree" type="text" bind:value={$FlightRecord.location} />
 				<input type="button" value="Go" on:click={loadWeatherData} />
 			</div>
 		</div>
 
+		<h3>Time & Date</h3>
 		<div id="flightinfo">
-			<h3>Time & Date</h3>
 			<div class="form-section">
 				<label for="date">Date</label>
 				<div class="data-field">
@@ -121,6 +121,22 @@
 						step="1"
 					/>
 					<button on:click={() => updateEnd(new Date())}>Now</button>
+				</div>
+			</div>
+
+			<h3>Flight IDs</h3>
+			<div class="form-section">
+				<label id="location-hint" for="location-field">
+					Pilot ID
+				</label>
+				<div class="data-field">
+					<input class="field-entree" type="text" bind:value={$FlightRecord.pilotID} />
+				</div>
+				<label id="location-hint" for="location-field">
+					Remote ID
+				</label>
+				<div class="data-field">
+					<input class="field-entree" type="text" bind:value={$FlightRecord.remoteID} />
 				</div>
 			</div>
 

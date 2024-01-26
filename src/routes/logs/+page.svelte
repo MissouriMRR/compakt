@@ -22,6 +22,8 @@
 			windDegree: '180',
 			gustSpeed: '10 MPH',
 			humidity: '5%',
+			pilotID: 'ABC123',
+			remoteID: 'ABC123',
 			vProps: {...logVisualProps},
 		}
 	] as FlightLog[];
@@ -41,6 +43,8 @@
 			windDegree: $FlightRecord.weather?.windDegree,
 			gustSpeed: $FlightRecord.weather?.gustSpeedMPH,
 			humidity: $FlightRecord.weather?.humidity,
+			pilotID: $FlightRecord.pilotID,
+			remoteID: $FlightRecord.remoteID,
 			vProps: {...logVisualProps},
 		} as FlightLog;
 		flightLogs = [...flightLogs, newLog]; // For svelte reactivity
@@ -142,13 +146,13 @@
 							<br />Temperature: {log.tempC}°C<br />
 							<br />Wind Speed: {log.windSpeed}<br />
 							<br />Wind Direction: {log.windDirection}<br />
-							<br />Remote ID: <br />
+							<br />Remote ID: {log.remoteID}<br />
 						</span>
 						<span>
 							<br />Wind Degree: {log.windDegree}°<br />
 							<br />Gust Speed: {log.gustSpeed}<br />
 							<br />Humidity: {log.humidity}<br />
-							<br />Pilot ID: <br />
+							<br />Pilot ID: {log.pilotID}<br />
 						</span>
 					</div>
 				{/if}
