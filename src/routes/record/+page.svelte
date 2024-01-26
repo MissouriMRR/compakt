@@ -76,29 +76,32 @@
 		<h2>Flight Information</h2>
 		<!-- <h3 id="required-text">* Required</h3> -->
 
+		<h3>Location</h3>
 		<div class="form-section">
-			<label id="location-hint" for="location-field">
-				Enter your location to auto-fill some fields
-			</label>
 			<div class="data-field">
-				<input class="field-entree" type="text" bind:value={$FlightRecord.location} />
-				<input type="button" value="Go" on:click={loadWeatherData} />
+				<label id="location-hint" for="location-field">
+					Enter your location to auto-fill some fields
+				</label>
+				<div class="field-container">
+					<input class="field-entree" type="text" bind:value={$FlightRecord.location} />
+					<input type="button" value="Go" on:click={loadWeatherData} />
+				</div>
 			</div>
 		</div>
 
 		<h3>Time & Date</h3>
-		<div id="flightinfo">
-			<div class="form-section">
+		<div class="form-section">
+			<div class="data-field">
 				<label for="date">Date</label>
-				<div class="data-field">
+				<div class="field-container">
 					<input class="field-entree" type="date" value={$FlightRecord.flightDate} />
 					<button on:click={() => updateDate(new Date())}>Today</button>
 				</div>
 			</div>
 
-			<div class="form-section">
+			<div class="data-field">
 				<label for="t_start">Start Time</label>
-				<div class="data-field">
+				<div class="field-container">
 					<input
 						class="field-entree"
 						type="time"
@@ -110,51 +113,51 @@
 				</div>
 			</div>
 
-			<div class="form-section">
+			<div class="data-field">
 				<label for="t_end">End Time</label>
-				<div class="data-field">
+				<div class="field-container">
 					<input
 						class="field-entree"
 						type="time"
 						id="t_end"
 						value={$FlightRecord.flightStopTime || ''}
-						step="1"
+						step=1
 					/>
 					<button on:click={() => updateEnd(new Date())}>Now</button>
 				</div>
 			</div>
+		</div>
 
-			<h3>Flight IDs</h3>
-			<div class="form-section">
+		<h3>Flight IDs</h3>
+		<div class="form-section">
+			<div class="data-field">
 				<label id="location-hint" for="location-field">
 					Pilot ID
 				</label>
-				<div class="data-field">
-					<input class="field-entree" type="text" bind:value={$FlightRecord.pilotID} />
-				</div>
+				<input class="field-entree" type="text" bind:value={$FlightRecord.pilotID} />
+			</div>
+			<div class="data-field">
 				<label id="location-hint" for="location-field">
 					Remote ID
 				</label>
-				<div class="data-field">
-					<input class="field-entree" type="text" bind:value={$FlightRecord.remoteID} />
+				<input class="field-entree" type="text" bind:value={$FlightRecord.remoteID} />
+			</div>
+		</div>
+
+		{#if $FlightRecord.weather}
+			<h3>Weather</h3>
+			<div class="form-section">
+				<p class="sectionTitle">Location: {$FlightRecord.location}</p>
+
+				<div class="temperatureContainer">
+					<p class="sectionTitle">Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
+				</div>
+				<div class="sectionRow">
+					<span class="sectionTitle">Condition: {$FlightRecord.weather.condition}</span>
+					<img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" />
 				</div>
 			</div>
-
-			{#if $FlightRecord.weather}
-				<h3>Weather</h3>
-				<div class="form-section">
-					<p class="sectionTitle">Location: {$FlightRecord.location}</p>
-
-					<div class="temperatureContainer">
-						<p class="sectionTitle">Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
-					</div>
-					<div class="sectionRow">
-						<span class="sectionTitle">Condition: {$FlightRecord.weather.condition}</span>
-						<img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" />
-					</div>
-				</div>
-			{/if}
-		</div>
+		{/if}
 	</form>
 </div>
 
@@ -204,6 +207,9 @@
 		text-align: center;
 		-webkit-text-stroke: 0.5px black;
 	}
+	label {
+		margin-bottom: 1ch;
+	}
 	h2,
 	h3 {
 		text-align: center;
@@ -212,7 +218,7 @@
 	.form-section {
 		align-items: center;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		justify-content: center;
 		margin: 0 10;
 	}
@@ -222,8 +228,13 @@
 	.data-field {
 		align-items: center;
 		display: flex;
+		flex-direction: column;
 		justify-content: space-between;
 		margin: 0.5em;
+	}
+	.field-container {
+		display: flex;
+		flex-direction: row;
 	}
 	.field-entree {
 		margin-right: 0.5em;
