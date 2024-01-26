@@ -75,16 +75,14 @@
 	<form id="flight-form">
 		<h2>Flight Information</h2>
 		<!-- <h3 id="required-text">* Required</h3> -->
-
+		<h6>Enter your location to auto-fill some fields</h6>
 		<h3>Location</h3>
 		<div class="form-section">
 			<div class="data-field">
-				<label id="location-hint" for="location-field">
-					Enter your location to auto-fill some fields
-				</label>
+				<label for="location">City</label>
 				<div class="field-container">
-					<input class="field-entree" type="text" bind:value={$FlightRecord.location} />
-					<input type="button" value="Go" on:click={loadWeatherData} />
+					<input class="field-entree" id="location" type="text" bind:value={$FlightRecord.location} />
+					<input class="field-button" type="button" value="Go" on:click={loadWeatherData} />
 				</div>
 			</div>
 		</div>
@@ -94,36 +92,36 @@
 			<div class="data-field">
 				<label for="date">Date</label>
 				<div class="field-container">
-					<input class="field-entree" type="date" value={$FlightRecord.flightDate} />
-					<button on:click={() => updateDate(new Date())}>Today</button>
+					<input class="field-entree" id="date" type="date" value={$FlightRecord.flightDate} />
+					<button class="field-button" on:click={() => updateDate(new Date())}>Today</button>
 				</div>
 			</div>
 
 			<div class="data-field">
-				<label for="t_start">Start Time</label>
+				<label for="time-start">Start Time</label>
 				<div class="field-container">
 					<input
 						class="field-entree"
 						type="time"
-						id="t_start"
+						id="time-start"
 						value={$FlightRecord.flightStartTime || ''}
 						step="1"
 					/>
-					<button on:click={() => updateStart(new Date())}>Now</button>
+					<button class="field-button" on:click={() => updateStart(new Date())}>Now</button>
 				</div>
 			</div>
 
 			<div class="data-field">
-				<label for="t_end">End Time</label>
+				<label for="time-end">End Time</label>
 				<div class="field-container">
 					<input
 						class="field-entree"
 						type="time"
-						id="t_end"
+						id="time-end"
 						value={$FlightRecord.flightStopTime || ''}
 						step=1
 					/>
-					<button on:click={() => updateEnd(new Date())}>Now</button>
+					<button class="field-button" on:click={() => updateEnd(new Date())}>Now</button>
 				</div>
 			</div>
 		</div>
@@ -131,16 +129,16 @@
 		<h3>Flight IDs</h3>
 		<div class="form-section">
 			<div class="data-field">
-				<label id="location-hint" for="location-field">
-					Pilot ID
-				</label>
-				<input class="field-entree" type="text" bind:value={$FlightRecord.pilotID} />
+				<label for="pilot-id">Pilot ID</label>
+				<div class="field-container">
+					<input class="field-entree" id="pilot-id" type="text" bind:value={$FlightRecord.pilotID} />
+				</div>
 			</div>
 			<div class="data-field">
-				<label id="location-hint" for="location-field">
-					Remote ID
-				</label>
-				<input class="field-entree" type="text" bind:value={$FlightRecord.remoteID} />
+				<label for="remote-id">Remote ID</label>
+				<div class="field-container">
+					<input class="field-entree" id="remote-id" type="text" bind:value={$FlightRecord.remoteID} />
+				</div>
 			</div>
 		</div>
 
@@ -209,11 +207,23 @@
 	}
 	label {
 		margin-bottom: 1ch;
+		text-decoration: underline;
+		white-space: nowrap;
 	}
 	h2,
-	h3 {
+	h3,
+	h6 {
 		text-align: center;
 		white-space: nowrap;
+	}
+	h2 {
+		margin-bottom: 1ch;
+	}
+	h3 {
+		margin-bottom: 0.5ch;
+	}
+	h6 {
+		margin: 0;
 	}
 	.form-section {
 		align-items: center;
@@ -222,9 +232,6 @@
 		justify-content: center;
 		margin: 0 10;
 	}
-	#location-hint {
-		white-space: nowrap;
-	}
 	.data-field {
 		align-items: center;
 		display: flex;
@@ -232,12 +239,19 @@
 		justify-content: space-between;
 		margin: 0.5em;
 	}
+	.field-button {
+		border-radius: 1em;
+		font-weight: bold;
+	}
 	.field-container {
 		display: flex;
 		flex-direction: row;
+		height: 2em;
 	}
 	.field-entree {
 		margin-right: 0.5em;
+		padding-left: 1ch;
+		padding-right: 1ch;
 	}
 	.sectionRow {
 		display: flex;
