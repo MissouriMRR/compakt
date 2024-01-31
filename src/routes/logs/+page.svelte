@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
 	import { FlightRecord } from '$lib/stores';
+	import { LogList } from '$lib/stores';
 	import type { FlightLog, VisualProperties } from '$lib/structs';
 
 	const logVisualProps = {
@@ -8,30 +9,10 @@
 		selected: false,
 	} as VisualProperties;
 
-	let flightLogs = [
-		{
-			index: 0,
-			date: '2023-10-17',
-			location: 'Rolla',
-			startTime: '3:00 PM',
-			stopTime: '5:00 PM',
-			tempF: '70',
-			tempC: '21.1',
-			windSpeed: '35 MPH',
-			windDirection: 'North',
-			windDegree: '180',
-			gustSpeed: '10 MPH',
-			humidity: '5%',
-			pilotID: 'ABC123',
-			remoteID: 'ABC123',
-			vProps: {...logVisualProps},
-		}
-	] as FlightLog[];
-
 	async function addNewLog() {
 		console.log($FlightRecord);
 		const newLog = {
-			index: flightLogs.length,
+			index: $LogList.length,
 			date: $FlightRecord.flightDate,
 			location: $FlightRecord.location,
 			startTime: $FlightRecord.flightStartTime,
@@ -47,7 +28,7 @@
 			remoteID: $FlightRecord.remoteID,
 			vProps: {...logVisualProps},
 		} as FlightLog;
-		flightLogs = [...flightLogs, newLog]; // For svelte reactivity
+		$LogList = [...$LogList, newLog]; // For svelte reactivity
 
 		// try {
 		// 	const response = await fetch('/api/logs', {
@@ -74,7 +55,7 @@
 
 		const flightLogsNext = [];
 
-		for (const log of flightLogs) {
+		for (const log of $LogList) {
 			if (!log.vProps.selected) {
 				flightLogsNext.push({
 					...log,
@@ -83,13 +64,13 @@
 			}
 		}
 
-		flightLogs = [...flightLogsNext];
+		$LogList = [...flightLogsNext];
 	}
 
 	function exportSelectedLogs() {
 		const flightLogsExport = [];
 
-		for (const log of flightLogs) {
+		for (const log of $LogList) {
 			if (!log.vProps.selected) continue;
 			const logEntry = {
 				...log,
@@ -102,7 +83,7 @@
 	}
 
 	function toggleExpansion(index: number) {
-		flightLogs[index].vProps.expanded = !flightLogs[index].vProps.expanded;
+		$LogList[index].vProps.expanded = !$LogList[index].vProps.expanded;
 	}
 </script>
 
@@ -121,7 +102,7 @@
 		</span>
 	</div>
 	<div id="logs-container">
-		{#each flightLogs as log, i (log.index)}
+		{#each $LogList as log, i (log.index)}
 			<div class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.date}</span>
