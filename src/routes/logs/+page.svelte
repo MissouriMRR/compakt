@@ -2,6 +2,7 @@
 	import { CsvDataService } from '$lib/data';
 	import { FlightRecord } from '$lib/stores';
 	import type { FlightLog, VisualProperties } from '$lib/structs';
+	// import client from '$lib/database';
 
 	const logVisualProps = {
 		expanded: false,
@@ -29,7 +30,6 @@
 	] as FlightLog[];
 
 	async function addNewLog() {
-		console.log($FlightRecord);
 		const newLog = {
 			index: flightLogs.length,
 			date: $FlightRecord.flightDate,
@@ -49,21 +49,13 @@
 		} as FlightLog;
 		flightLogs = [...flightLogs, newLog]; // For svelte reactivity
 
-		// try {
-		// 	const response = await fetch('/api/logs', {
-		// 		method: 'POST',
-		// 		body: JSON.stringify(newLog)
-		// 	});
-
-		// 	const data = await response.json();
-
-		// 	if (data.error) {
-		// 		console.error('[Log Write]', data.error.message);
-		// 		return;
-		// 	}
-		// } catch (error) {
-		// 	console.error('[Log Write]', error);
-		// }
+		try {
+      const response = await fetch('/api/database');
+      const data = await response;
+      console.log(data);
+    } catch (error: any) {
+      console.error('Error fetching data:', error.message);
+    }
 	}
 
 	function deleteSelectedLogs() {
