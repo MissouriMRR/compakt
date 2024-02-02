@@ -12,25 +12,14 @@ export const GET: RequestHandler = async () => {
   });
 
   try {
-    const parameters = ['id','"date"','location'];
+    const parameters = ['id','"date"','location','start_time','stop_time'];
     const query = `SELECT ${parameters.join(',')} FROM "compakt-logs" ORDER BY id LIMIT 50 OFFSET 0`;
     await client.connect();
-    const responseBody = await client.query(query);
+    const queryResponse = await client.query(query);
     client.end();
-    console.log(responseBody.rows)
-
-    return new Response(null, {
-      status: 200
-    });
+    return new Response(JSON.stringify(queryResponse.rows, null, 2));
   } catch (error) {
     console.error('Error connecting to the database:', error);
-    
-    const responseBody = 'Error connecting to the database';
-    const responseHeaders = new Headers({ 'Content-Type': 'text/plain' });
-
-    return new Response(responseBody, {
-      status: 500,
-      headers: responseHeaders,
-    });
+    return new Response(null, {status: 500});
   }
 };

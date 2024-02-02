@@ -5,6 +5,7 @@
 	import type { FlightLog, VisualProperties } from '$lib/structs';
 	import { onMount } from 'svelte';
 
+	let logArray = [] as FlightLog[];
 	const logVisualProps = {
 		expanded: false,
 		selected: false,
@@ -12,7 +13,7 @@
 
 	async function addNewLog() {
 		const newLog = {
-			index: $LogList.length,
+			id: logArray.length,
 			date: $FlightRecord.flightDate,
 			location: $FlightRecord.location,
 			startTime: $FlightRecord.flightStartTime,
@@ -28,14 +29,20 @@
 			remoteID: $FlightRecord.remoteID,
 			vProps: {...logVisualProps},
 		} as FlightLog;
-		$LogList = [...$LogList, newLog]; // For svelte reactivity
+		logArray = [...logArray, newLog]; // For svelte reactivity
 	}
 
 	async function init() {
 		try {
 			const response = await fetch('/api/database');
-			const data = await response;
-			console.log(data);
+			const data = await response.json();
+			for(const row of data) {
+				logArray.push({
+					...row,
+					vProps: {...logVisualProps}
+				})
+			}
+			logArray = logArray;
 		} catch (error: any) {
 			console.error('Error fetching data:', error.message);
 		}
@@ -49,26 +56,26 @@
 
 		const flightLogsNext = [];
 
-		for (const log of $LogList) {
+		for (const log of logArray) {
 			if (!log.vProps.selected) {
 				flightLogsNext.push({
 					...log,
-					index: flightLogsNext.length
+					id: flightLogsNext.length
 				});
 			}
 		}
 
-		$LogList = [...flightLogsNext];
+		logArray = [...flightLogsNext];
 	}
 
 	function exportSelectedLogs() {
 		const flightLogsExport = [];
 
-		for (const log of $LogList) {
+		for (const log of logArray) {
 			if (!log.vProps.selected) continue;
 			const logEntry = {
 				...log,
-				index: flightLogsExport.length
+				id: flightLogsExport.length
 			} as FlightLog;
 			flightLogsExport.push(logEntry);
 		}
@@ -77,7 +84,7 @@
 	}
 
 	function toggleExpansion(index: number) {
-		$LogList[index].vProps.expanded = !$LogList[index].vProps.expanded;
+		logArray[index].vProps.expanded = !logArray[index].vProps.expanded;
 	}
 
 	onMount(() => init());
@@ -98,7 +105,7 @@
 		</span>
 	</div>
 	<div id="logs-container">
-		{#each $LogList as log, i (log.index)}
+		{#each logArray as log, i (log.id)}
 			<div class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.date}</span>

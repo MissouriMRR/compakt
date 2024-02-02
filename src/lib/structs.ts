@@ -24,7 +24,7 @@ export interface FlightData {
 }
 
 export interface FlightLog {
-	index: number,
+	id: number,
 	date: string,
 	location: string,
 	startTime: string,
