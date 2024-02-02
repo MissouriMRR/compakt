@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
 	import { FlightRecord } from '$lib/stores';
-	import { LogList } from '$lib/stores';
 	import type { FlightLog, VisualProperties } from '$lib/structs';
 	import { onMount } from 'svelte';
 
