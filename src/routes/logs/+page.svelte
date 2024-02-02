@@ -28,6 +28,10 @@
 			remoteID: $FlightRecord.remoteID,
 			vProps: {...logVisualProps},
 		} as FlightLog;
+		await fetch('/api/database', {
+			method: "POST",
+			body: JSON.stringify(newLog)
+		});
 		logArray = [...logArray, newLog]; // For svelte reactivity
 	}
 
