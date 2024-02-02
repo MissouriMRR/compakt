@@ -3,7 +3,7 @@
 	import { FlightRecord } from '$lib/stores';
 	import { LogList } from '$lib/stores';
 	import type { FlightLog, VisualProperties } from '$lib/structs';
-	// import client from '$lib/database';
+	import { onMount } from 'svelte';
 
 	const logVisualProps = {
 		expanded: false,
@@ -29,14 +29,16 @@
 			vProps: {...logVisualProps},
 		} as FlightLog;
 		$LogList = [...$LogList, newLog]; // For svelte reactivity
+	}
 
+	async function init() {
 		try {
-      const response = await fetch('/api/database');
-      const data = await response;
-      console.log(data);
-    } catch (error: any) {
-      console.error('Error fetching data:', error.message);
-    }
+			const response = await fetch('/api/database');
+			const data = await response;
+			console.log(data);
+		} catch (error: any) {
+			console.error('Error fetching data:', error.message);
+		}
 	}
 
 	function deleteSelectedLogs() {
@@ -77,6 +79,8 @@
 	function toggleExpansion(index: number) {
 		$LogList[index].vProps.expanded = !$LogList[index].vProps.expanded;
 	}
+
+	onMount(() => init());
 </script>
 
 <div id="flightform">

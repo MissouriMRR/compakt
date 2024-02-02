@@ -12,16 +12,15 @@ export const GET: RequestHandler = async () => {
   });
 
   try {
+    const parameters = ['id','"date"','location'];
+    const query = `SELECT ${parameters.join(',')} FROM "compakt-logs" ORDER BY id LIMIT 50 OFFSET 0`;
     await client.connect();
-    console.log('Connected to PostgreSQL database!');
+    const responseBody = await client.query(query);
     client.end();
+    console.log(responseBody.rows)
 
-    const responseBody = 'Connected to PostgreSQL database!';
-    const responseHeaders = new Headers({ 'Content-Type': 'text/plain' });
-
-    return new Response(responseBody, {
-      status: 200,
-      headers: responseHeaders,
+    return new Response(null, {
+      status: 200
     });
   } catch (error) {
     console.error('Error connecting to the database:', error);
