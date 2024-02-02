@@ -199,12 +199,6 @@
 		justify-content: center;
 		width: 50%;
 	}
-	#required-text {
-		color: red;
-		font-style: italic;
-		text-align: center;
-		-webkit-text-stroke: 0.5px black;
-	}
 	label {
 		margin-bottom: 1ch;
 		text-decoration: underline;
@@ -231,6 +225,8 @@
 		flex-direction: column;
 		justify-content: center;
 		margin: 0 10;
+		-webkit-text-stroke-color: rgb(0, 0, 0);
+		-webkit-text-stroke-width: .25px;
 	}
 	.data-field {
 		align-items: center;
@@ -260,7 +256,7 @@
 		justify-content: center;
 	}
 	.weather-label {
-		font-size: 16;
+		font-size: 18px;
 		font-weight: 'bold';
 	}
 	.temperature-container {
