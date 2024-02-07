@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { FlightRecord, InfoVisible } from '$lib/stores';
 	import type { FlightData, WeatherData } from '$lib/structs';
 
@@ -158,6 +159,7 @@
 		</div>
 	</form>
 </div>
+
 
 <style>
 	#info-container {

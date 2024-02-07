@@ -97,12 +97,12 @@
 	<h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
 	<div id="logs-action-container">
 		<span id="logs-action-button">
-			<button on:click={deleteSelectedLogs}>
+			<button on:click={deleteSelectedLogs} style="background-color:crimson; border-radius:10px; border-color:crimson;">
 				<span id="delete-logs-text">Delete Selected Logs</span>
 			</button>
 		</span>
 		<span id="logs-action-button">
-			<button on:click={exportSelectedLogs}>
+			<button on:click={exportSelectedLogs} style="background-color:cornflowerblue; border-radius:10px; border-color:cornflowerblue;">
 				<span id="export-logs-text">Export Selected Logs</span>
 			</button>
 		</span>
@@ -199,17 +199,17 @@
 		position: absolute;
 	}
 	#logs-action-button {
-		margin: 5px;
-		width: 100px;
+		margin: 7px;
+		width: 120px;
 	}
 	#delete-logs-text {
-		color: red;
+		color: white;
 		font-family: Proxima;
-		font-weight: bold;
+		font-weight: bolder;
 	}
 	#export-logs-text {
-		color: blue;
+		color: white;
 		font-family: Proxima;
-		font-weight: bold;
+		font-weight: bolder;
 	}
 </style>
