@@ -95,7 +95,7 @@
 			<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
 			<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
 		{/if}
-		<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? '˄' : '˅'}</button>
+		<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? '↑' : '↓'}</button>
 	</div>
 
 	<form id="flight-form">
