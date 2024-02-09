@@ -181,11 +181,10 @@
 					<input class="field-entree" id="remote-id" type="text" bind:value={$FlightRecord.remoteID} />
 				</div>
 			</div>
-		</div>
+		<h1>
+			<button on:click={addNewLog} id="add-log-button" style="background-color: rgb(65, 188, 94);">Add New Log</button>
+		</h1>
 	</form>
-	<h4 style="text-align: center;">
-		<button on:click={addNewLog}>Add New Log</button>
-	</h4>
 </div>
 
 
@@ -206,6 +205,10 @@
 		padding-left: 5em;
 		padding-right: 5em;
 		white-space: normal;
+	}
+	#add-log-button {
+		border-radius: 10px;
+		text-align: center;
 	}
 	button#info-close {
 		background-color: transparent;
