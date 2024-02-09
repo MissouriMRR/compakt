@@ -41,7 +41,12 @@ export interface FlightLog {
 	vProps: VisualProperties
 }
 
-export interface VisualProperties {
+interface VisualProperties {
 	expanded: boolean,
 	selected: boolean,
 }
+
+export const LogVisualProps = {
+  expanded: false,
+  selected: false,
+} as VisualProperties;

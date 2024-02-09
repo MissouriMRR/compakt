@@ -1,55 +1,8 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
-	import { FlightRecord } from '$lib/stores';
-	import type { FlightLog, VisualProperties } from '$lib/structs';
+	import type { FlightLog } from '$lib/structs';
+	import { LogArray } from '$lib/stores';
 	import { onMount } from 'svelte';
-
-	let logArray = [] as FlightLog[];
-	const logVisualProps = {
-		expanded: false,
-		selected: false,
-	} as VisualProperties;
-
-	async function addNewLog() {
-		const newLog = {
-			id: logArray.length,
-			date: $FlightRecord.flightDate,
-			location: $FlightRecord.location,
-			startTime: $FlightRecord.flightStartTime,
-			stopTime: $FlightRecord.flightStopTime,
-			tempF: $FlightRecord.weather?.temperatureF,
-			tempC: $FlightRecord.weather?.temperatureC,
-			windSpeed: $FlightRecord.weather?.windSpeedMPH,
-			windDirection: $FlightRecord.weather?.windDirection,
-			windDegree: $FlightRecord.weather?.windDegree,
-			gustSpeed: $FlightRecord.weather?.gustSpeedMPH,
-			humidity: $FlightRecord.weather?.humidity,
-			pilotID: $FlightRecord.pilotID,
-			remoteID: $FlightRecord.remoteID,
-			vProps: {...logVisualProps},
-		} as FlightLog;
-		await fetch('/api/database', {
-			method: "POST",
-			body: JSON.stringify(newLog)
-		});
-		logArray = [...logArray, newLog]; // For svelte reactivity
-	}
-
-	async function init() {
-		try {
-			const response = await fetch('/api/database');
-			const data = await response.json();
-			for(const row of data) {
-				logArray.push({
-					...row,
-					vProps: {...logVisualProps}
-				})
-			}
-			logArray = logArray;
-		} catch (error: any) {
-			console.error('Error fetching data:', error.message);
-		}
-	}
 
 	function deleteSelectedLogs() {
 		const confirmation = confirm(
@@ -59,7 +12,7 @@
 
 		const flightLogsNext = [];
 
-		for (const log of logArray) {
+		for (const log of $LogArray) {
 			if (!log.vProps.selected) {
 				flightLogsNext.push({
 					...log,
@@ -68,13 +21,13 @@
 			}
 		}
 
-		logArray = [...flightLogsNext];
+		$LogArray = [...flightLogsNext];
 	}
 
 	function exportSelectedLogs() {
 		const flightLogsExport = [];
 
-		for (const log of logArray) {
+		for (const log of $LogArray) {
 			if (!log.vProps.selected) continue;
 			const logEntry = {
 				...log,
@@ -87,28 +40,24 @@
 	}
 
 	function toggleExpansion(index: number) {
-		logArray[index].vProps.expanded = !logArray[index].vProps.expanded;
+		$LogArray[index].vProps.expanded = !$LogArray[index].vProps.expanded;
 	}
 
-	onMount(() => init());
+	onMount(() => {console.log($LogArray)});
 </script>
 
 <div id="flightform">
 	<h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
 	<div id="logs-action-container">
-		<span id="logs-action-button">
-			<button on:click={deleteSelectedLogs} style="background-color:crimson; border-radius:10px; border-color:crimson;">
-				<span id="delete-logs-text">Delete Selected Logs</span>
-			</button>
-		</span>
-		<span id="logs-action-button">
-			<button on:click={exportSelectedLogs} style="background-color:cornflowerblue; border-radius:10px; border-color:cornflowerblue;">
-				<span id="export-logs-text">Export Selected Logs</span>
-			</button>
-		</span>
+		<button on:click={deleteSelectedLogs} id="logs-action-button" style="background-color: crimson; border-color: crimson;">
+			<span id="delete-logs-text">Delete Selected Logs</span>
+		</button>
+		<button on:click={exportSelectedLogs} id="logs-action-button" style="background-color: cornflowerblue; border-color: cornflowerblue;">
+			<span id="export-logs-text">Export Selected Logs</span>
+		</button>
 	</div>
 	<div id="logs-container">
-		{#each logArray as log, i (log.id)}
+		{#each $LogArray as log, i (log.id)}
 			<div class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.date}</span>
@@ -146,9 +95,6 @@
 			</div>
 		{/each}
 	</div>
-	<h4 style="text-align: center;">
-		<button on:click={addNewLog}>Add New Log</button>
-	</h4>
 </div>
 
 <style>
@@ -199,6 +145,7 @@
 		position: absolute;
 	}
 	#logs-action-button {
+		border-radius: 10px;
 		margin: 7px;
 		width: 120px;
 	}

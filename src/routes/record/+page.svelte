@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { FlightRecord, InfoVisible } from '$lib/stores';
-	import type { FlightData, WeatherData } from '$lib/structs';
+	import { FlightRecord, InfoVisible, LogArray } from '$lib/stores';
+	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
+	import { LogVisualProps } from '$lib/structs';
 
 	const DEFAULT_LOC = 'Rolla, MO';
 
@@ -11,6 +11,31 @@
 			location: DEFAULT_LOC,
 			flightDate: extractDate(new Date())
 		} as FlightData;
+	}
+
+	async function addNewLog() {
+		const newLog = {
+			id: $LogArray.length,
+			date: $FlightRecord.flightDate,
+			location: $FlightRecord.location,
+			startTime: $FlightRecord.flightStartTime,
+			stopTime: $FlightRecord.flightStopTime,
+			tempF: $FlightRecord.weather?.temperatureF,
+			tempC: $FlightRecord.weather?.temperatureC,
+			windSpeed: $FlightRecord.weather?.windSpeedMPH,
+			windDirection: $FlightRecord.weather?.windDirection,
+			windDegree: $FlightRecord.weather?.windDegree,
+			gustSpeed: $FlightRecord.weather?.gustSpeedMPH,
+			humidity: $FlightRecord.weather?.humidity,
+			pilotID: $FlightRecord.pilotID,
+			remoteID: $FlightRecord.remoteID,
+			vProps: {...LogVisualProps},
+		} as FlightLog;
+		// await fetch('/api/database', {
+		// 	method: "POST",
+		// 	body: JSON.stringify(newLog)
+		// });
+		$LogArray = [...$LogArray, newLog]; // For svelte reactivity
 	}
 
 	async function loadWeatherData() {
@@ -158,6 +183,9 @@
 			</div>
 		</div>
 	</form>
+	<h4 style="text-align: center;">
+		<button on:click={addNewLog}>Add New Log</button>
+	</h4>
 </div>
 
 
