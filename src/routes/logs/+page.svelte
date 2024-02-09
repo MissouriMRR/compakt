@@ -43,6 +43,10 @@
 		$LogArray[index].vProps.expanded = !$LogArray[index].vProps.expanded;
 	}
 
+	function chronologicSort(logs: FlightLog[]) {
+		return logs.toReversed();
+	}
+
 	onMount(() => {
 		console.log($LogArray);
 	});
@@ -67,7 +71,7 @@
 		</button>
 	</div>
 	<div id="logs-container">
-		{#each $LogArray as log, i (log.id)}
+		{#each chronologicSort($LogArray) as log, i (log.id)}
 			<div class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.date}</span>
