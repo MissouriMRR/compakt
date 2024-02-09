@@ -2,7 +2,6 @@
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
-	import { onMount } from 'svelte';
 
 	function deleteSelectedLogs() {
 		const confirmation = confirm(
@@ -39,17 +38,18 @@
 		CsvDataService.exportToCsv('log_data.csv', flightLogsExport);
 	}
 
-	function toggleExpansion(index: number) {
-		$LogArray[index].vProps.expanded = !$LogArray[index].vProps.expanded;
+	function toggleExpansion(id: number) {
+		for(let i = 0; i < $LogArray.length; i++) {
+			if($LogArray[i].id === id) {
+				$LogArray[i].vProps.expanded = !$LogArray[i].vProps.expanded;
+				break;
+			}
+		}
 	}
 
-	function chronologicSort(logs: FlightLog[]) {
-		return logs.toReversed();
+	function chronologicSort(logArray: FlightLog[]) {
+		return logArray.toReversed();
 	}
-
-	onMount(() => {
-		console.log($LogArray);
-	});
 </script>
 
 <div id="flightform">
@@ -71,7 +71,7 @@
 		</button>
 	</div>
 	<div id="logs-container">
-		{#each chronologicSort($LogArray) as log, i (log.id)}
+		{#each chronologicSort($LogArray) as log (log.id)}
 			<div class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.date}</span>
@@ -79,7 +79,7 @@
 					<span>Start Time: {log.startTime}</span>
 					<span>End Time: {log.stopTime}</span>
 					<div id="button">
-						<button on:click={() => toggleExpansion(i)} class="expand-button">
+						<button on:click={() => toggleExpansion(log.id)} class="expand-button">
 							{log.vProps.expanded ? 'Collapse' : 'Expand'}
 						</button>
 						<input id="select-checkbox" type="checkbox" bind:checked={log.vProps.selected} />
