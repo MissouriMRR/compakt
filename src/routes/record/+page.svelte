@@ -99,10 +99,10 @@
 	</div>
 
 	<form id="flight-form">
-		<h2>Flight Information</h2>
+		<h2 style="font-size: 40px;">Flight Information</h2>
 		<!-- <h3 id="required-text">* Required</h3> -->
 		<h6>Enter your location to fetch weather data</h6>
-		<h3>Location</h3>
+		<h2>Location</h2>
 		<div class="form-section">
 			<div class="data-field">
 				<label for="location">City</label>
@@ -138,8 +138,8 @@
 			</div>
 		{/if}
 
-		<h3>Time & Date</h3>
 		<div class="form-section">
+			<h2>Time & Date</h2>
 			<div class="data-field">
 				<label for="date">Date</label>
 				<div class="field-container">
@@ -177,8 +177,8 @@
 			</div>
 		</div>
 
-		<h3>Flight IDs</h3>
 		<div class="form-section">
+			<h2 style="margin-bottom:20px">Flight IDs</h2>
 			<div class="data-field">
 				<label for="pilot-id">Pilot ID</label>
 				<div class="field-container">
@@ -202,7 +202,7 @@
 				</div>
 			</div>
 			<h1>
-				<button on:click={addNewLog} id="add-log-button" style="background-color: rgb(65, 188, 94);"
+				<button on:click={addNewLog} id="add-log-button"
 					>Add New Log</button
 				>
 			</h1>
@@ -229,8 +229,12 @@
 		white-space: normal;
 	}
 	#add-log-button {
-		border-radius: 10px;
+		border-radius: 100px;
+		font-weight: bold;
+		font-size: 20px;
+		height: 40px;
 		text-align: center;
+		width: 150px;
 	}
 	button#info-close {
 		background-color: transparent;
@@ -280,6 +284,7 @@
 		flex-direction: column;
 		justify-content: center;
 		margin: 0 10;
+		margin-top: 30px;
 		-webkit-text-stroke-color: rgb(0, 0, 0);
 		-webkit-text-stroke-width: 0.25px;
 	}
