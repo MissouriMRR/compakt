@@ -7,11 +7,11 @@
 		try {
 			const response = await fetch('/api/database');
 			const data = await response.json();
-			for(const row of data) {
+			for (const row of data) {
 				$LogArray.push({
 					...row,
-					vProps: {...LogVisualProps}
-				})
+					vProps: { ...LogVisualProps }
+				});
 			}
 		} catch (error: any) {
 			console.error('Error fetching data:', error.message);

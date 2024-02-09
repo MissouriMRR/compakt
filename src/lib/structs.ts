@@ -24,29 +24,29 @@ export interface FlightData {
 }
 
 export interface FlightLog {
-	id: number,
-	date: string,
-	location: string,
-	startTime: string,
-	stopTime: string,
-	tempF?: string,
-	tempC?: string,
-	windSpeed?: string,
-	windDirection?: string,
-	windDegree?: string,
-	gustSpeed?: string,
-	humidity?: string,
-	pilotID?: string,
-	remoteID?: string,
-	vProps: VisualProperties
+	id: number;
+	date: string;
+	location: string;
+	startTime: string;
+	stopTime: string;
+	tempF?: string;
+	tempC?: string;
+	windSpeed?: string;
+	windDirection?: string;
+	windDegree?: string;
+	gustSpeed?: string;
+	humidity?: string;
+	pilotID?: string;
+	remoteID?: string;
+	vProps: VisualProperties;
 }
 
 interface VisualProperties {
-	expanded: boolean,
-	selected: boolean,
+	expanded: boolean;
+	selected: boolean;
 }
 
 export const LogVisualProps = {
-  expanded: false,
-  selected: false,
+	expanded: false,
+	selected: false
 } as VisualProperties;

@@ -43,16 +43,26 @@
 		$LogArray[index].vProps.expanded = !$LogArray[index].vProps.expanded;
 	}
 
-	onMount(() => {console.log($LogArray)});
+	onMount(() => {
+		console.log($LogArray);
+	});
 </script>
 
 <div id="flightform">
 	<h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
 	<div id="logs-action-container">
-		<button on:click={deleteSelectedLogs} id="logs-action-button" style="background-color: crimson; border-color: crimson;">
+		<button
+			on:click={deleteSelectedLogs}
+			id="logs-action-button"
+			style="background-color: crimson; border-color: crimson;"
+		>
 			<span id="delete-logs-text">Delete Selected Logs</span>
 		</button>
-		<button on:click={exportSelectedLogs} id="logs-action-button" style="background-color: cornflowerblue; border-color: cornflowerblue;">
+		<button
+			on:click={exportSelectedLogs}
+			id="logs-action-button"
+			style="background-color: cornflowerblue; border-color: cornflowerblue;"
+		>
 			<span id="export-logs-text">Export Selected Logs</span>
 		</button>
 	</div>
@@ -68,11 +78,7 @@
 						<button on:click={() => toggleExpansion(i)} class="expand-button">
 							{log.vProps.expanded ? 'Collapse' : 'Expand'}
 						</button>
-						<input
-							id="select-checkbox"
-							type="checkbox"
-							bind:checked={log.vProps.selected}
-						/>
+						<input id="select-checkbox" type="checkbox" bind:checked={log.vProps.selected} />
 					</div>
 				</div>
 				{#if log.vProps.expanded}

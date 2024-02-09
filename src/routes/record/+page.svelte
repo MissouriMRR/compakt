@@ -29,7 +29,7 @@
 			humidity: $FlightRecord.weather?.humidity,
 			pilotID: $FlightRecord.pilotID,
 			remoteID: $FlightRecord.remoteID,
-			vProps: {...LogVisualProps},
+			vProps: { ...LogVisualProps }
 		} as FlightLog;
 		// await fetch('/api/database', {
 		// 	method: "POST",
@@ -107,8 +107,18 @@
 			<div class="data-field">
 				<label for="location">City</label>
 				<div class="field-container">
-					<input class="field-entree" id="location" type="text" bind:value={$FlightRecord.location} />
-					<input class="field-button" type="button" value="Get Weather" on:click={loadWeatherData} />
+					<input
+						class="field-entree"
+						id="location"
+						type="text"
+						bind:value={$FlightRecord.location}
+					/>
+					<input
+						class="field-button"
+						type="button"
+						value="Get Weather"
+						on:click={loadWeatherData}
+					/>
 				</div>
 			</div>
 		</div>
@@ -160,7 +170,7 @@
 						type="time"
 						id="time-end"
 						value={$FlightRecord.flightStopTime || ''}
-						step=1
+						step="1"
 					/>
 					<button class="field-button" on:click={() => updateEnd(new Date())}>Now</button>
 				</div>
@@ -172,21 +182,33 @@
 			<div class="data-field">
 				<label for="pilot-id">Pilot ID</label>
 				<div class="field-container">
-					<input class="field-entree" id="pilot-id" type="text" bind:value={$FlightRecord.pilotID} />
+					<input
+						class="field-entree"
+						id="pilot-id"
+						type="text"
+						bind:value={$FlightRecord.pilotID}
+					/>
 				</div>
 			</div>
 			<div class="data-field">
 				<label for="remote-id">Remote ID</label>
 				<div class="field-container">
-					<input class="field-entree" id="remote-id" type="text" bind:value={$FlightRecord.remoteID} />
+					<input
+						class="field-entree"
+						id="remote-id"
+						type="text"
+						bind:value={$FlightRecord.remoteID}
+					/>
 				</div>
 			</div>
-		<h1>
-			<button on:click={addNewLog} id="add-log-button" style="background-color: rgb(65, 188, 94);">Add New Log</button>
-		</h1>
+			<h1>
+				<button on:click={addNewLog} id="add-log-button" style="background-color: rgb(65, 188, 94);"
+					>Add New Log</button
+				>
+			</h1>
+		</div>
 	</form>
 </div>
-
 
 <style>
 	#info-container {
@@ -259,7 +281,7 @@
 		justify-content: center;
 		margin: 0 10;
 		-webkit-text-stroke-color: rgb(0, 0, 0);
-		-webkit-text-stroke-width: .25px;
+		-webkit-text-stroke-width: 0.25px;
 	}
 	.data-field {
 		align-items: center;
