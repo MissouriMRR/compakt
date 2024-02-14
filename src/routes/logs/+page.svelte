@@ -52,8 +52,8 @@
 	}
 </script>
 
-<div id="flightform">
-	<h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
+<div>
+	<h1>Flight Logs</h1>
 	<div id="logs-action-container">
 		<button
 			on:click={deleteSelectedLogs}
@@ -72,17 +72,17 @@
 	</div>
 	<div id="logs-container">
 		{#each chronologicSort($LogArray) as log (log.id)}
-			<div class="flight-log">
+			<div id={`${log.id}`} class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.flight_date}</span>
 					<span>Location: {log.location}</span>
 					<span>Start Time: {log.start_time}</span>
 					<span>End Time: {log.stop_time}</span>
-					<div id="button">
+					<div class="log-action-container">
 						<button on:click={() => toggleExpansion(log.id)} class="expand-button">
 							{log.v_props.expanded ? 'Collapse' : 'Expand'}
 						</button>
-						<input id="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
+						<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
 					</div>
 				</div>
 				{#if log.v_props.expanded}
@@ -108,12 +108,17 @@
 </div>
 
 <style>
+	h1 {
+		text-align: center;
+		font-family: "Proxima";
+		font-weight: bolder;
+	}
 	#logs-container {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 	}
-	#button {
+	.log-action-container {
 		margin-left: 1ch;
 	}
 	.flight-log {
@@ -140,7 +145,7 @@
 	.flight-log span {
 		flex: 1;
 	}
-	#select-checkbox {
+	.select-checkbox {
 		height: 2em;
 		margin-left: 2ch;
 		text-align: center;
