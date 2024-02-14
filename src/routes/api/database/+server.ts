@@ -64,7 +64,10 @@ export const POST: RequestHandler = async (ev) => {
 
 export const DELETE: RequestHandler = async (ev) => {
 	const query_data = await ev.request.json();
-	console.log(query_data);
+
+	if(query_data.length === 0) {
+		return new Response(null, { status: 200 });
+	}
 
 	const client = new Client({
 		user: 'postgres',
