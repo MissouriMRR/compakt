@@ -48,10 +48,9 @@ export const POST: RequestHandler = async (ev) => {
 		password: env.DATABASE_PASS,
 		port: 5432
 	});
+	const query = `INSERT INTO "compakt-logs" (${query_keys.join(',')}) VALUES (${query_values.join(',')})`;
 
 	try {
-		const query = `INSERT INTO "compakt-logs" (${query_keys.join(',')}) VALUES (${query_values.join(',')})`;
-		console.log(query);
 		await client.connect();
 		const queryResponse = await client.query(query);
 		client.end();
@@ -61,3 +60,28 @@ export const POST: RequestHandler = async (ev) => {
 		return new Response(null, { status: 500 });
 	}
 };
+
+
+export const DELETE: RequestHandler = async (ev) => {
+	const query_data = await ev.request.json();
+	console.log(query_data);
+
+	const client = new Client({
+		user: 'postgres',
+		host: 'localhost',
+		database: 'compakt',
+		password: env.DATABASE_PASS,
+		port: 5432
+	});
+	const query = `DELETE FROM "compakt-logs" WHERE id IN (${query_data.join(',')})`;
+
+	try {
+		await client.connect();
+		const queryResponse = await client.query(query);
+		client.end();
+		return new Response(JSON.stringify(queryResponse.rows, null, 2));
+	} catch (error) {
+		console.error('Error connecting to the database:', error);
+		return new Response(null, { status: 500 });
+	}
+}

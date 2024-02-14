@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { LogVisualProps } from '$lib/structs';
+	import type { FlightLog } from '$lib/structs';
 	import { onMount } from 'svelte';
 	import { LogArray, Init } from '$lib/stores';
 
@@ -11,10 +12,25 @@
 			const response = await fetch('/api/database');
 			const data = await response.json();
 			for (const row of data) {
-				$LogArray.push({
-					...row,
+				const newLog = {
+					id: parseInt(row.id),
+					flight_date: row.flight_date,
+					location: row.location,
+					start_time: row.start_time,
+					stop_time: row.stop_time,
+					temp_f: parseFloat(row.temp_f),
+					temp_c: parseFloat(row.temp_c),
+					wind_speed: parseFloat(row.wind_speed),
+					wind_direction: row.wind_direction,
+					wind_degree: parseFloat(row.wind_degree),
+					gust_speed: parseFloat(row.gust_speed),
+					humidity: parseFloat(row.humidity),
+					pilot_id: row.pilot_id,
+					remote_id: row.remote_id,
 					v_props: { ...LogVisualProps }
-				});
+				} as FlightLog;
+
+				$LogArray.push(newLog);
 			}
 		} catch (error: any) {
 			console.error('Error fetching data:', error.message);

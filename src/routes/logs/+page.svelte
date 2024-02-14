@@ -3,13 +3,14 @@
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
 
-	function deleteSelectedLogs() {
+	async function deleteSelectedLogs() {
 		const confirmation = confirm(
 			'Are you sure you want to delete these logs? They cannot be recovered.'
 		);
 		if (!confirmation) return;
 
 		const flightLogsNext = [];
+		const deletedIds = [];
 
 		for (const log of $LogArray) {
 			if (!log.v_props.selected) {
@@ -17,8 +18,18 @@
 					...log,
 					id: flightLogsNext.length
 				});
+			} else {
+				deletedIds.push(log.id);
 			}
 		}
+
+		await fetch('/api/database', {
+			method: "DELETE",
+			body: JSON.stringify(deletedIds),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		});
 
 		$LogArray = [...flightLogsNext];
 	}
