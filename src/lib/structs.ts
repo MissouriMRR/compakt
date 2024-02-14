@@ -1,44 +1,42 @@
 export interface WeatherData {
 	condition: string;
 	icon: string;
-	temperatureF: number;
-	temperatureC: number;
-	windSpeedMPH: number;
-	windDirection: string;
-	windDegree: number;
-	gustSpeedMPH: number;
+	temp_f: number;
+	temp_c: number;
+	wind_speed: number;
+	wind_direction: string;
+	wind_degree: number;
+	gust_speed: number;
 	humidity: number;
-	indexNumber: number;
 }
 
 export interface FlightData {
 	initialized: boolean;
 	location?: string;
-	flightDate?: string;
-	flightStartTime?: string;
-	flightStopTime?: string;
+	flight_date?: string;
+	start_time?: string;
+	stop_time?: string;
 	weather?: WeatherData;
-	pilotID?: number;
-	remoteID?: string;
-	indexNumber: number;
+	pilot_id?: number;
+	remote_id?: string;
 }
 
 export interface FlightLog {
 	id: number;
-	date: string;
+	flight_date: string;
 	location: string;
-	startTime: string;
-	stopTime: string;
-	tempF?: string;
-	tempC?: string;
-	windSpeed?: string;
-	windDirection?: string;
-	windDegree?: string;
-	gustSpeed?: string;
-	humidity?: string;
-	pilotID?: string;
-	remoteID?: string;
-	vProps: VisualProperties;
+	start_time: string;
+	stop_time: string;
+	temp_f?: number;
+	temp_c?: number;
+	wind_speed?: number;
+	wind_direction?: string;
+	wind_degree?: number;
+	gust_speed?: number;
+	humidity?: number;
+	pilot_id?: string;
+	remote_id?: string;
+	v_props: VisualProperties;
 }
 
 interface VisualProperties {

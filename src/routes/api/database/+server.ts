@@ -12,10 +12,8 @@ export const GET: RequestHandler = async () => {
 	});
 
 	try {
-		const parameters = ['id', '"date"', 'location', 'start_time', 'stop_time'];
-		const query = `SELECT ${parameters.join(
-			','
-		)} FROM "compakt-logs" ORDER BY id LIMIT 50 OFFSET 0`;
+		const parameters = ['id', 'flight_date', 'location', 'start_time', 'stop_time'];
+		const query = `SELECT ${parameters.join(',')} FROM "compakt-logs" ORDER BY id LIMIT 50 OFFSET 0`;
 		await client.connect();
 		const queryResponse = await client.query(query);
 		client.end();
@@ -27,24 +25,22 @@ export const GET: RequestHandler = async () => {
 };
 
 export const POST: RequestHandler = async (ev) => {
-	const {
-		id,
-		date,
-		location,
-		startTime,
-		stopTime,
-		tempF,
-		tempC,
-		windSpeed,
-		windDirection,
-		windDegree,
-		gustSpeed,
-		humidity,
-		pilotID,
-		remoteID
-	} = await ev.request.json();
+	const query_data = await ev.request.json();
+	const query_keys = [];
+	const query_values = [];
 
-	const N = 'null';
+	for(const [key, value] of Object.entries(query_data)) {
+		if(value === null || value === undefined || key == "v_props") continue;
+		const str_value = `'${(value)}'`;
+		query_keys.push(key);
+
+		if(['flight_date','location','start_time','stop_time','wind_direction','pilot_id','remote_id'].includes(key)) {
+			query_values.push(str_value);
+		} else {
+			query_values.push(value);
+		}
+	}
+
 	const client = new Client({
 		user: 'postgres',
 		host: 'localhost',
@@ -54,39 +50,7 @@ export const POST: RequestHandler = async (ev) => {
 	});
 
 	try {
-		const keys = [
-			'id',
-			'date',
-			'location',
-			'start_time',
-			'stop_time',
-			'temp_f',
-			'temp_c',
-			'wind_speed',
-			'wind_direction',
-			'wind_degree',
-			'gust_speed',
-			'humidity',
-			'pilot_id',
-			'remote_id'
-		];
-		const values = [
-			id,
-			date || N,
-			location || N,
-			startTime || N,
-			stopTime || N,
-			tempF || N,
-			tempC || N,
-			windSpeed || N,
-			windDirection || N,
-			windDegree || N,
-			gustSpeed || N,
-			humidity || N,
-			pilotID || N,
-			remoteID || N
-		];
-		const query = `INSERT INTO "compakt-logs"(${keys.join(',')}) VALUES(${values.join(',')})`;
+		const query = `INSERT INTO "compakt-logs" (${query_keys.join(',')}) VALUES (${query_values.join(',')})`;
 		console.log(query);
 		await client.connect();
 		const queryResponse = await client.query(query);

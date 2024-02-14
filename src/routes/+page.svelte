@@ -1,16 +1,19 @@
 <script lang="ts">
 	import { LogVisualProps } from '$lib/structs';
 	import { onMount } from 'svelte';
-	import { LogArray } from '$lib/stores';
+	import { LogArray, Init } from '$lib/stores';
 
 	async function init() {
+		if($Init) return;
+		$Init = true;
+
 		try {
 			const response = await fetch('/api/database');
 			const data = await response.json();
 			for (const row of data) {
 				$LogArray.push({
 					...row,
-					vProps: { ...LogVisualProps }
+					v_props: { ...LogVisualProps }
 				});
 			}
 		} catch (error: any) {

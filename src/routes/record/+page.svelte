@@ -9,32 +9,35 @@
 		$FlightRecord = {
 			initialized: true,
 			location: DEFAULT_LOC,
-			flightDate: extractDate(new Date())
+			flight_date: extractDate(new Date())
 		} as FlightData;
 	}
 
 	async function addNewLog() {
 		const newLog = {
 			id: $LogArray.length,
-			date: $FlightRecord.flightDate,
+			flight_date: $FlightRecord.flight_date,
 			location: $FlightRecord.location,
-			startTime: $FlightRecord.flightStartTime,
-			stopTime: $FlightRecord.flightStopTime,
-			tempF: $FlightRecord.weather?.temperatureF,
-			tempC: $FlightRecord.weather?.temperatureC,
-			windSpeed: $FlightRecord.weather?.windSpeedMPH,
-			windDirection: $FlightRecord.weather?.windDirection,
-			windDegree: $FlightRecord.weather?.windDegree,
-			gustSpeed: $FlightRecord.weather?.gustSpeedMPH,
+			start_time: $FlightRecord.start_time,
+			stop_time: $FlightRecord.stop_time,
+			temp_f: $FlightRecord.weather?.temp_f,
+			temp_c: $FlightRecord.weather?.temp_c,
+			wind_speed: $FlightRecord.weather?.wind_speed,
+			wind_direction: $FlightRecord.weather?.wind_direction,
+			wind_degree: $FlightRecord.weather?.wind_degree,
+			gust_speed: $FlightRecord.weather?.gust_speed,
 			humidity: $FlightRecord.weather?.humidity,
-			pilotID: $FlightRecord.pilotID,
-			remoteID: $FlightRecord.remoteID,
-			vProps: { ...LogVisualProps }
+			pilot_id: $FlightRecord.pilot_id,
+			remote_id: $FlightRecord.remote_id,
+			v_props: { ...LogVisualProps }
 		} as FlightLog;
-		// await fetch('/api/database', {
-		// 	method: "POST",
-		// 	body: JSON.stringify(newLog)
-		// });
+		await fetch('/api/database', {
+			method: "POST",
+			body: JSON.stringify(newLog),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		});
 		$LogArray = [...$LogArray, newLog]; // For svelte reactivity
 	}
 
@@ -55,12 +58,12 @@
 			$FlightRecord.weather = {
 				condition: data.current.condition.text,
 				icon: data.current.condition.icon,
-				temperatureF: data.current.temp_f,
-				temperatureC: data.current.temp_c,
-				windSpeedMPH: data.current.wind_mph,
-				windDirection: data.current.wind_dir,
-				windDegree: data.current.wind_degree,
-				gustSpeedMPH: data.current.gust_mph,
+				temp_f: data.current.temp_f,
+				temp_c: data.current.temp_c,
+				wind_speed: data.current.wind_mph,
+				wind_direction: data.current.wind_dir,
+				wind_degree: data.current.wind_degree,
+				gust_speed: data.current.gust_mph,
 				humidity: data.current.humidity
 			} as WeatherData;
 		} catch (error) {
@@ -81,9 +84,9 @@
 	}
 
 	const toggleInfo = () => ($InfoVisible = !$InfoVisible);
-	const updateDate = (date: Date) => ($FlightRecord.flightDate = extractDate(date));
-	const updateStart = (time: Date) => ($FlightRecord.flightStartTime = extractTime(time));
-	const updateEnd = (time: Date) => ($FlightRecord.flightStopTime = extractTime(time));
+	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
+	const updateStart = (time: Date) => ($FlightRecord.start_time = extractTime(time));
+	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
 </script>
 
 <div id="form-container">
@@ -129,7 +132,7 @@
 				<p class="weather-label">Location: {$FlightRecord.location}</p>
 
 				<div class="temperature-container">
-					<p class="weather-label">Temperature: {$FlightRecord.weather.temperatureF + '°F'}</p>
+					<p class="weather-label">Temperature: {$FlightRecord.weather.temp_f + '°F'}</p>
 				</div>
 				<div class="section-container">
 					<span class="weather-label">Condition: {$FlightRecord.weather.condition}</span>
@@ -143,7 +146,7 @@
 			<div class="data-field">
 				<label for="date">Date</label>
 				<div class="field-container">
-					<input class="field-entree" id="date" type="date" value={$FlightRecord.flightDate} />
+					<input class="field-entree" id="date" type="date" value={$FlightRecord.flight_date} />
 					<button class="field-button" on:click={() => updateDate(new Date())}>Today</button>
 				</div>
 			</div>
@@ -155,7 +158,7 @@
 						class="field-entree"
 						type="time"
 						id="time-start"
-						value={$FlightRecord.flightStartTime || ''}
+						value={$FlightRecord.start_time || ''}
 						step="1"
 					/>
 					<button class="field-button" on:click={() => updateStart(new Date())}>Now</button>
@@ -169,7 +172,7 @@
 						class="field-entree"
 						type="time"
 						id="time-end"
-						value={$FlightRecord.flightStopTime || ''}
+						value={$FlightRecord.stop_time || ''}
 						step="1"
 					/>
 					<button class="field-button" on:click={() => updateEnd(new Date())}>Now</button>
@@ -186,7 +189,7 @@
 						class="field-entree"
 						id="pilot-id"
 						type="text"
-						bind:value={$FlightRecord.pilotID}
+						bind:value={$FlightRecord.pilot_id}
 					/>
 				</div>
 			</div>
@@ -197,7 +200,7 @@
 						class="field-entree"
 						id="remote-id"
 						type="text"
-						bind:value={$FlightRecord.remoteID}
+						bind:value={$FlightRecord.remote_id}
 					/>
 				</div>
 			</div>

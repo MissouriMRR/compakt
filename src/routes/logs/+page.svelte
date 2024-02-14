@@ -12,7 +12,7 @@
 		const flightLogsNext = [];
 
 		for (const log of $LogArray) {
-			if (!log.vProps.selected) {
+			if (!log.v_props.selected) {
 				flightLogsNext.push({
 					...log,
 					id: flightLogsNext.length
@@ -27,7 +27,7 @@
 		const flightLogsExport = [];
 
 		for (const log of $LogArray) {
-			if (!log.vProps.selected) continue;
+			if (!log.v_props.selected) continue;
 			const logEntry = {
 				...log,
 				id: flightLogsExport.length
@@ -41,7 +41,7 @@
 	function toggleExpansion(id: number) {
 		for(let i = 0; i < $LogArray.length; i++) {
 			if($LogArray[i].id === id) {
-				$LogArray[i].vProps.expanded = !$LogArray[i].vProps.expanded;
+				$LogArray[i].v_props.expanded = !$LogArray[i].v_props.expanded;
 				break;
 			}
 		}
@@ -74,31 +74,31 @@
 		{#each chronologicSort($LogArray) as log (log.id)}
 			<div class="flight-log">
 				<div class="expand-details">
-					<span>Date: {log.date}</span>
+					<span>Date: {log.flight_date}</span>
 					<span>Location: {log.location}</span>
-					<span>Start Time: {log.startTime}</span>
-					<span>End Time: {log.stopTime}</span>
+					<span>Start Time: {log.start_time}</span>
+					<span>End Time: {log.stop_time}</span>
 					<div id="button">
 						<button on:click={() => toggleExpansion(log.id)} class="expand-button">
-							{log.vProps.expanded ? 'Collapse' : 'Expand'}
+							{log.v_props.expanded ? 'Collapse' : 'Expand'}
 						</button>
-						<input id="select-checkbox" type="checkbox" bind:checked={log.vProps.selected} />
+						<input id="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
 					</div>
 				</div>
-				{#if log.vProps.expanded}
+				{#if log.v_props.expanded}
 					<div class="log-info">
 						<span>
-							<br />Temperature: {log.tempF}°F<br />
-							<br />Temperature: {log.tempC}°C<br />
-							<br />Wind Speed: {log.windSpeed}<br />
-							<br />Wind Direction: {log.windDirection}<br />
-							<br />Remote ID: {log.remoteID}<br />
+							<br />Temperature: {log.temp_f}°F<br />
+							<br />Temperature: {log.temp_c}°C<br />
+							<br />Wind Speed: {log.wind_speed}<br />
+							<br />Wind Direction: {log.wind_direction}<br />
+							<br />Remote ID: {log.remote_id}<br />
 						</span>
 						<span>
-							<br />Wind Degree: {log.windDegree}°<br />
-							<br />Gust Speed: {log.gustSpeed}<br />
+							<br />Wind Degree: {log.wind_degree}°<br />
+							<br />Gust Speed: {log.gust_speed}<br />
 							<br />Humidity: {log.humidity}<br />
-							<br />Pilot ID: {log.pilotID}<br />
+							<br />Pilot ID: {log.pilot_id}<br />
 						</span>
 					</div>
 				{/if}
