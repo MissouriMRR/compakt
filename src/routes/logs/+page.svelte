@@ -5,6 +5,16 @@
 	import { onMount } from 'svelte';
 
 	function deleteSelectedLogs() {
+		/**
+    		Deletes the selected logs from both the flight log page and subsequently the connected database
+
+            Parameters:
+					Selected logs
+
+            Returns:
+                    None
+	 	* 
+	 	*/
 		const confirmation = confirm(
 			'Are you sure you want to delete these logs? They cannot be recovered.'
 		);
@@ -25,6 +35,16 @@
 	}
 
 	function exportSelectedLogs() {
+		/**
+    		Exports the selected logs in a CSV file
+
+            Parameters:
+					Selected logs
+
+            Returns:
+                    None
+	 	* 
+	 	*/
 		const flightLogsExport = [];
 
 		for (const log of $LogArray) {
@@ -40,6 +60,10 @@
 	}
 
 	function toggleExpansion(index: number) {
+		/**
+    		Expands a flight log to show the full flight information
+	 	* 
+	 	*/
 		$LogArray[index].v_props.expanded = !$LogArray[index].v_props.expanded;
 	}
 
