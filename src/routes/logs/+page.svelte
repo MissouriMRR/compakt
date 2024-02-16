@@ -10,9 +10,6 @@
 
             Parameters:
 					Selected logs
-
-            Returns:
-                    None
 	 	* 
 	 	*/
 		const confirmation = confirm(
@@ -40,9 +37,6 @@
 
             Parameters:
 					Selected logs
-
-            Returns:
-                    None
 	 	* 
 	 	*/
 		const flightLogsExport = [];
