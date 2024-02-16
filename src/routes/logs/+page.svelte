@@ -2,15 +2,15 @@
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
+	import { onMount } from 'svelte';
 
-	async function deleteSelectedLogs() {
+	function deleteSelectedLogs() {
 		const confirmation = confirm(
 			'Are you sure you want to delete these logs? They cannot be recovered.'
 		);
 		if (!confirmation) return;
 
 		const flightLogsNext = [];
-		const deletedIds = [];
 
 		for (const log of $LogArray) {
 			if (!log.v_props.selected) {
@@ -18,18 +18,8 @@
 					...log,
 					id: flightLogsNext.length
 				});
-			} else {
-				deletedIds.push(log.id);
 			}
 		}
-
-		await fetch('/api/database', {
-			method: "DELETE",
-			body: JSON.stringify(deletedIds),
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}
-		});
 
 		$LogArray = [...flightLogsNext];
 	}
@@ -49,51 +39,40 @@
 		CsvDataService.exportToCsv('log_data.csv', flightLogsExport);
 	}
 
-	function toggleExpansion(id: number) {
-		for(let i = 0; i < $LogArray.length; i++) {
-			if($LogArray[i].id === id) {
-				$LogArray[i].v_props.expanded = !$LogArray[i].v_props.expanded;
-				break;
-			}
-		}
+	function toggleExpansion(index: number) {
+		$LogArray[index].v_props.expanded = !$LogArray[index].v_props.expanded;
 	}
 
-	function chronologicSort(logArray: FlightLog[]) {
-		return logArray.toReversed();
-	}
+	onMount(() => {console.log($LogArray)});
 </script>
 
-<div>
-	<h1>Flight Logs</h1>
+<div id="flightform">
+	<h1 style="text-align: center; font-family: Proxima; font-weight: bolder;">Flight Logs</h1>
 	<div id="logs-action-container">
-		<button
-			on:click={deleteSelectedLogs}
-			id="logs-action-button"
-			style="background-color: crimson; border-color: crimson;"
-		>
+		<button on:click={deleteSelectedLogs} id="logs-action-button" style="background-color: crimson; border-color: crimson;">
 			<span id="delete-logs-text">Delete Selected Logs</span>
 		</button>
-		<button
-			on:click={exportSelectedLogs}
-			id="logs-action-button"
-			style="background-color: cornflowerblue; border-color: cornflowerblue;"
-		>
+		<button on:click={exportSelectedLogs} id="logs-action-button" style="background-color: cornflowerblue; border-color: cornflowerblue;">
 			<span id="export-logs-text">Export Selected Logs</span>
 		</button>
 	</div>
 	<div id="logs-container">
-		{#each chronologicSort($LogArray) as log (log.id)}
-			<div id={`${log.id}`} class="flight-log">
+		{#each $LogArray as log, i (log.id)}
+			<div class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.flight_date}</span>
 					<span>Location: {log.location}</span>
 					<span>Start Time: {log.start_time}</span>
 					<span>End Time: {log.stop_time}</span>
-					<div class="log-action-container">
-						<button on:click={() => toggleExpansion(log.id)} class="expand-button">
+					<div id="button">
+						<button on:click={() => toggleExpansion(i)} class="expand-button">
 							{log.v_props.expanded ? 'Collapse' : 'Expand'}
 						</button>
-						<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
+						<input
+							id="select-checkbox"
+							type="checkbox"
+							bind:checked={log.v_props.selected}
+						/>
 					</div>
 				</div>
 				{#if log.v_props.expanded}
@@ -119,17 +98,12 @@
 </div>
 
 <style>
-	h1 {
-		text-align: center;
-		font-family: "Proxima";
-		font-weight: bolder;
-	}
 	#logs-container {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 	}
-	.log-action-container {
+	#button {
 		margin-left: 1ch;
 	}
 	.flight-log {
@@ -156,7 +130,7 @@
 	.flight-log span {
 		flex: 1;
 	}
-	.select-checkbox {
+	#select-checkbox {
 		height: 2em;
 		margin-left: 2ch;
 		text-align: center;
