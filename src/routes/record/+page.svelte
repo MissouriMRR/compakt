@@ -13,6 +13,11 @@
 		} as FlightData;
 	}
 
+	/**
+	*	@description 
+	* Creates a new log in the flight logs section and adds it to the database
+	*	with all of the information pulled from the API and manually entered.
+	*/
 	async function addNewLog() {
 		const newLog = {
 			id: $LogArray.length,
@@ -41,6 +46,10 @@
 		$LogArray = [...$LogArray, newLog]; // For svelte reactivity
 	}
 
+	/**
+	* @description
+	* Fetches weather data from the API in JSON format
+	*/
 	async function loadWeatherData() {
 		try {
 			const response = await fetch('/api/weather', {

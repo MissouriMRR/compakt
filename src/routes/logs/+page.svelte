@@ -3,6 +3,10 @@
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
 
+	/**
+	* @description
+  * Deletes the selected logs from both the flight log page and subsequently the connected database
+	*/
 	async function deleteSelectedLogs() {
 		const confirmation = confirm(
 			'Are you sure you want to delete these logs? They cannot be recovered.'
@@ -34,6 +38,10 @@
 		$LogArray = [...flightLogsNext];
 	}
 
+	/**
+	* @description
+	*	Exports the selected logs in a CSV file
+	*/
 	function exportSelectedLogs() {
 		const flightLogsExport = [];
 
@@ -49,6 +57,10 @@
 		CsvDataService.exportToCsv('log_data.csv', flightLogsExport);
 	}
 
+	/**
+	* @description
+	* Expands a flight log to show the full flight information
+	*/
 	function toggleExpansion(id: number) {
 		for(let i = 0; i < $LogArray.length; i++) {
 			if($LogArray[i].id === id) {
