@@ -18,6 +18,9 @@
     		Creates a new log in the flight logs section and adds it to the database
 			with all of the information pulled from the API and manually entered.
 
+            Parameters:
+					None
+
             Returns:
                     Completed Log
 	 	* 
@@ -47,10 +50,6 @@
 	}
 
 	async function loadWeatherData() {
-		/**
-    		Fetches weather data from the API in JSON format
-	 	* 
-	 	*/
 		try {
 			const response = await fetch('/api/weather', {
 				method: 'POST',
