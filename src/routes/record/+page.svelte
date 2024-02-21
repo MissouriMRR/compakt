@@ -9,43 +9,35 @@
 		$FlightRecord = {
 			initialized: true,
 			location: DEFAULT_LOC,
-			flightDate: extractDate(new Date())
+			flight_date: extractDate(new Date())
 		} as FlightData;
 	}
 
 	async function addNewLog() {
-		/**
-    		Creates a new log in the flight logs section and adds it to the database
-			with all of the information pulled from the API and manually entered.
-
-            Parameters:
-					None
-
-            Returns:
-                    Completed Log
-	 	* 
-	 	*/
 		const newLog = {
 			id: $LogArray.length,
 			flight_date: $FlightRecord.flight_date,
 			location: $FlightRecord.location,
 			start_time: $FlightRecord.start_time,
 			stop_time: $FlightRecord.stop_time,
-			tempF: $FlightRecord.weather?.temp_f,
-			tempC: $FlightRecord.weather?.temp_c,
-			windSpeed: $FlightRecord.weather?.wind_speed,
-			windDirection: $FlightRecord.weather?.wind_direction,
-			windDegree: $FlightRecord.weather?.wind_degree,
-			gustSpeed: $FlightRecord.weather?.gust_speed,
+			temp_f: $FlightRecord.weather?.temp_f,
+			temp_c: $FlightRecord.weather?.temp_c,
+			wind_speed: $FlightRecord.weather?.wind_speed,
+			wind_direction: $FlightRecord.weather?.wind_direction,
+			wind_degree: $FlightRecord.weather?.wind_degree,
+			gust_speed: $FlightRecord.weather?.gust_speed,
 			humidity: $FlightRecord.weather?.humidity,
-			pilotID: $FlightRecord.pilot_id,
-			remoteID: $FlightRecord.remote_id,
+			pilot_id: $FlightRecord.pilot_id,
+			remote_id: $FlightRecord.remote_id,
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
-		// await fetch('/api/database', {
-		// 	method: "POST",
-		// 	body: JSON.stringify(newLog)
-		// });
+		await fetch('/api/database', {
+			method: "POST",
+			body: JSON.stringify(newLog),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		});
 		$LogArray = [...$LogArray, newLog]; // For svelte reactivity
 	}
 
