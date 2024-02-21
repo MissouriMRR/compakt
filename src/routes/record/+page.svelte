@@ -339,7 +339,7 @@
 		font-weight: 'bold';
 	}
 	.weather-container {
-		margin-bottom: 10px;
+		margin-bottom: 15px;
 		margin-top: 10;
 		flex-direction: row;
 		align-items: 'center';
