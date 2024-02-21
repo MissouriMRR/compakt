@@ -1,6 +1,8 @@
-import { Client } from 'pg';
+import pkg from 'pg';
 import type { RequestHandler } from '@sveltejs/kit';
 import { env } from '$env/dynamic/private';
+
+const { Client } = pkg;
 
 export const GET: RequestHandler = async () => {
 	const client = new Client({
