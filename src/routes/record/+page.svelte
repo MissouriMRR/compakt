@@ -113,7 +113,7 @@
 	<form id="flight-form">
 		<h2 style="font-size: 40px;">Flight Information</h2>
 		<!-- <h3 id="required-text">* Required</h3> -->
-		<h6>Enter your location to fetch weather data</h6>
+		<h5>Enter your location to fetch weather data</h5>
 		<h2>Location</h2>
 		<div class="form-section">
 			<div class="data-field">
@@ -136,16 +136,18 @@
 		</div>
 
 		{#if $FlightRecord.weather}
-			<h3>Weather</h3>
 			<div class="form-section">
-				<p class="weather-label">Location: {$FlightRecord.location}</p>
-
-				<div class="temperature-container">
-					<p class="weather-label">Temperature: {$FlightRecord.weather.temp_f + '°F'}</p>
+				<h2>Weather</h2>
+				<div class="weather-container">
+					<label for = "location">Location: {$FlightRecord.location}</label>
 				</div>
-				<div class="section-container">
-					<span class="weather-label">Condition: {$FlightRecord.weather.condition}</span>
-					<img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" />
+
+				<div class="weather-container">
+					<label for = "temperature">Temperature: {$FlightRecord.weather.temp_f + '°F'}</label>
+				</div>
+				<div class="weather-container">
+					<label for = "condition">Condition: {$FlightRecord.weather.condition}</label>
+					<!-- <img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" /> -->
 				</div>
 			</div>
 		{/if}
@@ -272,6 +274,7 @@
 	}
 	label {
 		margin-bottom: 1ch;
+		font-size: 18px;
 		text-decoration: underline;
 		white-space: nowrap;
 	}
@@ -286,6 +289,10 @@
 	}
 	h3 {
 		margin-bottom: 0.5ch;
+	}
+	h5 {
+		text-align: center;
+		margin-bottom: 0.25ch;
 	}
 	h6 {
 		margin: 0;
@@ -331,17 +338,10 @@
 		font-size: 18px;
 		font-weight: 'bold';
 	}
-	.temperature-container {
-		margin-bottom: 10;
+	.weather-container {
+		margin-bottom: 10px;
 		margin-top: 10;
 		flex-direction: row;
 		align-items: 'center';
-	}
-	.weatherIcon {
-		display: inline-block;
-		width: 2em;
-		height: 2em;
-		margin-left: 10;
-		margin-right: 10;
 	}
 </style>
