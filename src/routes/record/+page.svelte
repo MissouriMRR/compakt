@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FlightRecord, InfoVisible, LogArray, LogValidation } from '$lib/stores';
+	import { FlightRecord, InfoVisible, LogArray } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 
@@ -93,7 +93,6 @@
 	}
 
 	const toggleInfo = () => ($InfoVisible = !$InfoVisible);
-	const toggleLog = () => ($LogValidation = !$LogValidation);
 	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
 	const updateStart = (time: Date) => ($FlightRecord.start_time = extractTime(time));
 	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
@@ -283,6 +282,7 @@
 	h3,
 	h2 {
 		margin-bottom: 1ch;
+		text-align: center;
 	}
 	h3 {
 		margin-bottom: 0.5ch;
