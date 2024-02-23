@@ -65,7 +65,6 @@ export const POST: RequestHandler = async (ev) => {
 	return new Response(null, { status: 200 });
 };
 
-
 export const DELETE: RequestHandler = async (ev) => {
 	// const query_data = await ev.request.json();
 
@@ -93,4 +92,4 @@ export const DELETE: RequestHandler = async (ev) => {
 	// }
 
 	return new Response(null, { status: 200 });
-}
+};

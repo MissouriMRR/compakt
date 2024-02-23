@@ -4,9 +4,9 @@
 	import { LogArray } from '$lib/stores';
 
 	/**
-	* @description
-  * Deletes the selected logs from both the flight log page and subsequently the connected database
-	*/
+	 * @description
+	 * Deletes the selected logs from both the flight log page and subsequently the connected database
+	 */
 	async function deleteSelectedLogs() {
 		const confirmation = confirm(
 			'Are you sure you want to delete these logs? They cannot be recovered.'
@@ -28,10 +28,10 @@
 		}
 
 		await fetch('/api/database', {
-			method: "DELETE",
+			method: 'DELETE',
 			body: JSON.stringify(deletedIds),
 			headers: {
-				"Content-type": "application/json; charset=UTF-8"
+				'Content-type': 'application/json; charset=UTF-8'
 			}
 		});
 
@@ -39,9 +39,9 @@
 	}
 
 	/**
-	* @description
-	*	Exports the selected logs in a CSV file
-	*/
+	 * @description
+	 *	Exports the selected logs in a CSV file
+	 */
 	function exportSelectedLogs() {
 		const flightLogsExport = [];
 
@@ -58,12 +58,12 @@
 	}
 
 	/**
-	* @description
-	* Expands a flight log to show the full flight information
-	*/
+	 * @description
+	 * Expands a flight log to show the full flight information
+	 */
 	function toggleExpansion(id: number) {
-		for(let i = 0; i < $LogArray.length; i++) {
-			if($LogArray[i].id === id) {
+		for (let i = 0; i < $LogArray.length; i++) {
+			if ($LogArray[i].id === id) {
 				$LogArray[i].v_props.expanded = !$LogArray[i].v_props.expanded;
 				break;
 			}
@@ -133,7 +133,7 @@
 <style>
 	h1 {
 		text-align: center;
-		font-family: "Proxima";
+		font-family: 'Proxima';
 		font-weight: bolder;
 	}
 	#logs-container {

@@ -5,7 +5,7 @@
 	import { LogArray, Init } from '$lib/stores';
 
 	async function init() {
-		if($Init) return;
+		if ($Init) return;
 		$Init = true;
 
 		try {

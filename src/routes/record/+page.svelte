@@ -14,10 +14,10 @@
 	}
 
 	/**
-	*	@description 
-	* Creates a new log in the flight logs section and adds it to the database
-	*	with all of the information pulled from the API and manually entered.
-	*/
+	 *	@description
+	 * Creates a new log in the flight logs section and adds it to the database
+	 *	with all of the information pulled from the API and manually entered.
+	 */
 	async function addNewLog() {
 		const newLog = {
 			id: $LogArray.length,
@@ -37,19 +37,19 @@
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
 		await fetch('/api/database', {
-			method: "POST",
+			method: 'POST',
 			body: JSON.stringify(newLog),
 			headers: {
-				"Content-type": "application/json; charset=UTF-8"
+				'Content-type': 'application/json; charset=UTF-8'
 			}
 		});
 		$LogArray = [...$LogArray, newLog]; // For svelte reactivity
 	}
 
 	/**
-	* @description
-	* Fetches weather data from the API in JSON format
-	*/
+	 * @description
+	 * Fetches weather data from the API in JSON format
+	 */
 	async function loadWeatherData() {
 		try {
 			const response = await fetch('/api/weather', {
@@ -139,14 +139,14 @@
 			<div class="form-section">
 				<h2>Weather</h2>
 				<div class="weather-container">
-					<label for = "location">Location: {$FlightRecord.location}</label>
+					<label for="location">Location: {$FlightRecord.location}</label>
 				</div>
 
 				<div class="weather-container">
-					<label for = "temperature">Temperature: {$FlightRecord.weather.temp_f + '°F'}</label>
+					<label for="temperature">Temperature: {$FlightRecord.weather.temp_f + '°F'}</label>
 				</div>
 				<div class="weather-container">
-					<label for = "condition">Condition: {$FlightRecord.weather.condition}</label>
+					<label for="condition">Condition: {$FlightRecord.weather.condition}</label>
 					<!-- <img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" /> -->
 				</div>
 			</div>
@@ -216,9 +216,7 @@
 				</div>
 			</div>
 			<h1>
-				<button on:click={addNewLog} id="add-log-button"
-					>Add New Log</button
-				>
+				<button on:click={addNewLog} id="add-log-button">Add New Log</button>
 			</h1>
 		</div>
 	</form>
