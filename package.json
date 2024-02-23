@@ -30,9 +30,5 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.4.2"
 	},
-	"type": "module",
-	"dependencies": {
-		"@types/pg": "^8.11.0",
-		"pg": "^8.11.3"
-	}
+	"type": "module"
 }
