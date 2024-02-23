@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FlightRecord, InfoVisible, LogArray } from '$lib/stores';
+	import { FlightRecord, InfoVisible, LogArray, LogValidation } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 
@@ -93,6 +93,7 @@
 	}
 
 	const toggleInfo = () => ($InfoVisible = !$InfoVisible);
+	const toggleLog = () => ($LogValidation = !$LogValidation);
 	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
 	const updateStart = (time: Date) => ($FlightRecord.start_time = extractTime(time));
 	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
@@ -280,10 +281,6 @@
 	}
 	h2,
 	h3,
-	h6 {
-		text-align: center;
-		white-space: nowrap;
-	}
 	h2 {
 		margin-bottom: 1ch;
 	}
@@ -293,9 +290,6 @@
 	h5 {
 		text-align: center;
 		margin-bottom: 0.25ch;
-	}
-	h6 {
-		margin: 0;
 	}
 	.form-section {
 		align-items: center;
@@ -327,16 +321,6 @@
 		margin-right: 0.5em;
 		padding-left: 1ch;
 		padding-right: 1ch;
-	}
-	.section-container {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		justify-content: center;
-	}
-	.weather-label {
-		font-size: 18px;
-		font-weight: 'bold';
 	}
 	.weather-container {
 		margin-bottom: 15px;
