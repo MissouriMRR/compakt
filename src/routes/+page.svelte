@@ -14,14 +14,15 @@
 			for (const row of data) {
 				const newLog = {
 					id: parseInt(row.id),
-					flight_date: row.flight_date,
 					location: row.location,
-					t_start: row.start_time,
-					t_end: row.stop_time,
-					temperature: parseFloat(row.temp_f),
-					wind_speed: parseFloat(row.wind_speed),
-					wind_heading: row.wind_direction,
-					gust_speed: parseFloat(row.gust_speed),
+					flight_date: row.flight_date,
+					start_time: row.start_time,
+					stop_time: row.stop_time,
+					temp_f: parseFloat(row.temp_f),
+					wind_speed_mph: parseFloat(row.wind_speed),
+					wind_direction: row.wind_direction,
+					wind_degree: parseFloat(row.wind_degree),
+					gust_speed_mph: parseFloat(row.gust_speed),
 					humidity: parseFloat(row.humidity),
 					pilot_id: row.pilot_id,
 					remote_id: row.remote_id,
@@ -41,7 +42,9 @@
 <div id="title">
 	<h1 style="font-size: 50px;">The Compakt Web App</h1>
 	<h1 style="font-size: 35px;">By:</h1>
-	<a href="https://multirotor.mst.edu/" target="_blank"><img src="/multirotorlogo.png" alt="logo" width="50%" height="auto" /></a>
+	<a href="https://multirotor.mst.edu/" target="_blank"
+		><img src="/multirotorlogo.png" alt="logo" width="50%" height="auto" /></a
+	>
 </div>
 
 <div id="details">

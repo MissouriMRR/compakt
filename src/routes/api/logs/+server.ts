@@ -5,9 +5,10 @@ import { authorized } from '$lib/auth';
 export const GET: RequestHandler = async (ev) => {
 	if (!(await authorized(ev, 'logs_r'))) return new Response(null, { status: 401 });
 
-	const stmt = env.DB.prepare(
-		'SELECT id, t_start, t_end, location FROM logs ORDER BY t_start LIMIT 50 OFFSET 0'
-	);
+	const query =
+		'SELECT id, start_time, stop_time, location FROM logs ORDER BY start_time LIMIT 50 OFFSET 0';
+
+	const stmt = env.DB.prepare(query);
 
 	const results = await stmt.all();
 
@@ -19,29 +20,37 @@ export const POST: RequestHandler = async (ev) => {
 
 	const {
 		location,
-		t_start,
-		t_end,
-		condition,
-		wind_speed,
-		wind_heading,
-		temperature,
-		gust_speed,
-		humidity
+		flight_date,
+		start_time,
+		stop_time,
+		temp_f,
+		wind_speed_mph,
+		wind_direction,
+		wind_degree,
+		gust_speed_mph,
+		humidity,
+		pilot_id,
+		remote_id
 	} = await ev.request.json();
 
-	const { success } = await env.DB.prepare(
-		'INSERT INTO logs (location, t_start, t_end, condition, wind_speed, wind_heading, temperature, gust_speed, humidity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-	)
+	const query =
+		'INSERT INTO logs (location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id' +
+		'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+
+	const { success } = await env.DB.prepare(query)
 		.bind(
 			location,
-			t_start,
-			t_end,
-			condition,
-			wind_speed,
-			wind_heading,
-			temperature,
-			gust_speed,
-			humidity
+			flight_date,
+			start_time,
+			stop_time,
+			temp_f,
+			wind_speed_mph,
+			wind_direction,
+			wind_degree,
+			gust_speed_mph,
+			humidity,
+			pilot_id,
+			remote_id
 		)
 		.run();
 
@@ -50,16 +59,16 @@ export const POST: RequestHandler = async (ev) => {
 
 export const DELETE: RequestHandler = async (ev) => {
 	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
-	
+
 	const query_data = await ev.request.json();
 
-	if(query_data.length === 0) {
+	if (query_data.length === 0) {
 		return new Response(null, { status: 200 });
 	}
 
-	const query = `DELETE FROM "compakt-logs" WHERE id IN (${query_data.join(',')})`;
+	const query = `DELETE FROM logs WHERE id IN (${query_data.join(',')})`;
 	console.log(query);
-	
+
 	const { success } = await env.DB.prepare(query).run();
 
 	return new Response(null, { status: success ? 201 : 500 });
