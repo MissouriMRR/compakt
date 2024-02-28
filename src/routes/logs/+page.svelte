@@ -27,7 +27,7 @@
 			}
 		}
 
-		await fetch('/api/database', {
+		await fetch('/api/logs', {
 			method: 'DELETE',
 			body: JSON.stringify(deletedIds),
 			headers: {
@@ -99,8 +99,8 @@
 				<div class="expand-details">
 					<span>Date: {log.flight_date}</span>
 					<span>Location: {log.location}</span>
-					<span>Start Time: {log.start_time}</span>
-					<span>End Time: {log.stop_time}</span>
+					<span>Start Time: {log.t_start}</span>
+					<span>End Time: {log.t_end}</span>
 					<div class="log-action-container">
 						<button on:click={() => toggleExpansion(log.id)} class="expand-button">
 							{log.v_props.expanded ? 'Collapse' : 'Expand'}
@@ -111,14 +111,12 @@
 				{#if log.v_props.expanded}
 					<div class="log-info">
 						<span>
-							<br />Temperature: {log.temp_f}°F<br />
-							<br />Temperature: {log.temp_c}°C<br />
+							<br />Temperature: {log.temperature}°F<br />
 							<br />Wind Speed: {log.wind_speed}<br />
-							<br />Wind Direction: {log.wind_direction}<br />
+							<br />Wind Direction: {log.wind_heading}<br />
 							<br />Remote ID: {log.remote_id}<br />
 						</span>
 						<span>
-							<br />Wind Degree: {log.wind_degree}°<br />
 							<br />Gust Speed: {log.gust_speed}<br />
 							<br />Humidity: {log.humidity}<br />
 							<br />Pilot ID: {log.pilot_id}<br />

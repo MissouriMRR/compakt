@@ -23,20 +23,18 @@
 			id: $LogArray.length,
 			flight_date: $FlightRecord.flight_date,
 			location: $FlightRecord.location,
-			start_time: $FlightRecord.start_time,
-			stop_time: $FlightRecord.stop_time,
-			temp_f: $FlightRecord.weather?.temp_f,
-			temp_c: $FlightRecord.weather?.temp_c,
+			t_start: $FlightRecord.start_time,
+			t_end: $FlightRecord.stop_time,
+			temperature: $FlightRecord.weather?.temp_f,
 			wind_speed: $FlightRecord.weather?.wind_speed,
-			wind_direction: $FlightRecord.weather?.wind_direction,
-			wind_degree: $FlightRecord.weather?.wind_degree,
+			wind_heading: $FlightRecord.weather?.wind_direction,
 			gust_speed: $FlightRecord.weather?.gust_speed,
 			humidity: $FlightRecord.weather?.humidity,
 			pilot_id: $FlightRecord.pilot_id,
 			remote_id: $FlightRecord.remote_id,
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
-		await fetch('/api/database', {
+		await fetch('/api/logs', {
 			method: 'POST',
 			body: JSON.stringify(newLog),
 			headers: {

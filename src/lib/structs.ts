@@ -25,13 +25,11 @@ export interface FlightLog {
 	id: number;
 	flight_date: string;
 	location: string;
-	start_time: string;
-	stop_time: string;
-	temp_f?: number;
-	temp_c?: number;
+	t_start: string;
+	t_end: string;
+	temperature?: number;
 	wind_speed?: number;
-	wind_direction?: string;
-	wind_degree?: number;
+	wind_heading?: string;
 	gust_speed?: number;
 	humidity?: number;
 	pilot_id?: string;

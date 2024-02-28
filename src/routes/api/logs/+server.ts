@@ -3,7 +3,7 @@ import { env } from '$env/dynamic/private';
 import { authorized } from '$lib/auth';
 
 export const GET: RequestHandler = async (ev) => {
-	// if (!(await authorized(ev, 'logs_r'))) return new Response(null, { status: 401 });
+	if (!(await authorized(ev, 'logs_r'))) return new Response(null, { status: 401 });
 
 	const stmt = env.DB.prepare(
 		'SELECT id, t_start, t_end, location FROM logs ORDER BY t_start LIMIT 50 OFFSET 0'
@@ -15,7 +15,7 @@ export const GET: RequestHandler = async (ev) => {
 };
 
 export const POST: RequestHandler = async (ev) => {
-	// if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
+	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
 
 	const {
 		location,
@@ -44,6 +44,23 @@ export const POST: RequestHandler = async (ev) => {
 			humidity
 		)
 		.run();
+
+	return new Response(null, { status: success ? 201 : 500 });
+};
+
+export const DELETE: RequestHandler = async (ev) => {
+	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
+	
+	const query_data = await ev.request.json();
+
+	if(query_data.length === 0) {
+		return new Response(null, { status: 200 });
+	}
+
+	const query = `DELETE FROM "compakt-logs" WHERE id IN (${query_data.join(',')})`;
+	console.log(query);
+	
+	const { success } = await env.DB.prepare(query).run();
 
 	return new Response(null, { status: success ? 201 : 500 });
 };
