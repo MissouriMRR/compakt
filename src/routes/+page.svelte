@@ -41,7 +41,7 @@
 <div id="title">
 	<h1 style="font-size: 50px;">The Compakt Web App</h1>
 	<h1 style="font-size: 35px;">By:</h1>
-	<img src="/multirotorlogo.png" alt="logo" width="50%" height="auto" />
+	<a href="https://multirotor.mst.edu/" target="_blank"><img src="/multirotorlogo.png" alt="logo" width="50%" height="auto" /></a>
 </div>
 
 <div id="details">
