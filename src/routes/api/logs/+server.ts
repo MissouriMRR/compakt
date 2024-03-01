@@ -1,28 +1,75 @@
-import type { RequestHandler } from "../weather/$types";
-import { env } from "$env/dynamic/private";
+import type { RequestHandler } from '../weather/$types';
+import { env } from '$env/dynamic/private';
+import { authorized } from '$lib/auth';
 
-export const GET: RequestHandler = async () => {
-    const stmt = env.DB.prepare('SELECT id, t_start, t_end, location FROM logs ORDER BY t_start LIMIT 50 OFFSET 0');
+export const GET: RequestHandler = async (ev) => {
+	if (!(await authorized(ev, 'logs_r'))) return new Response(null, { status: 401 });
 
-    const results = await stmt.all();
+	const query =
+		'SELECT id, start_time, stop_time, location FROM logs ORDER BY start_time LIMIT 50 OFFSET 0';
 
-    return new Response(JSON.stringify(results));
-}
+	const stmt = env.DB.prepare(query);
+
+	const results = await stmt.all();
+
+	return new Response(results);
+};
 
 export const POST: RequestHandler = async (ev) => {
-    const { location, t_start, t_end, condition, wind_speed, wind_heading, temperature, gust_speed, humidity, pilot_id, remote_id } = await ev.request.json();
+	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
 
-    const access_jwt = ev.request.headers.get("Cf-Access-Jwt-Assertion");
+	const {
+		location,
+		flight_date,
+		start_time,
+		stop_time,
+		temp_f,
+		wind_speed_mph,
+		wind_direction,
+		wind_degree,
+		gust_speed_mph,
+		humidity,
+		pilot_id,
+		remote_id
+	} = await ev.request.json();
 
-    if (!access_jwt)
-        return new Response(null, { status: 400 });
+	const query =
+		'INSERT INTO logs (location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id' +
+		'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-    const jwt_data = JSON.parse(Buffer.from(access_jwt.split('.')[1], 'base64').toString());
+	const { success } = await env.DB.prepare(query)
+		.bind(
+			location,
+			flight_date,
+			start_time,
+			stop_time,
+			temp_f,
+			wind_speed_mph,
+			wind_direction,
+			wind_degree,
+			gust_speed_mph,
+			humidity,
+			pilot_id,
+			remote_id
+		)
+		.run();
 
-    const added_by: string = (jwt_data.email as string).split('@')[0];
+	return new Response(null, { status: success ? 201 : 500 });
+};
 
-    const { success } = await env.DB.prepare('INSERT INTO logs (location, t_start, t_end, condition, wind_speed, wind_heading, temperature, gust_speed, humidity, added_by, pilot_id, remote_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
-        .bind(location, t_start, t_end, condition, wind_speed, wind_heading, temperature, gust_speed, humidity, added_by, pilot_id, remote_id).run();
+export const DELETE: RequestHandler = async (ev) => {
+	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
 
-    return new Response(null, { status: success ? 201 : 500 });
-}
+	const query_data = await ev.request.json();
+
+	if (query_data.length === 0) {
+		return new Response(null, { status: 200 });
+	}
+
+	const query = `DELETE FROM logs WHERE id IN (${query_data.join(',')})`;
+	console.log(query);
+
+	const { success } = await env.DB.prepare(query).run();
+
+	return new Response(null, { status: success ? 201 : 500 });
+};
