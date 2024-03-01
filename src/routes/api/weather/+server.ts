@@ -1,6 +1,5 @@
 import type { RequestHandler } from './$types';
 import { env } from '$env/dynamic/private';
-import { authorized } from '$lib/auth';
 
 export const POST: RequestHandler = async (ev) => {
 	const { request } = ev;
