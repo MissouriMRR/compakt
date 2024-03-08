@@ -10,7 +10,9 @@
 
 		try {
 			const response = await fetch('/api/logs');
+			console.log(response);
 			const data = await response.json();
+			console.log(data);
 			for (const row of data) {
 				const newLog = {
 					id: parseInt(row.id),
