@@ -9,7 +9,6 @@
 				font-family: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 				background: linear-gradient(#21c447, #355542);
 				background-attachment: fixed;
-				font-family: Arial, Helvetica, sans-serif;
 				margin: 0;
 				overflow: hidden;
 				user-select: none;
@@ -32,7 +31,7 @@
 				margin-left: 1em;
 			}
 			div.title span#title-text {
-				font-family: Rockwell;
+				font-family: "IBMPlexSans-Bold";
 				font-size: 35px;
 			}
 			div.tabs {
@@ -42,10 +41,10 @@
 				justify-content: right;
 			}
 			div.tabs span#tab-text {
-				font-family: Proxima;
+				font-family: "IBMPlexSans-Bold";
 				font-size: 30px;
 				font-size: min(30px, 3.2vw);
-				font-weight: bold;
+				
 			}
 			a#tab-link {
 				border-radius: 10px;
@@ -67,14 +66,6 @@
 				overflow: auto;
 				padding: 5vb;
 			}
-			@font-face {
-				font-family: Rockwell;
-				src: url(rockwell_bold.ttf);
-			}
-			@font-face {
-				font-family: Proxima;
-				src: url(proxima_nova_font.otf);
-			}
             ul.nav {
                 list-style-type: none;
                 margin: 0;
@@ -84,9 +75,9 @@
                 display: flex;
                 align-items: center;
             }
-            ul.nav li {
-               /* float: left; */
-            }
+            /*ul.nav li {
+               	float: left;
+            }*/
             ul.nav li a,
             ul.nav li span {
                 display: block;
@@ -101,11 +92,11 @@
                 background-color: rgba(0, 0, 0, 0.1);
             }
             #site-title {
-                font-family: Rockwell;
+                font-family: "IBMPlexSans-Bold";
                 font-size: 35px;
             }
             #hover-nav {
-                font-family: "IBM Plex Sans";
+                font-family: "IBMPlexSans-Bold";
                 font-size: 30px;
                 border-color: black;
                 border: 2px solid transparent;
@@ -114,34 +105,22 @@
             main {
                 padding: 2em;
             }
-            @font-face {
-                font-family: Rockwell;
-                src: url(rockwell_bold.ttf);
-            }
-            @font-face {
-                font-family: "IBM Plex Sans";
-                font-weight: 400;
-                font-style: normal;
-                src: url(IBMPlexSans-Regular.woff2);
-            }
-            @font-face {
-                font-family: "IBM Plex Sans";
-                font-weight: 400;
-                font-style: italic;
-                src: url(IBMPlexSans-Italic.woff2);
-            }
-            @font-face {
-                font-family: "IBM Plex Sans";
-                font-weight: 700;
-                font-style: normal;
-                src: url(IBMPlexSans-Bold.woff2);
-            }
-            @font-face {
-                font-family: "IBM Plex Sans";
-                font-weight: 700;
-                font-style: italic;
-                src: url(IBMPlexSans-BoldItalic.woff2);
-            }
+			@font-face {
+				font-family: IBMPlexSans-Bold;
+				src: url(IBMPlexSans-Bold.woff2);
+			}
+			@font-face {
+				font-family: IBMPlexSans-BoldItalic;
+				src: url(IBMPlexSans-BoldItalic.woff2);
+			}
+			@font-face {
+				font-family: IBMPlexSans-Italic;
+				src: url(IBMPlexSans-Italic.woff2);
+			}
+			@font-face {
+				font-family: IBMPlexSans-Regular;
+				src: url(IBMPlexSans-Regular.woff2);
+			}
 		</style>
 		%sveltekit.head%
 	</head>

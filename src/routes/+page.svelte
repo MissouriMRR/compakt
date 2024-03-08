@@ -48,7 +48,7 @@
 </div>
 
 <div id="details">
-	<h1 style="font-size: 35px; margin-top:3ch">What is this for?</h1>
+	<h1 style="font-size: 35px; margin-top:3ch;">What is this for?</h1>
 	<h1 style="font-size: 20px; margin-top:-1ch">
 		The Compakt app is a tool designed by the Multirotor Software Division <br />
 		to assist with drone testing days by providing data logging and retrieval <br />
@@ -70,12 +70,12 @@
 	#title {
 		text-align: center;
 		justify-content: center;
-		font-family: Proxima;
+		font-family: "IBMPlexSans-Bold";
 		color: rgb(255, 255, 255);
 	}
 	#details {
 		text-align: center;
-		font-family: Proxima;
+		font-family: "IBMPlexSans-Regular";
 		color: rgb(255, 255, 255);
 	}
 </style>
