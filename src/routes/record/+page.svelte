@@ -110,7 +110,7 @@
 	</div>
 
 	<form id="flight-form">
-		<h2 style="font-size: 40px;">Flight Information</h2>
+		<h1>Flight Information</h1>
 		<!-- <h3 id="required-text">* Required</h3> -->
 		<h5>Enter your location to fetch weather data</h5>
 		<h2>Location</h2>
@@ -273,14 +273,17 @@
 		width: 50%;
 	}
 	label {
-		margin-bottom: 1ch;
 		font-family: "IBMPlexSans-Regular";
-		font-size: 18px;
+		font-size: 19px;
+		margin-bottom:.5ch;
+		margin-top: 1.5ch;
 		text-decoration: underline;
 		white-space: nowrap;
 	}
 	h1 {
+		font-size: 40px;
 		font-weight: bold;
+		text-align: center;
 	}
 	h2 {
 		margin-bottom: 1ch;
@@ -304,7 +307,7 @@
 		flex-direction: column;
 		justify-content: center;
 		margin: 0 10;
-		margin-top: 30px;
+		margin-bottom: 40px;
 		-webkit-text-stroke-color: rgb(0, 0, 0);
 		-webkit-text-stroke-width: 0.25px;
 	}
@@ -332,7 +335,7 @@
 	}
 	.weather-container {
 		margin-bottom: 15px;
-		margin-top: 10;
+		margin-top: 10px;
 		flex-direction: row;
 		align-items: 'center';
 	}
