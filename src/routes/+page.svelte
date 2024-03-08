@@ -11,8 +11,8 @@
 		try {
 			const response = await fetch('/api/logs');
 			const data = await response.json();
-			
-			if(data.results.length() == 0) {
+
+			if(data.results.length == 0) {
 				return;
 			}
 
