@@ -70,12 +70,12 @@
 	#title {
 		text-align: center;
 		justify-content: center;
-		font-family: "IBMPlexSans-Bold";
+		font-family: 'IBMPlexSans-Bold';
 		color: rgb(255, 255, 255);
 	}
 	#details {
 		text-align: center;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		color: rgb(255, 255, 255);
 	}
 </style>

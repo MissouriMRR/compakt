@@ -131,7 +131,7 @@
 <style>
 	h1 {
 		text-align: center;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
 	}
 	#logs-container {
@@ -144,7 +144,7 @@
 	}
 	.flight-log {
 		border: 1px solid #000000;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		margin: 2em 0;
 		padding: 1.5em;
 		background-color: white;
@@ -174,7 +174,7 @@
 		width: 2em;
 	}
 	#logs-action-container {
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		right: 30px;
 		top: 15vh;
 		align-self: right;
@@ -184,19 +184,19 @@
 	}
 	#logs-action-button {
 		border-radius: 10px;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		margin: 7px;
 		width: 120px;
 	}
 	#delete-logs-text {
 		color: white;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
 		-webkit-text-stroke-width: 1.1px;
 	}
 	#export-logs-text {
 		color: white;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
 		-webkit-text-stroke-width: 1.1px;
 	}
