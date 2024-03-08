@@ -3,7 +3,7 @@ import { env } from '$env/dynamic/private';
 
 export const GET: RequestHandler = async (ev) => {
 	const query =
-		'SELECT id, start_time, stop_time, location FROM logs ORDER BY start_time LIMIT 50 OFFSET 0';
+		'SELECT id, location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id FROM logs ORDER BY start_time LIMIT 50 OFFSET 0';
 
 	const stmt = env.DB.prepare(query);
 
