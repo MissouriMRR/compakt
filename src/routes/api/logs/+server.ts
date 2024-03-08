@@ -9,7 +9,7 @@ export const GET: RequestHandler = async (ev) => {
 
 	const results = await stmt.all();
 
-	return new Response(results);
+	return new Response(JSON.stringify(results));
 };
 
 export const POST: RequestHandler = async (ev) => {
