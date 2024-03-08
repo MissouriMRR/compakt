@@ -10,10 +10,13 @@
 
 		try {
 			const response = await fetch('/api/logs');
-			console.log(response);
 			const data = await response.json();
-			console.log(data);
-			for (const row of data) {
+			
+			if(data.results.length() == 0) {
+				return;
+			}
+
+			for (const row of data.results) {
 				const newLog = {
 					id: parseInt(row.id),
 					location: row.location,
