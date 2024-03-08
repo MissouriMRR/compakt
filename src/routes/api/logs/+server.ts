@@ -1,10 +1,7 @@
 import type { RequestHandler } from '../weather/$types';
 import { env } from '$env/dynamic/private';
-import { authorized } from '$lib/auth';
 
 export const GET: RequestHandler = async (ev) => {
-	if (!(await authorized(ev, 'logs_r'))) return new Response(null, { status: 401 });
-
 	const query =
 		'SELECT id, start_time, stop_time, location FROM logs ORDER BY start_time LIMIT 50 OFFSET 0';
 
@@ -16,8 +13,6 @@ export const GET: RequestHandler = async (ev) => {
 };
 
 export const POST: RequestHandler = async (ev) => {
-	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
-
 	const {
 		location,
 		flight_date,
@@ -58,8 +53,6 @@ export const POST: RequestHandler = async (ev) => {
 };
 
 export const DELETE: RequestHandler = async (ev) => {
-	if (!(await authorized(ev, 'logs_w'))) return new Response(null, { status: 401 });
-
 	const query_data = await ev.request.json();
 
 	if (query_data.length === 0) {
