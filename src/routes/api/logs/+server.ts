@@ -13,41 +13,28 @@ export const GET: RequestHandler = async (ev) => {
 };
 
 export const POST: RequestHandler = async (ev) => {
-	const {
-		location,
-		flight_date,
-		start_time,
-		stop_time,
-		temp_f,
-		wind_speed_mph,
-		wind_direction,
-		wind_degree,
-		gust_speed_mph,
-		humidity,
-		pilot_id,
-		remote_id
-	} = await ev.request.json();
+	const props = await ev.request.json();
+	const vals = [
+		'"'+props.location+'"',
+		'"'+props.flight_date+'"',
+		'"'+props.start_time+'"',
+		'"'+props.stop_time+'"',
+		props.temp_f,
+		props.wind_speed_mph,
+		'"'+props.wind_direction+'"',
+		props.wind_degree,
+		props.gust_speed_mph,
+		props.humidity,
+		'"'+props.pilot_id+'"',
+		'"'+props.remote_id+'"'
+	];
 
 	const query =
-		'INSERT INTO logs (location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id' +
-		'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-
-	const { success } = await env.DB.prepare(query)
-		.bind(
-			location,
-			flight_date,
-			start_time,
-			stop_time,
-			temp_f,
-			wind_speed_mph,
-			wind_direction,
-			wind_degree,
-			gust_speed_mph,
-			humidity,
-			pilot_id,
-			remote_id
-		)
-		.run();
+		'INSERT INTO logs (location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id)' +
+		` VALUES (${vals.join(', ')})`;
+	
+	console.log(query);
+	const { success } = await env.DB.prepare(query).run();
 
 	return new Response(null, { status: success ? 201 : 500 });
 };
@@ -60,7 +47,6 @@ export const DELETE: RequestHandler = async (ev) => {
 	}
 
 	const query = `DELETE FROM logs WHERE id IN (${query_data.join(',')})`;
-	console.log(query);
 
 	const { success } = await env.DB.prepare(query).run();
 
