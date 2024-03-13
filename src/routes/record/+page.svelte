@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FlightRecord, InfoVisible, LogArray } from '$lib/stores';
+	import { FlightRecord, InfoVisible, LogArray, FlagInvalid } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 
@@ -35,6 +35,19 @@
 			remote_id: $FlightRecord.remote_id,
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
+
+		let invalid = false;
+		for(const value of Object.values(newLog)) {
+			if(value === undefined) {
+				invalid = true;
+			}
+		}
+
+		if(invalid) {
+			$FlagInvalid = true;
+			return;
+		}
+
 		await fetch('/api/logs', {
 			method: 'POST',
 			body: JSON.stringify(newLog),
@@ -42,7 +55,9 @@
 				'Content-type': 'application/json; charset=UTF-8'
 			}
 		});
-		$LogArray = [...$LogArray, newLog]; // For svelte reactivity
+
+		$LogArray = [...$LogArray, newLog];
+		$FlagInvalid = false;
 	}
 
 	/**
@@ -110,8 +125,7 @@
 	</div>
 
 	<form id="flight-form">
-		<h2 style="font-size: 40px;">Flight Information</h2>
-		<!-- <h3 id="required-text">* Required</h3> -->
+		<h1>Flight Information</h1>
 		<h5>Enter your location to fetch weather data</h5>
 		<h2>Location</h2>
 		<div class="form-section">
@@ -119,12 +133,14 @@
 				<label for="location">City</label>
 				<div class="field-container">
 					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.location}
 						class="field-entree"
 						id="location"
 						type="text"
 						bind:value={$FlightRecord.location}
 					/>
 					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.weather}
 						class="field-button"
 						type="button"
 						value="Get Weather"
@@ -146,7 +162,6 @@
 				</div>
 				<div class="weather-container">
 					<label for="condition">Condition: {$FlightRecord.weather.condition}</label>
-					<!-- <img class="weatherIcon" src={$FlightRecord.weather.icon} alt="Weather Icon" /> -->
 				</div>
 			</div>
 		{/if}
@@ -156,7 +171,13 @@
 			<div class="data-field">
 				<label for="date">Date</label>
 				<div class="field-container">
-					<input class="field-entree" id="date" type="date" value={$FlightRecord.flight_date} />
+					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.flight_date}
+						class="field-entree"
+						id="date"
+						type="date"
+						value={$FlightRecord.flight_date}
+					/>
 					<button class="field-button" on:click={() => updateDate(new Date())}>Today</button>
 				</div>
 			</div>
@@ -165,6 +186,7 @@
 				<label for="time-start">Start Time</label>
 				<div class="field-container">
 					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.start_time}
 						class="field-entree"
 						type="time"
 						id="time-start"
@@ -179,6 +201,7 @@
 				<label for="time-end">End Time</label>
 				<div class="field-container">
 					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.stop_time}
 						class="field-entree"
 						type="time"
 						id="time-end"
@@ -196,6 +219,7 @@
 				<label for="pilot-id">Pilot ID</label>
 				<div class="field-container">
 					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.pilot_id}
 						class="field-entree"
 						id="pilot-id"
 						type="text"
@@ -207,6 +231,7 @@
 				<label for="remote-id">Remote ID</label>
 				<div class="field-container">
 					<input
+						class:invalid-input={$FlagInvalid && !$FlightRecord.remote_id}
 						class="field-entree"
 						id="remote-id"
 						type="text"
@@ -222,6 +247,11 @@
 </div>
 
 <style>
+	.invalid-input {
+		color: red;
+		text-decoration-color: red;
+		border-color: red;
+	}
 	#info-container {
 		align-items: center;
 		background-color: #2e2e2e;
@@ -273,14 +303,17 @@
 		width: 50%;
 	}
 	label {
-		margin-bottom: 1ch;
-		font-family: 'IBMPlexSans-Regular';
-		font-size: 18px;
+		font-family: "IBMPlexSans-Regular";
+		font-size: 19px;
+		margin-bottom:.5ch;
+		margin-top: 1.5ch;
 		text-decoration: underline;
 		white-space: nowrap;
 	}
 	h1 {
+		font-size: 40px;
 		font-weight: bold;
+		text-align: center;
 	}
 	h2 {
 		margin-bottom: 1ch;
@@ -303,7 +336,7 @@
 		flex-direction: column;
 		justify-content: center;
 		margin: 0 10;
-		margin-top: 30px;
+		margin-bottom: 40px;
 		-webkit-text-stroke-color: rgb(0, 0, 0);
 		-webkit-text-stroke-width: 0.25px;
 	}
@@ -331,7 +364,7 @@
 	}
 	.weather-container {
 		margin-bottom: 15px;
-		margin-top: 10;
+		margin-top: 10px;
 		flex-direction: row;
 		align-items: 'center';
 	}
