@@ -76,7 +76,7 @@
 </script>
 
 <div>
-	<h1>Flight Logs</h1>
+	<h1 style="-webkit-text-stroke-width: 1.5px;">Flight Logs</h1>
 	<div id="logs-action-container">
 		<button
 			on:click={deleteSelectedLogs}
@@ -112,13 +112,13 @@
 					<div class="log-info">
 						<span>
 							<br />Temperature: {log.temp_f}°F<br />
-							<br />Wind Speed: {log.wind_speed_mph}<br />
+							<br />Wind Speed: {log.wind_speed_mph} MPH<br />
 							<br />Wind Direction: {log.wind_direction}<br />
 							<br />Remote ID: {log.remote_id}<br />
 						</span>
 						<span>
-							<br />Gust Speed: {log.gust_speed_mph}<br />
-							<br />Humidity: {log.humidity}<br />
+							<br />Gust Speed: {log.gust_speed_mph} MPH<br />
+							<br />Humidity: {log.humidity}%<br />
 							<br />Pilot ID: {log.pilot_id}<br />
 						</span>
 					</div>
@@ -131,7 +131,7 @@
 <style>
 	h1 {
 		text-align: center;
-		font-family: 'Proxima';
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
 	}
 	#logs-container {
@@ -144,6 +144,7 @@
 	}
 	.flight-log {
 		border: 1px solid #000000;
+		font-family: 'IBMPlexSans-Regular';
 		margin: 2em 0;
 		padding: 1.5em;
 		background-color: white;
@@ -173,6 +174,7 @@
 		width: 2em;
 	}
 	#logs-action-container {
+		font-family: 'IBMPlexSans-Regular';
 		right: 30px;
 		top: 15vh;
 		align-self: right;
@@ -182,17 +184,20 @@
 	}
 	#logs-action-button {
 		border-radius: 10px;
+		font-family: 'IBMPlexSans-Regular';
 		margin: 7px;
 		width: 120px;
 	}
 	#delete-logs-text {
 		color: white;
-		font-family: Proxima;
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
+		-webkit-text-stroke-width: 1.1px;
 	}
 	#export-logs-text {
 		color: white;
-		font-family: Proxima;
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
+		-webkit-text-stroke-width: 1.1px;
 	}
 </style>
