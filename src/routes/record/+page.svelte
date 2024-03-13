@@ -264,7 +264,7 @@
 	}
 	.info-text {
 		color: silver;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-size: 25px;
 		padding-left: 5em;
 		padding-right: 5em;
@@ -272,7 +272,7 @@
 	}
 	#add-log-button {
 		border-radius: 100px;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bold;
 		font-size: 20px;
 		height: 40px;
@@ -284,7 +284,7 @@
 		border: none;
 		color: silver;
 		cursor: pointer;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-size: 25px;
 		font-weight: bold;
 		outline: none;
@@ -318,16 +318,15 @@
 	h2 {
 		margin-bottom: 1ch;
 		text-align: center;
-		font-family: "IBMPlexSans-Bold";
-		font-weight: .5px;
-
+		font-family: 'IBMPlexSans-Bold';
+		font-weight: 0.5px;
 	}
 	h3 {
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		margin-bottom: 0.5ch;
 	}
 	h5 {
-		font-family: "IBMPlexSans-BoldItalic";
+		font-family: 'IBMPlexSans-BoldItalic';
 		text-align: center;
 		margin-bottom: 0.25ch;
 	}
@@ -350,7 +349,7 @@
 	}
 	.field-button {
 		border-radius: 1em;
-		font-family: "IBMPlexSans-Regular";
+		font-family: 'IBMPlexSans-Regular';
 		font-weight: bold;
 	}
 	.field-container {
