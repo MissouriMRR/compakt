@@ -1,13 +1,8 @@
 <script lang="ts">
-	export let data;
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
-	
-	// LogArray.set(data);
-	console.log(data);
-	$LogArray = [];
-	
+
 	/**
 	 * @description
 	 * Deletes the selected logs from both the flight log page and subsequently the connected database

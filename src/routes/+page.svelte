@@ -1,3 +1,49 @@
+<script lang="ts">
+	import { LogVisualProps } from '$lib/structs';
+	import type { FlightLog } from '$lib/structs';
+	import { onMount } from 'svelte';
+	import { LogArray, Init } from '$lib/stores';
+
+	async function init() {
+		if ($Init) return;
+		$Init = true;
+
+		try {
+			const response = await fetch('/api/logs');
+			const data = await response.json();
+
+			if(data.results.length == 0) {
+				return;
+			}
+
+			for (const row of data.results) {
+				const newLog = {
+					id: parseInt(row.id),
+					location: row.location,
+					flight_date: row.flight_date,
+					start_time: row.start_time,
+					stop_time: row.stop_time,
+					temp_f: parseFloat(row.temp_f),
+					wind_speed_mph: parseFloat(row.wind_speed),
+					wind_direction: row.wind_direction,
+					wind_degree: parseFloat(row.wind_degree),
+					gust_speed_mph: parseFloat(row.gust_speed),
+					humidity: parseFloat(row.humidity),
+					pilot_id: row.pilot_id,
+					remote_id: row.remote_id,
+					v_props: { ...LogVisualProps }
+				} as FlightLog;
+
+				$LogArray.push(newLog);
+			}
+		} catch (error: any) {
+			console.error('Error fetching data:', error.message);
+		}
+	}
+
+	onMount(() => init());
+</script>
+
 <div id="title">
 	<h1 style="font-size: 50px;">The Compakt Web App</h1>
 	<h1 style="font-size: 35px;">By:</h1>
