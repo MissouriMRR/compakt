@@ -13,6 +13,31 @@
 				overflow: hidden;
 				user-select: none;
 			}
+			#checkbox-text {
+				font-family: 'IBMPlexSans-Bold';
+				font-size: 19px;
+				margin-top: 5px;
+			}
+			#checkbox-text input {
+				height: 1.5em;
+				width: 1.5em;
+			}
+			#checklist {
+				background-color: white;
+				border: 1px solid #000000;
+				border-radius: 10px;
+				padding: 1.5em;
+				position: absolute;
+				top: 125px;
+				left: 20px;
+			}
+			#checklist-text {
+				font-family: 'IBMPlexSans-Bold';
+				font-size: 29px;
+				margin-bottom: 10px;
+				margin-top: 20px;
+				text-decoration: underline;
+			}
 			div.nav {
 				align-items: center;
 				background-color: white;
@@ -31,8 +56,11 @@
 				margin-left: 1em;
 			}
 			div.title span#title-text {
+				display: flex;
 				font-family: 'IBMPlexSans-Bold';
 				font-size: 35px;
+				text-decoration: none;
+				white-space: nowrap;
 			}
 			div.tabs {
 				display: flex;
@@ -134,5 +162,20 @@
 			</div>
 		</div>
 		<main>%sveltekit.body%</main>
+	</body>
+	<body>
+		<div id="checklist">
+			<div id ="checklist-text">Flight Checklist</div> <br>
+			<div id ="checklist-text">Call: </div>
+				<div id="checkbox">
+					<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">Phelps Health <br> (573) 458-8899 </span> <br><br>
+					<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">S&T University Police <br> (573) 341-4300 </span>
+				</div>
+				<div id ="checklist-text">Document: </div>
+					<div id="checkbox">
+						<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">Pilot ID</span> <br><br>
+						<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">Drone ID</span>
+					</div>
+		</div>
 	</body>
 </html>
