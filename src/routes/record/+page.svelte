@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FlightRecord, InfoVisible, LogArray, FlagInvalid } from '$lib/stores';
+	import { FlightRecord, LogArray, FlagInvalid } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 
@@ -106,24 +106,12 @@
 		return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 	}
 
-	const toggleInfo = () => ($InfoVisible = !$InfoVisible);
 	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
 	const updateStart = (time: Date) => ($FlightRecord.start_time = extractTime(time));
 	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
 </script>
 
 <div id="form-container">
-	<div id="info-container">
-		{#if $InfoVisible}
-			<h2 class="info-text">
-				IMPORTANT INFO! You must call these phone numbers to ask for permission to fly:
-			</h2>
-			<h3 class="info-text">S&T University Police - (573) 341-4300</h3>
-			<h3 class="info-text">Phelps Health - (573) 458-8899</h3>
-		{/if}
-		<button id="info-close" on:click={toggleInfo}>{$InfoVisible ? '↑' : '↓'}</button>
-	</div>
-
 	<form id="flight-form">
 		<h1>Flight Information</h1>
 		<h5>Enter your location to fetch weather data</h5>
@@ -252,24 +240,6 @@
 		text-decoration-color: red;
 		border-color: red;
 	}
-	#info-container {
-		align-items: center;
-		background-color: #2e2e2e;
-		border-radius: 0px 0px 20px 20px;
-		display: flex;
-		flex-direction: column;
-		position: fixed;
-		top: max(4em, 10vh);
-		width: 80vw;
-	}
-	.info-text {
-		color: silver;
-		font-family: 'IBMPlexSans-Regular';
-		font-size: 25px;
-		padding-left: 5em;
-		padding-right: 5em;
-		white-space: normal;
-	}
 	#add-log-button {
 		border-radius: 100px;
 		font-family: 'IBMPlexSans-Regular';
@@ -278,17 +248,6 @@
 		height: 40px;
 		text-align: center;
 		width: 150px;
-	}
-	button#info-close {
-		background-color: transparent;
-		border: none;
-		color: silver;
-		cursor: pointer;
-		font-family: 'IBMPlexSans-Regular';
-		font-size: 25px;
-		font-weight: bold;
-		outline: none;
-		width: 100%;
 	}
 	#form-container {
 		align-items: top;
@@ -320,10 +279,6 @@
 		text-align: center;
 		font-family: 'IBMPlexSans-Bold';
 		font-weight: 0.5px;
-	}
-	h3 {
-		font-family: 'IBMPlexSans-Regular';
-		margin-bottom: 0.5ch;
 	}
 	h5 {
 		font-family: 'IBMPlexSans-BoldItalic';
