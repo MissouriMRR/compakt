@@ -74,12 +74,14 @@
 	}
 
 	function chronologicSort(logArray: FlightLog[]) {
-		logArray.sort((flight_a, flight_b) => {
-			const dateStringA = `${flight_a.flight_date}T${flight_a.start_time}`;
-			const dateStringB = `${flight_b.flight_date}T${flight_b.start_time}`;
-			return Date.parse(dateStringB) - Date.parse(dateStringA);
-		});
+		console.log(logArray);
 		return logArray;
+		// logArray.sort((flight_a, flight_b) => {
+		// 	const dateStringA = `${flight_a.flight_date}T${flight_a.start_time}`;
+		// 	const dateStringB = `${flight_b.flight_date}T${flight_b.start_time}`;
+		// 	return Date.parse(dateStringB) - Date.parse(dateStringA);
+		// });
+		// return logArray;
 	}
 </script>
 
