@@ -4,7 +4,9 @@
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
 	
-	LogArray.set(data);
+	// LogArray.set(data);
+	console.log(data);
+	$LogArray = [];
 	
 	/**
 	 * @description
@@ -74,14 +76,12 @@
 	}
 
 	function chronologicSort(logArray: FlightLog[]) {
-		console.log(logArray);
+		logArray.sort((flight_a, flight_b) => {
+			const dateStringA = `${flight_a.flight_date}T${flight_a.start_time}`;
+			const dateStringB = `${flight_b.flight_date}T${flight_b.start_time}`;
+			return Date.parse(dateStringB) - Date.parse(dateStringA);
+		});
 		return logArray;
-		// logArray.sort((flight_a, flight_b) => {
-		// 	const dateStringA = `${flight_a.flight_date}T${flight_a.start_time}`;
-		// 	const dateStringB = `${flight_b.flight_date}T${flight_b.start_time}`;
-		// 	return Date.parse(dateStringB) - Date.parse(dateStringA);
-		// });
-		// return logArray;
 	}
 </script>
 
