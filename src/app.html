@@ -13,12 +13,16 @@
 				overflow: hidden;
 				user-select: none;
 			}
-			#checkbox-text {
+			#checklist-section {
+				display: flex;
+				flex-direction: column;
+			}
+			#checklist-section label {
 				font-family: 'IBMPlexSans-Bold';
 				font-size: 19px;
 				margin-top: 5px;
 			}
-			#checkbox-text input {
+			#checklist-section input {
 				height: 1.5em;
 				width: 1.5em;
 			}
@@ -31,9 +35,8 @@
 				top: 125px;
 				left: 20px;
 			}
-			#checklist-text {
+			#checklist h1,#checklist h2 {
 				font-family: 'IBMPlexSans-Bold';
-				font-size: 29px;
 				margin-bottom: 10px;
 				margin-top: 20px;
 				text-decoration: underline;
@@ -165,17 +168,29 @@
 	</body>
 	<body>
 		<div id="checklist">
-			<div id ="checklist-text">Flight Checklist</div> <br>
-			<div id ="checklist-text">Call: </div>
-				<div id="checkbox">
-					<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">Phelps Health <br> (573) 458-8899 </span> <br><br>
-					<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">S&T University Police <br> (573) 341-4300 </span>
+			<h1>Flight Checklist</h1>
+			<h2>Call: </h2>
+			<div id="checklist-section">
+				<div>
+					<input id="hospital-num" type="checkbox" bind:checked={yes}/>
+					<label for="hospital-num">Phelps Health<br>(573) 458-8899</label>
 				</div>
-				<div id ="checklist-text">Document: </div>
-					<div id="checkbox">
-						<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">Pilot ID</span> <br><br>
-						<input type="checkbox" bind:checked={yes} /> <span id="checkbox-text">Drone ID</span>
-					</div>
+				<div>
+					<input id="police-num" type="checkbox" bind:checked={yes}/>
+					<label for="police-num">S&T University Police<br>(573) 341-4300</label>
+				</div>
+			</div>
+			<h2>Document: </h2>
+			<div id="checklist-section">
+				<div>
+					<input id="pilot-id" type="checkbox" bind:checked={yes}/>
+					<label for="pilot-id">Pilot ID</label>
+				</div>
+				<div>
+					<input id="remote-id" type="checkbox" bind:checked={yes}/>
+					<label for="remote-id">Drone ID</label>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
