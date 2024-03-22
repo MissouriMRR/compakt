@@ -2,6 +2,10 @@
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
+	import { onMount } from 'svelte';
+	import { init } from '$lib/load';
+
+	onMount(() => init());
 
 	/**
 	 * @description

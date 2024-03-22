@@ -2,6 +2,10 @@
 	import { FlightRecord, InfoVisible, LogArray, FlagInvalid } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
+	import { onMount } from 'svelte';
+	import { init } from '$lib/load';
+
+	onMount(() => init());
 
 	const DEFAULT_LOC = 'Rolla, MO';
 
