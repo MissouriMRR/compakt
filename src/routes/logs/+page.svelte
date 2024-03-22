@@ -80,7 +80,7 @@
 </script>
 
 <div>
-	<h1 style="-webkit-text-stroke-width: 1.5px;">Flight Logs</h1>
+	<h1>Flight Logs</h1>
 	<div id="logs-action-container">
 		<button
 			on:click={deleteSelectedLogs}
@@ -134,9 +134,9 @@
 
 <style>
 	h1 {
+		font-size: 40px;
+		font-weight: bold;
 		text-align: center;
-		font-family: 'IBMPlexSans-Regular';
-		font-weight: bolder;
 	}
 	#logs-container {
 		align-items: center;

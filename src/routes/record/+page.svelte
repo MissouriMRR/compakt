@@ -227,9 +227,7 @@
 					/>
 				</div>
 			</div>
-			<h1>
-				<button on:click={addNewLog} id="add-log-button">Add New Log</button>
-			</h1>
+			<button on:click={addNewLog} id="add-log-button">Add New Log</button>
 		</div>
 	</form>
 </div>
@@ -246,6 +244,7 @@
 		font-weight: bold;
 		font-size: 20px;
 		height: 40px;
+		margin-top: 2em;
 		text-align: center;
 		width: 150px;
 	}
@@ -300,7 +299,6 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		margin: 0.5em;
 	}
 	.field-button {
 		border-radius: 1em;
