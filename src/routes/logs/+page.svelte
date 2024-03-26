@@ -79,7 +79,7 @@
 	}
 </script>
 
-<body>
+<div id="logs-container">
 	<h1>Flight Logs</h1>
 	<div id="logs-action-container">
 		<button
@@ -128,10 +128,10 @@
 			</div>
 		{/each}
 	</div>
-</body>
+</div>
 
 <style>
-	body {
+	#logs-container {
 		font-family: 'IBMPlexSans-Regular';
 	}
 	h1 {

@@ -240,7 +240,6 @@
 	}
 	#add-log-button {
 		border-radius: 100px;
-		font-family: 'IBMPlexSans-Regular';
 		font-weight: bold;
 		font-size: 20px;
 		height: 40px;
@@ -251,6 +250,7 @@
 	#form-container {
 		align-items: top;
 		display: flex;
+		font-family: 'IBMPlexSans-Regular';
 		justify-content: center;
 		width: 100%;
 	}
@@ -261,7 +261,6 @@
 		width: 50%;
 	}
 	label {
-		font-family: "IBMPlexSans-Regular";
 		font-size: 19px;
 		margin-bottom:.5ch;
 		margin-top: 1.5ch;
@@ -302,7 +301,6 @@
 	}
 	.field-button {
 		border-radius: 1em;
-		font-family: 'IBMPlexSans-Regular';
 		font-weight: bold;
 	}
 	.field-container {
