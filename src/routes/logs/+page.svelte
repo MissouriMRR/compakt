@@ -2,6 +2,10 @@
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
+	import { onMount } from 'svelte';
+	import { init } from '$lib/load';
+
+	onMount(() => init());
 
 	/**
 	 * @description
@@ -71,11 +75,12 @@
 	}
 
 	function chronologicSort(logArray: FlightLog[]) {
-		return logArray.toSorted((flight_a, flight_b) => {
+		logArray.sort((flight_a, flight_b) => {
 			const dateStringA = `${flight_a.flight_date}T${flight_a.start_time}`;
 			const dateStringB = `${flight_b.flight_date}T${flight_b.start_time}`;
 			return Date.parse(dateStringB) - Date.parse(dateStringA);
 		});
+		return logArray;
 	}
 </script>
 
