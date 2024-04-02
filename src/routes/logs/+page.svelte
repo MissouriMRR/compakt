@@ -107,6 +107,7 @@
 			<div id={`${log.id}`} class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.flight_date}</span>
+					<span>Start Time: {log.start_time}</span>
 					<span>Location: {log.location}</span>
 					<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
 						{log.v_props.expanded ? 'Collapse' : 'Expand'}
@@ -154,7 +155,7 @@
 		margin: 2em 0;
 		padding: 1.5em;
 		background-color: white;
-		width: 70vw;
+		width: 65vw;
 		text-align: center;
 	}
 	.expand-button {
