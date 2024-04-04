@@ -18,6 +18,10 @@
 				overflow: auto;
 				padding: 5vb;
 			}
+			#logo {
+				width: min(9vw, 9vh);
+				height: auto;
+			}
 			.checklist-section {
 				display: flex;
 				flex-direction: column;
@@ -36,6 +40,7 @@
 				width: 1.5em;
 			}
 			div.checklist {
+				display: none;
 				background-color: white;
 				border-right: 3px solid black;
 				border-top: 3px solid black;
@@ -87,7 +92,7 @@
 				background-color: rgba(0, 0, 0, 0.1);
 			}
 			a#title-tab {
-				font-size: 35px;
+				font-size: min(35px, 5vw);
 				padding: 0.25em;
 			}
 			#site-title {
@@ -152,7 +157,7 @@
 		<div id="navbar">
 			<div id="title">
 				<a href="https://multirotor.mst.edu/" target="_blank"
-					><img src="/favicon.png" alt="logo" width="60" height="60" style="margin-right: 1ch"
+					><img src="/favicon.png" id="logo" alt="logo" style="margin-right: 1ch"
 				/></a>
 				<a class="tab-link" id="title-tab" href="/">Compakt</a>
 			</div>
