@@ -206,7 +206,7 @@
 		</div>
 
 		<div class="form-section">
-			<h2 style="margin-bottom:20px">Flight IDs</h2>
+			<h2>Flight IDs</h2>
 			<div class="data-field">
 				<label for="pilot-id">Pilot ID</label>
 				<div class="field-container">
@@ -262,7 +262,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		width: 50%;
+		padding: 10px;
 	}
 	label {
 		font-size: 19px;
@@ -272,7 +272,7 @@
 		white-space: nowrap;
 	}
 	h1 {
-		font-size: 40px;
+		font-size: min(40px, 8vw);
 		font-weight: bold;
 		text-align: center;
 	}
