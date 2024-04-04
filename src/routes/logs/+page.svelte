@@ -84,22 +84,22 @@
 	}
 </script>
 
-<div>
-	<h1 style="-webkit-text-stroke-width: 1.5px;">Flight Logs</h1>
+<div id="logs-container">
+	<h1>Flight Logs</h1>
 	<div id="logs-action-container">
 		<button
 			on:click={deleteSelectedLogs}
-			id="logs-action-button"
-			style="background-color: crimson; border-color: crimson;"
+			class="logs-action-button"
+			id="delete"
 		>
-			<span id="delete-logs-text">Delete Selected Logs</span>
+			<span>Delete Selected Logs</span>
 		</button>
 		<button
 			on:click={exportSelectedLogs}
-			id="logs-action-button"
-			style="background-color: cornflowerblue; border-color: cornflowerblue;"
+			class="logs-action-button"
+			id="export"
 		>
-			<span id="export-logs-text">Export Selected Logs</span>
+			<span>Export Selected Logs</span>
 		</button>
 	</div>
 	<div id="logs-container">
@@ -107,30 +107,29 @@
 			<div id={`${log.id}`} class="flight-log">
 				<div class="expand-details">
 					<span>Date: {log.flight_date}</span>
-					<span>Location: {log.location}</span>
 					<span>Start Time: {log.start_time}</span>
-					<span>End Time: {log.stop_time}</span>
-					<div class="log-action-container">
-						<button on:click={() => toggleExpansion(log.id)} class="expand-button">
-							{log.v_props.expanded ? 'Collapse' : 'Expand'}
-						</button>
-						<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
-					</div>
+					<span>Location: {log.location}</span>
+					<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
+						{log.v_props.expanded ? 'Collapse' : 'Expand'}
+					</button>
+					<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
 				</div>
 				{#if log.v_props.expanded}
-					<div class="log-info">
-						<span>
-							<br />Temperature: {log.temp_f}°F<br />
-							<br />Wind Speed: {log.wind_speed_mph} MPH<br />
-							<br />Wind Direction: {log.wind_direction}<br />
-							<br />Remote ID: {log.remote_id}<br />
-						</span>
-						<span>
-							<br />Gust Speed: {log.gust_speed_mph} MPH<br />
-							<br />Humidity: {log.humidity}%<br />
-							<br />Pilot ID: {log.pilot_id}<br />
-						</span>
-					</div>
+					<table id="log-info">
+						<tr>
+							<td>Temperature: {log.temp_f}°F</td>
+							<td>Wind Speed: {log.wind_speed_mph} MPH</td>
+							<td>Wind Direction: {log.wind_direction}</td>
+							<td>Remote ID: {log.remote_id}</td>
+							<td>Start Time: {log.start_time}</td>
+						</tr>
+						<tr>
+							<td>Gust Speed: {log.gust_speed_mph} MPH</td>
+							<td>Humidity: {log.humidity}%</td>
+							<td>Pilot ID: {log.pilot_id}</td>
+							<td>End Time: {log.stop_time}</td>
+						</tr>
+					</table>
 				{/if}
 			</div>
 		{/each}
@@ -138,36 +137,45 @@
 </div>
 
 <style>
-	h1 {
-		text-align: center;
+	#logs-container {
 		font-family: 'IBMPlexSans-Regular';
-		font-weight: bolder;
+	}
+	h1 {
+		font-size: 40px;
+		font-weight: bold;
+		text-align: center;
 	}
 	#logs-container {
 		align-items: center;
 		display: flex;
 		flex-direction: column;
 	}
-	.log-action-container {
-		margin-left: 1ch;
-	}
 	.flight-log {
 		border: 1px solid #000000;
-		font-family: 'IBMPlexSans-Regular';
 		margin: 2em 0;
 		padding: 1.5em;
 		background-color: white;
-		width: 70vw;
+		width: 65vw;
 		text-align: center;
 	}
 	.expand-button {
 		cursor: pointer;
+		margin-left: 1ch;
 	}
 	.expand-details {
 		font-weight: bold;
 	}
-	.log-info {
-		display: none;
+	#log-info {
+		display: flex;
+		justify-content: center;
+	}
+	#log-info tr {
+		display: flex;
+		flex-direction: column;
+		margin: auto;
+	}
+	#log-info td {
+		margin: .5em;
 	}
 	.flight-log div {
 		display: flex;
@@ -183,7 +191,6 @@
 		width: 2em;
 	}
 	#logs-action-container {
-		font-family: 'IBMPlexSans-Regular';
 		right: 30px;
 		top: 15vh;
 		align-self: right;
@@ -191,22 +198,21 @@
 		flex-direction: column;
 		position: absolute;
 	}
-	#logs-action-button {
+	.logs-action-button {
 		border-radius: 10px;
-		font-family: 'IBMPlexSans-Regular';
 		margin: 7px;
 		width: 120px;
 	}
-	#delete-logs-text {
+	.logs-action-button span {
 		color: white;
-		font-family: 'IBMPlexSans-Regular';
 		font-weight: bolder;
-		-webkit-text-stroke-width: 1.1px;
 	}
-	#export-logs-text {
-		color: white;
-		font-family: 'IBMPlexSans-Regular';
-		font-weight: bolder;
-		-webkit-text-stroke-width: 1.1px;
+	.logs-action-button#delete {
+		background-color: crimson;
+		border-color: crimson;
+	}
+	.logs-action-button#export {
+		background-color: cornflowerblue;
+		border-color: cornflowerblue;
 	}
 </style>
