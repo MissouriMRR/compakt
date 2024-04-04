@@ -4,7 +4,7 @@
 	import { LogArray } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import { init } from '$lib/load';
-	import DeleteForever from '@material-ui/icons/DeleteForever'
+
 	onMount(() => init());
 
 	/**
