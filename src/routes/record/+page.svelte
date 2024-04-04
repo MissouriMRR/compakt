@@ -117,8 +117,7 @@
 
 <div id="form-container">
 	<form id="flight-form">
-		<h1>Flight Information</h1>
-		<h5>Enter your location to fetch weather data</h5>
+		<h1>Record Flight</h1>
 		<h2>Location</h2>
 		<div class="form-section">
 			<div class="data-field">
@@ -139,6 +138,7 @@
 						on:click={loadWeatherData}
 					/>
 				</div>
+				<h5>Enter your location to fetch weather data</h5>
 			</div>
 		</div>
 

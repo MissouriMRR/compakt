@@ -81,9 +81,10 @@
 			a.tab-link {
 				border-radius: 0.5em;
 				color: black;
+				width: 14vw;
 				font-family: 'IBMPlexSans-Bold';
 				font-size: min(30px, 4vw);
-				padding: 0.5em;
+				padding: 0.25em;
 				text-align: center;
 				text-decoration: none;
 				white-space: nowrap;
@@ -93,7 +94,7 @@
 			}
 			a#title-tab {
 				font-size: min(35px, 5vw);
-				padding: 0.25em;
+				width: auto;
 			}
 			#site-title {
 				font-family: 'IBMPlexSans-Bold';
@@ -162,8 +163,8 @@
 				<a class="tab-link" id="title-tab" href="/">Compakt</a>
 			</div>
 			<div id="tabs">
-				<a class="tab-link" href="/record">Flight Recorder</a>
-				<a class="tab-link" href="/logs">Flight Logs</a>
+				<a class="tab-link" href="/record">Record</a>
+				<a class="tab-link" href="/logs">Logs</a>
 			</div>
 		</div>
 		<main>%sveltekit.body%</main>

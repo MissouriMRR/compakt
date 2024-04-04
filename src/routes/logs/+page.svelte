@@ -4,7 +4,7 @@
 	import { LogArray } from '$lib/stores';
 	import { onMount } from 'svelte';
 	import { init } from '$lib/load';
-
+	import DeleteForever from '@material-ui/icons/DeleteForever'
 	onMount(() => init());
 
 	/**
@@ -92,14 +92,14 @@
 			class="logs-action-button"
 			id="delete"
 		>
-			<span>Delete Selected Logs</span>
+		<span>Delete</span>
 		</button>
 		<button
 			on:click={exportSelectedLogs}
 			class="logs-action-button"
 			id="export"
 		>
-			<span>Export Selected Logs</span>
+			<span>Export</span>
 		</button>
 	</div>
 	<div id="logs-container">
@@ -201,7 +201,6 @@
 	.logs-action-button {
 		border-radius: 10px;
 		margin: 7px;
-		width: 120px;
 	}
 	.logs-action-button span {
 		color: white;
