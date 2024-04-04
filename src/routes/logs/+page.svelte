@@ -141,7 +141,7 @@
 		font-family: 'IBMPlexSans-Regular';
 	}
 	h1 {
-		font-size: 40px;
+		font-size: min(40px, 8vw);
 		font-weight: bold;
 		text-align: center;
 	}
@@ -152,10 +152,10 @@
 	}
 	.flight-log {
 		border: 1px solid #000000;
-		margin: 2em 0;
+		margin: 2em;
 		padding: 1.5em;
 		background-color: white;
-		width: 65vw;
+		width: 90vw;
 		text-align: center;
 	}
 	.expand-button {
