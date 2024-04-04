@@ -92,14 +92,14 @@
 			class="logs-action-button"
 			id="delete"
 		>
-		<span>Delete</span>
+			<img src="feather/trash-2.svg"/>
 		</button>
 		<button
 			on:click={exportSelectedLogs}
 			class="logs-action-button"
 			id="export"
 		>
-			<span>Export</span>
+		<img src="feather/download.svg"/>
 		</button>
 	</div>
 	<div id="logs-container">
