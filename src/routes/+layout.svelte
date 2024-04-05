@@ -1,6 +1,15 @@
 <script>
+  import { dev } from '$app/environment';
+  import { onMount } from 'svelte';
+	import { init } from '$lib/load';
+
+  if(!dev) {
+    onMount(() => init());
+  }
+
   let checklistVisible = true;
   let checks = [false, false];
+  
   function onConfirm() {
     if(checks.every(Boolean)) {
       checklistVisible = false;

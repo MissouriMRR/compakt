@@ -2,10 +2,7 @@
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
-	import { onMount } from 'svelte';
-	import { init } from '$lib/load';
-
-	onMount(() => init());
+	import { dev } from '$app/environment';
 
 	/**
 	 * @description
@@ -31,13 +28,15 @@
 			}
 		}
 
-		await fetch('/api/logs', {
-			method: 'DELETE',
-			body: JSON.stringify(deletedIds),
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8'
-			}
-		});
+		if(!dev) {
+			await fetch('/api/logs', {
+				method: 'DELETE',
+				body: JSON.stringify(deletedIds),
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8'
+				}
+			});
+		}
 
 		$LogArray = [...flightLogsNext];
 	}
@@ -92,14 +91,14 @@
 			class="logs-action-button"
 			id="delete"
 		>
-			<img src="feather/trash-2.svg"/>
+			<img alt="Delete target data" src="feather/trash-2.svg"/>
 		</button>
 		<button
 			on:click={exportSelectedLogs}
 			class="logs-action-button"
 			id="export"
 		>
-		<img src="feather/download.svg"/>
+		<img alt="Export target data" src="feather/download.svg"/>
 		</button>
 	</div>
 	<div>
@@ -151,16 +150,16 @@
 		text-align: center;
 	}
 	#logs-action-container {
-		right: 30px;
-		top: 15vh;
+		right: 3vh;
+		top: 13vh;
 		align-self: right;
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		position: absolute;
 	}
 	.logs-action-button {
-		border-radius: 10px;
-		margin: 7px;
+		border-radius: .5em;
+		margin: .5em;
 	}
 	.logs-action-button#delete {
 		background-color: crimson;
@@ -172,10 +171,9 @@
 	}
 	.flight-log {
 		border: 1px solid #000000;
-		margin: 2em;
 		padding: 1.5em;
 		background-color: white;
-		width: 90vw;
+		width: calc(100vw - 3em);
 		text-align: center;
 	}
 	.flight-log div {

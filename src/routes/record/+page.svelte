@@ -2,10 +2,7 @@
 	import { FlightRecord, LogArray, FlagInvalid } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
-	import { onMount } from 'svelte';
-	import { init } from '$lib/load';
-
-	onMount(() => init());
+	import { dev } from '$app/environment';
 
 	const DEFAULT_LOC = 'Rolla, MO';
 
@@ -52,13 +49,15 @@
 			return;
 		}
 
-		await fetch('/api/logs', {
-			method: 'POST',
-			body: JSON.stringify(newLog),
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8'
-			}
-		});
+		if(!dev) {
+			await fetch('/api/logs', {
+				method: 'POST',
+				body: JSON.stringify(newLog),
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8'
+				}
+			});
+		}
 
 		$LogArray = [...$LogArray, newLog];
 		$FlagInvalid = false;

@@ -1,9 +1,3 @@
-<script lang="ts">
-	import { onMount } from 'svelte';
-	import { init } from '$lib/load';
-	onMount(() => init());
-</script>
-
 <div id="about-container">
 	<div id="title">
 		<h1 style="font-size: 50px;">The Compakt Web App</h1>
