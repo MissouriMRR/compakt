@@ -188,6 +188,7 @@
 		background: none;
 		border: none;
 		cursor: pointer;
+		width: 100%;
 	}
 	.log-info {
 		align-items: center;
