@@ -67,6 +67,7 @@
     align-items: center;
     background-color: white;
     border: 3px solid black;
+    border-radius: 1em;
     display: flex;
     flex-direction: column;
     height: auto;

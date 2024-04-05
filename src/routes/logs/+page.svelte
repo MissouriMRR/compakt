@@ -104,15 +104,19 @@
 	<div>
 		{#each chronologicSort($LogArray) as log (log.id)}
 			<div id={`${log.id}`} class="flight-log">
-				<div class="expand-details">
-					<span>Date: {log.flight_date}</span>
-					<span>Start Time: {log.start_time}</span>
-					<span>Location: {log.location}</span>
-					<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
-						{log.v_props.expanded ? 'Collapse' : 'Expand'}
-					</button>
+				<div id="log-header">
 					<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
+					<span>{log.location}</span>
+					<span>{log.flight_date}</span>
+					<span>{log.start_time}</span>
 				</div>
+				<button id="expand-button" on:click={() => toggleExpansion(log.id)}>
+					{#if log.v_props.expanded}
+						<img alt="Collapse" src="feather/chevron-up.svg"/>
+					{:else}
+						<img alt="Expand" src="feather/chevron-down.svg"/>
+					{/if}
+				</button>
 				{#if log.v_props.expanded}
 					<table id="log-info">
 						<tr>
@@ -150,15 +154,12 @@
 		text-align: center;
 	}
 	#logs-action-container {
-		right: 3vh;
-		top: 13vh;
-		align-self: right;
 		display: flex;
-		flex-direction: column;
-		position: absolute;
+		flex-direction: row;
 	}
 	.logs-action-button {
 		border-radius: .5em;
+		flex: 1;
 		margin: .5em;
 	}
 	.logs-action-button#delete {
@@ -170,11 +171,13 @@
 		border-color: cornflowerblue;
 	}
 	.flight-log {
+		background-color: #ffffff;
 		border: 1px solid #000000;
+		margin-bottom: 0.25em;
 		padding: 1.5em;
-		background-color: white;
-		width: calc(100vw - 3em);
+		padding-bottom: 0;
 		text-align: center;
+		width: calc(100vw - 3em);
 	}
 	.flight-log div {
 		display: flex;
@@ -183,12 +186,17 @@
 	.flight-log span {
 		flex: 1;
 	}
-	.expand-button {
+	#expand-button {
+		background: none;
+		border: none;
 		cursor: pointer;
-		margin-left: 1ch;
 	}
-	.expand-details {
+	#log-header {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
 		font-weight: bold;
+		justify-content: space-between;
 	}
 	#log-info {
 		display: flex;
