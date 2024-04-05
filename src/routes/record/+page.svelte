@@ -115,128 +115,135 @@
 	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
 </script>
 
-<div id="form-container">
-	<form id="flight-form">
-		<h1>Record Flight</h1>
-		<h2>Location</h2>
+<div id="flight-form">
+	<h1>Record Flight</h1>
+	<h2>Location</h2>
+	<div class="form-section">
+		<div class="data-field">
+			<label for="location">City</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.location}
+					class="field-entree"
+					id="location"
+					type="text"
+					bind:value={$FlightRecord.location}
+				/>
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.weather}
+					class="field-button"
+					type="button"
+					value="Get Weather"
+					on:click={loadWeatherData}
+				/>
+			</div>
+			<h5>Enter your location to fetch weather data</h5>
+		</div>
+	</div>
+
+	{#if $FlightRecord.weather}
 		<div class="form-section">
-			<div class="data-field">
-				<label for="location">City</label>
-				<div class="field-container">
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.location}
-						class="field-entree"
-						id="location"
-						type="text"
-						bind:value={$FlightRecord.location}
-					/>
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.weather}
-						class="field-button"
-						type="button"
-						value="Get Weather"
-						on:click={loadWeatherData}
-					/>
-				</div>
-				<h5>Enter your location to fetch weather data</h5>
+			<h2>Weather</h2>
+			<div class="weather-container">
+				<label for="location">Location: {$FlightRecord.location}</label>
+			</div>
+
+			<div class="weather-container">
+				<label for="temperature">Temperature: {$FlightRecord.weather.temp_f + '°F'}</label>
+			</div>
+			<div class="weather-container">
+				<label for="condition">Condition: {$FlightRecord.weather.condition}</label>
+			</div>
+		</div>
+	{/if}
+
+	<div class="form-section">
+		<h2>Time & Date</h2>
+		<div class="data-field">
+			<label for="date">Date</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.flight_date}
+					class="field-entree"
+					id="date"
+					type="date"
+					value={$FlightRecord.flight_date}
+				/>
+				<button class="field-button" on:click={() => updateDate(new Date())}>Today</button>
 			</div>
 		</div>
 
-		{#if $FlightRecord.weather}
-			<div class="form-section">
-				<h2>Weather</h2>
-				<div class="weather-container">
-					<label for="location">Location: {$FlightRecord.location}</label>
-				</div>
-
-				<div class="weather-container">
-					<label for="temperature">Temperature: {$FlightRecord.weather.temp_f + '°F'}</label>
-				</div>
-				<div class="weather-container">
-					<label for="condition">Condition: {$FlightRecord.weather.condition}</label>
-				</div>
-			</div>
-		{/if}
-
-		<div class="form-section">
-			<h2>Time & Date</h2>
-			<div class="data-field">
-				<label for="date">Date</label>
-				<div class="field-container">
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.flight_date}
-						class="field-entree"
-						id="date"
-						type="date"
-						value={$FlightRecord.flight_date}
-					/>
-					<button class="field-button" on:click={() => updateDate(new Date())}>Today</button>
-				</div>
-			</div>
-
-			<div class="data-field">
-				<label for="time-start">Start Time</label>
-				<div class="field-container">
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.start_time}
-						class="field-entree"
-						type="time"
-						id="time-start"
-						value={$FlightRecord.start_time || ''}
-						step="1"
-					/>
-					<button class="field-button" on:click={() => updateStart(new Date())}>Now</button>
-				</div>
-			</div>
-
-			<div class="data-field">
-				<label for="time-end">End Time</label>
-				<div class="field-container">
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.stop_time}
-						class="field-entree"
-						type="time"
-						id="time-end"
-						value={$FlightRecord.stop_time || ''}
-						step="1"
-					/>
-					<button class="field-button" on:click={() => updateEnd(new Date())}>Now</button>
-				</div>
+		<div class="data-field">
+			<label for="time-start">Start Time</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.start_time}
+					class="field-entree"
+					type="time"
+					id="time-start"
+					value={$FlightRecord.start_time || ''}
+					step="1"
+				/>
+				<button class="field-button" on:click={() => updateStart(new Date())}>Now</button>
 			</div>
 		</div>
 
-		<div class="form-section">
-			<h2>Flight IDs</h2>
-			<div class="data-field">
-				<label for="pilot-id">Pilot ID</label>
-				<div class="field-container">
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.pilot_id}
-						class="field-entree"
-						id="pilot-id"
-						type="text"
-						bind:value={$FlightRecord.pilot_id}
-					/>
-				</div>
+		<div class="data-field">
+			<label for="time-end">End Time</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.stop_time}
+					class="field-entree"
+					type="time"
+					id="time-end"
+					value={$FlightRecord.stop_time || ''}
+					step="1"
+				/>
+				<button class="field-button" on:click={() => updateEnd(new Date())}>Now</button>
 			</div>
-			<div class="data-field">
-				<label for="remote-id">Remote ID</label>
-				<div class="field-container">
-					<input
-						class:invalid-input={$FlagInvalid && !$FlightRecord.remote_id}
-						class="field-entree"
-						id="remote-id"
-						type="text"
-						bind:value={$FlightRecord.remote_id}
-					/>
-				</div>
-			</div>
-			<button on:click={addNewLog} id="add-log-button">Add New Log</button>
 		</div>
-	</form>
+	</div>
+
+	<div class="form-section">
+		<h2>Flight IDs</h2>
+		<div class="data-field">
+			<label for="pilot-id">Pilot ID</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.pilot_id}
+					class="field-entree"
+					id="pilot-id"
+					type="text"
+					bind:value={$FlightRecord.pilot_id}
+				/>
+			</div>
+		</div>
+		<div class="data-field">
+			<label for="remote-id">Remote ID</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.remote_id}
+					class="field-entree"
+					id="remote-id"
+					type="text"
+					bind:value={$FlightRecord.remote_id}
+				/>
+			</div>
+		</div>
+		<button on:click={addNewLog} id="add-log-button">Add New Log</button>
+	</div>
 </div>
 
 <style>
+	#flight-form {
+		display: flex;
+		flex-direction: column;
+		font-family: 'IBMPlexSans-Regular';
+		height: 90vh;
+		justify-content: left;
+		overflow: auto;
+		padding: 10px;
+	}
 	.invalid-input {
 		color: red;
 		text-decoration-color: red;
@@ -250,19 +257,6 @@
 		margin-top: 2em;
 		text-align: center;
 		width: 150px;
-	}
-	#form-container {
-		align-items: top;
-		display: flex;
-		font-family: 'IBMPlexSans-Regular';
-		justify-content: center;
-		width: 100%;
-	}
-	#flight-form {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		padding: 10px;
 	}
 	label {
 		font-size: 19px;

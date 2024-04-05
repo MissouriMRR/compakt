@@ -102,7 +102,7 @@
 		<img src="feather/download.svg"/>
 		</button>
 	</div>
-	<div id="logs-container">
+	<div>
 		{#each chronologicSort($LogArray) as log (log.id)}
 			<div id={`${log.id}`} class="flight-log">
 				<div class="expand-details">
@@ -138,17 +138,37 @@
 
 <style>
 	#logs-container {
+		display: flex;
+		flex-direction: column;
 		font-family: 'IBMPlexSans-Regular';
+		justify-content: left;
+		height: 90vh;
+		overflow: auto;
 	}
 	h1 {
 		font-size: min(40px, 8vw);
 		font-weight: bold;
 		text-align: center;
 	}
-	#logs-container {
-		align-items: center;
+	#logs-action-container {
+		right: 30px;
+		top: 15vh;
+		align-self: right;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
+		position: absolute;
+	}
+	.logs-action-button {
+		border-radius: 10px;
+		margin: 7px;
+	}
+	.logs-action-button#delete {
+		background-color: crimson;
+		border-color: crimson;
+	}
+	.logs-action-button#export {
+		background-color: cornflowerblue;
+		border-color: cornflowerblue;
 	}
 	.flight-log {
 		border: 1px solid #000000;
@@ -157,6 +177,13 @@
 		background-color: white;
 		width: 90vw;
 		text-align: center;
+	}
+	.flight-log div {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.flight-log span {
+		flex: 1;
 	}
 	.expand-button {
 		cursor: pointer;
@@ -177,41 +204,10 @@
 	#log-info td {
 		margin: .5em;
 	}
-	.flight-log div {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.flight-log span {
-		flex: 1;
-	}
 	.select-checkbox {
 		height: 2em;
 		margin-left: 2ch;
 		text-align: center;
 		width: 2em;
-	}
-	#logs-action-container {
-		right: 30px;
-		top: 15vh;
-		align-self: right;
-		display: flex;
-		flex-direction: column;
-		position: absolute;
-	}
-	.logs-action-button {
-		border-radius: 10px;
-		margin: 7px;
-	}
-	.logs-action-button span {
-		color: white;
-		font-weight: bolder;
-	}
-	.logs-action-button#delete {
-		background-color: crimson;
-		border-color: crimson;
-	}
-	.logs-action-button#export {
-		background-color: cornflowerblue;
-		border-color: cornflowerblue;
 	}
 </style>
