@@ -2,10 +2,7 @@
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray } from '$lib/stores';
-	import { onMount } from 'svelte';
-	import { init } from '$lib/load';
-
-	onMount(() => init());
+	import { dev } from '$app/environment';
 
 	/**
 	 * @description
@@ -31,13 +28,15 @@
 			}
 		}
 
-		await fetch('/api/logs', {
-			method: 'DELETE',
-			body: JSON.stringify(deletedIds),
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8'
-			}
-		});
+		if(!dev) {
+			await fetch('/api/logs', {
+				method: 'DELETE',
+				body: JSON.stringify(deletedIds),
+				headers: {
+					'Content-type': 'application/json; charset=UTF-8'
+				}
+			});
+		}
 
 		$LogArray = [...flightLogsNext];
 	}
@@ -86,49 +85,41 @@
 
 <div id="logs-container">
 	<h1>Flight Logs</h1>
-	<div id="logs-action-container">
-		<button
-			on:click={deleteSelectedLogs}
-			class="logs-action-button"
-			id="delete"
-		>
-			<span>Delete Selected Logs</span>
+	<div class="logs-action-container">
+		<button on:click={deleteSelectedLogs} id="delete">
+			<img alt="Delete target data" src="feather/trash-2.svg"/>
 		</button>
-		<button
-			on:click={exportSelectedLogs}
-			class="logs-action-button"
-			id="export"
-		>
-			<span>Export Selected Logs</span>
+		<button on:click={exportSelectedLogs} id="export">
+		<img alt="Export target data" src="feather/download.svg"/>
 		</button>
 	</div>
-	<div id="logs-container">
+	<div>
 		{#each chronologicSort($LogArray) as log (log.id)}
 			<div id={`${log.id}`} class="flight-log">
-				<div class="expand-details">
-					<span>Date: {log.flight_date}</span>
-					<span>Start Time: {log.start_time}</span>
-					<span>Location: {log.location}</span>
-					<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
-						{log.v_props.expanded ? 'Collapse' : 'Expand'}
-					</button>
+				<div class="log-header">
 					<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
+					<span>{log.location}</span>
+					<span>{log.flight_date}</span>
+					<span>{log.start_time}</span>
 				</div>
+				<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
+					{#if log.v_props.expanded}
+						<img alt="Collapse" src="feather/chevron-up.svg"/>
+					{:else}
+						<img alt="Expand" src="feather/chevron-down.svg"/>
+					{/if}
+				</button>
 				{#if log.v_props.expanded}
-					<table id="log-info">
-						<tr>
-							<td>Temperature: {log.temp_f}°F</td>
-							<td>Wind Speed: {log.wind_speed_mph} MPH</td>
-							<td>Wind Direction: {log.wind_direction}</td>
-							<td>Remote ID: {log.remote_id}</td>
-							<td>Start Time: {log.start_time}</td>
-						</tr>
-						<tr>
-							<td>Gust Speed: {log.gust_speed_mph} MPH</td>
-							<td>Humidity: {log.humidity}%</td>
-							<td>Pilot ID: {log.pilot_id}</td>
-							<td>End Time: {log.stop_time}</td>
-						</tr>
+					<table class="log-info">
+						<tr><td class="key-col">Start Time</td><td>{log.start_time}</td></tr>
+						<tr><td class="key-col">End Time</td><td>{log.stop_time}</td></tr>
+						<tr><td class="key-col">Temperature</td><td>{log.temp_f}°F</td></tr>
+						<tr><td class="key-col">Wind Speed</td><td>{log.wind_speed_mph} MPH</td></tr>
+						<tr><td class="key-col">Wind Direction</td><td>{log.wind_direction}</td></tr>
+						<tr><td class="key-col">Gust Speed</td><td>{log.gust_speed_mph} MPH</td></tr>
+						<tr><td class="key-col">Humidity</td><td>{log.humidity}%</td></tr>
+						<tr><td class="key-col">Remote ID</td><td>{log.remote_id}</td></tr>
+						<tr><td class="key-col">Pilot ID</td><td>{log.pilot_id}</td></tr>
 					</table>
 				{/if}
 			</div>
@@ -138,51 +129,51 @@
 
 <style>
 	#logs-container {
+		display: flex;
+		flex-direction: column;
 		font-family: 'IBMPlexSans-Regular';
+		justify-content: left;
+		height: 90vh;
+		overflow: auto;
 	}
 	h1 {
-		font-size: 40px;
+		font-size: min(40px, 8vw);
 		font-weight: bold;
 		text-align: center;
 	}
-	#logs-container {
-		align-items: center;
+	.logs-action-container {
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 	}
-	.flight-log {
-		border: 1px solid #000000;
-		margin: 2em 0;
-		padding: 1.5em;
-		background-color: white;
-		width: 65vw;
-		text-align: center;
-	}
-	.expand-button {
-		cursor: pointer;
-		margin-left: 1ch;
-	}
-	.expand-details {
-		font-weight: bold;
-	}
-	#log-info {
-		display: flex;
-		justify-content: center;
-	}
-	#log-info tr {
-		display: flex;
-		flex-direction: column;
-		margin: auto;
-	}
-	#log-info td {
+	.logs-action-container button {
+		border-radius: .5em;
+		flex: 1;
 		margin: .5em;
 	}
-	.flight-log div {
-		display: flex;
-		flex-wrap: wrap;
+	.logs-action-container button#delete {
+		background-color: crimson;
+		border-color: crimson;
 	}
-	.flight-log span {
-		flex: 1;
+	.logs-action-container button#export {
+		background-color: cornflowerblue;
+		border-color: cornflowerblue;
+	}
+	.flight-log {
+		background-color: #ffffff;
+		border: 1px solid #000000;
+		margin-bottom: 0.25em;
+		padding: 1.5em;
+		padding-bottom: 0;
+		text-align: center;
+		width: calc(100vw - 3em);
+	}
+	.log-header {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		font-weight: bold;
+		justify-content: space-between;
 	}
 	.select-checkbox {
 		height: 2em;
@@ -190,29 +181,34 @@
 		text-align: center;
 		width: 2em;
 	}
-	#logs-action-container {
-		right: 30px;
-		top: 15vh;
-		align-self: right;
+	#log-header span {
+		flex: 1;
+	}
+	.expand-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		width: 100%;
+	}
+	.log-info {
+		align-items: center;
 		display: flex;
 		flex-direction: column;
-		position: absolute;
+		justify-content: center;
+		margin-bottom: 1.5em;
 	}
-	.logs-action-button {
-		border-radius: 10px;
-		margin: 7px;
-		width: 120px;
+	.log-info tr {
+		border-bottom: 1px solid black;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
 	}
-	.logs-action-button span {
-		color: white;
-		font-weight: bolder;
+	.log-info td {
+		flex: 1;
+		margin: .25em;
+		text-align: right;
 	}
-	.logs-action-button#delete {
-		background-color: crimson;
-		border-color: crimson;
-	}
-	.logs-action-button#export {
-		background-color: cornflowerblue;
-		border-color: cornflowerblue;
+	td.key-col {
+		text-align: left;
 	}
 </style>
