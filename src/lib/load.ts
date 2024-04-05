@@ -4,6 +4,10 @@ import { LogArray } from '$lib/stores';
 
 let initialized = false;
 
+/**
+ * @description
+ * Initializes the flight logs array by pulling from the database
+*/
 export async function init() {
   if (initialized) return;
   initialized = true;

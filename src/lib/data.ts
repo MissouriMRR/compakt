@@ -1,5 +1,11 @@
 // Taken from https://gist.github.com/changhuixu/de092ee55a9e115abba988910bd68d41
 export class CsvDataService {
+	/**
+	 * @description
+	 * Exports a key-value object to a csv file format
+	 * @param {string} filename The object to parse and export
+	 * @param {object[]} rows The filename of the exported file
+	*/
 	static exportToCsv(filename: string, rows: object[]) {
 		if (!rows || !rows.length) {
 			return;

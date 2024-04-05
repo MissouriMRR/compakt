@@ -1,6 +1,10 @@
 import type { RequestHandler } from './$types';
 import { env } from '$env/dynamic/private';
 
+/**
+ * @description
+ * Retrieves weather data from an external weather service
+*/
 export const POST: RequestHandler = async (ev) => {
 	const { request } = ev;
 	try {
