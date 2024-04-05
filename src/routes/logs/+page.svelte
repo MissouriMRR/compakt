@@ -85,32 +85,24 @@
 
 <div id="logs-container">
 	<h1>Flight Logs</h1>
-	<div id="logs-action-container">
-		<button
-			on:click={deleteSelectedLogs}
-			class="logs-action-button"
-			id="delete"
-		>
+	<div class="logs-action-container">
+		<button on:click={deleteSelectedLogs} id="delete">
 			<img alt="Delete target data" src="feather/trash-2.svg"/>
 		</button>
-		<button
-			on:click={exportSelectedLogs}
-			class="logs-action-button"
-			id="export"
-		>
+		<button on:click={exportSelectedLogs} id="export">
 		<img alt="Export target data" src="feather/download.svg"/>
 		</button>
 	</div>
 	<div>
 		{#each chronologicSort($LogArray) as log (log.id)}
 			<div id={`${log.id}`} class="flight-log">
-				<div id="log-header">
+				<div class="log-header">
 					<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
 					<span>{log.location}</span>
 					<span>{log.flight_date}</span>
 					<span>{log.start_time}</span>
 				</div>
-				<button id="expand-button" on:click={() => toggleExpansion(log.id)}>
+				<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
 					{#if log.v_props.expanded}
 						<img alt="Collapse" src="feather/chevron-up.svg"/>
 					{:else}
@@ -118,20 +110,16 @@
 					{/if}
 				</button>
 				{#if log.v_props.expanded}
-					<table id="log-info">
-						<tr>
-							<td>Temperature: {log.temp_f}°F</td>
-							<td>Wind Speed: {log.wind_speed_mph} MPH</td>
-							<td>Wind Direction: {log.wind_direction}</td>
-							<td>Remote ID: {log.remote_id}</td>
-							<td>Start Time: {log.start_time}</td>
-						</tr>
-						<tr>
-							<td>Gust Speed: {log.gust_speed_mph} MPH</td>
-							<td>Humidity: {log.humidity}%</td>
-							<td>Pilot ID: {log.pilot_id}</td>
-							<td>End Time: {log.stop_time}</td>
-						</tr>
+					<table class="log-info">
+						<tr><td class="key-col">Start Time</td><td>{log.start_time}</td></tr>
+						<tr><td class="key-col">End Time</td><td>{log.stop_time}</td></tr>
+						<tr><td class="key-col">Temperature</td><td>{log.temp_f}°F</td></tr>
+						<tr><td class="key-col">Wind Speed</td><td>{log.wind_speed_mph} MPH</td></tr>
+						<tr><td class="key-col">Wind Direction</td><td>{log.wind_direction}</td></tr>
+						<tr><td class="key-col">Gust Speed</td><td>{log.gust_speed_mph} MPH</td></tr>
+						<tr><td class="key-col">Humidity</td><td>{log.humidity}%</td></tr>
+						<tr><td class="key-col">Remote ID</td><td>{log.remote_id}</td></tr>
+						<tr><td class="key-col">Pilot ID</td><td>{log.pilot_id}</td></tr>
 					</table>
 				{/if}
 			</div>
@@ -153,20 +141,20 @@
 		font-weight: bold;
 		text-align: center;
 	}
-	#logs-action-container {
+	.logs-action-container {
 		display: flex;
 		flex-direction: row;
 	}
-	.logs-action-button {
+	.logs-action-container button {
 		border-radius: .5em;
 		flex: 1;
 		margin: .5em;
 	}
-	.logs-action-button#delete {
+	.logs-action-container button#delete {
 		background-color: crimson;
 		border-color: crimson;
 	}
-	.logs-action-button#export {
+	.logs-action-container button#export {
 		background-color: cornflowerblue;
 		border-color: cornflowerblue;
 	}
@@ -179,41 +167,47 @@
 		text-align: center;
 		width: calc(100vw - 3em);
 	}
-	.flight-log div {
-		display: flex;
-		flex-wrap: wrap;
-	}
-	.flight-log span {
-		flex: 1;
-	}
-	#expand-button {
-		background: none;
-		border: none;
-		cursor: pointer;
-	}
-	#log-header {
+	.log-header {
 		align-items: center;
 		display: flex;
 		flex-direction: row;
+		flex-wrap: wrap;
 		font-weight: bold;
 		justify-content: space-between;
-	}
-	#log-info {
-		display: flex;
-		justify-content: center;
-	}
-	#log-info tr {
-		display: flex;
-		flex-direction: column;
-		margin: auto;
-	}
-	#log-info td {
-		margin: .5em;
 	}
 	.select-checkbox {
 		height: 2em;
 		margin-left: 2ch;
 		text-align: center;
 		width: 2em;
+	}
+	#log-header span {
+		flex: 1;
+	}
+	.expand-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+	}
+	.log-info {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		margin-bottom: 1.5em;
+	}
+	.log-info tr {
+		border-bottom: 1px solid black;
+		display: flex;
+		flex-direction: row;
+		width: 100%;
+	}
+	.log-info td {
+		flex: 1;
+		margin: .25em;
+		text-align: right;
+	}
+	td.key-col {
+		text-align: left;
 	}
 </style>
