@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FlightRecord, LogArray, FlagInvalid, ReservedIds } from '$lib/stores';
+	import { FlightRecord, LogArray, FlagInvalid, ReservedId } from '$lib/stores';
 	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 	import { dev } from '$app/environment';
@@ -16,31 +16,12 @@
 
 	/**
 	 * @description
-	 * Generates the next id by searching through the ReservedIds array
-	 * and adding the next highest id available
-	*/
-	function getNextId() {
-		let nextID = 1;
-		for(let i = 0; i < $ReservedIds.length; i++) {
-			if(nextID === $ReservedIds[i]) {
-				nextID += 1;
-			} else {
-				$ReservedIds.splice(i, 0, nextID);
-				return nextID;
-			}
-		}
-		$ReservedIds.push(nextID);
-		return nextID;
-	}
-
-	/**
-	 * @description
 	 * Creates a new log in the flight logs section and adds it to the database
 	 * with all of the information pulled from the API and manually entered.
 	*/
 	async function addNewLog() {
 		const newLog = {
-			id: getNextId(), // Database indices start at 1
+			id: $ReservedId + 1,
 			location: $FlightRecord.location,
 			flight_date: $FlightRecord.flight_date,
 			start_time: $FlightRecord.start_time,
@@ -78,6 +59,7 @@
 			});
 		}
 
+		$ReservedId += 1;
 		$LogArray = [...$LogArray, newLog];
 		$FlagInvalid = false;
 	}

@@ -1,6 +1,6 @@
 import { LogVisualProps } from '$lib/structs';
 import type { FlightLog } from '$lib/structs';
-import { LogArray, ReservedIds } from '$lib/stores';
+import { LogArray, ReservedId } from '$lib/stores';
 
 let initialized = false;
 
@@ -36,11 +36,6 @@ export async function init() {
     } as FlightLog;
 
     LogArray.update(a => [...a, newLog]);
-    ReservedIds.update(a => [...a, parseInt(row.id)]);
+    ReservedId.update(a => Math.max(a, parseInt(row.id)));
   }
-  
-  ReservedIds.update(a => {
-    a.sort();
-    return a;
-  })
 }
