@@ -21,7 +21,7 @@
 			if (!log.v_props.selected) {
 				flightLogsNext.push({
 					...log,
-					id: flightLogsNext.length
+					id: flightLogsNext.length + 1
 				});
 			} else {
 				deletedIds.push(log.id);
