@@ -245,7 +245,11 @@
 				/>
 			</div>
 		</div>
-		<button on:click={addNewLog} id="add-log-button">Add New Log</button>
+		<button
+			class:invalid-input={$FlagInvalid}
+			id="add-log-button"
+			on:click={addNewLog}
+		>Add New Log</button>
 	</div>
 </div>
 
