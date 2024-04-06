@@ -21,7 +21,7 @@
 	*/
 	async function addNewLog() {
 		const newLog = {
-			id: $ReservedId + 1,
+			id: ++$ReservedId,
 			location: $FlightRecord.location,
 			flight_date: $FlightRecord.flight_date,
 			start_time: $FlightRecord.start_time,
@@ -59,7 +59,6 @@
 			});
 		}
 
-		$ReservedId += 1;
 		$LogArray = [...$LogArray, newLog];
 		$FlagInvalid = false;
 	}
