@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
-	import { LogArray } from '$lib/stores';
+	import { LogArray, ReservedIds } from '$lib/stores';
 	import { dev } from '$app/environment';
 
 	/**
@@ -15,14 +15,13 @@
 		if (!confirmation) return;
 
 		const flightLogsNext = [];
+		const reservedIdsNext = [];
 		const deletedIds = [];
 
 		for (const log of $LogArray) {
 			if (!log.v_props.selected) {
-				flightLogsNext.push({
-					...log,
-					id: flightLogsNext.length + 1
-				});
+				flightLogsNext.push(log);
+				reservedIdsNext.push(log.id);
 			} else {
 				deletedIds.push(log.id);
 			}
@@ -39,6 +38,7 @@
 		}
 
 		$LogArray = [...flightLogsNext];
+		$ReservedIds = [...reservedIdsNext];
 	}
 
 	/**
