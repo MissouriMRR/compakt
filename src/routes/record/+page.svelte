@@ -21,7 +21,7 @@
 	*/
 	async function addNewLog() {
 		const newLog = {
-			id: $LogArray.length,
+			id: $LogArray.length + 1, // Database indices start at 1
 			location: $FlightRecord.location,
 			flight_date: $FlightRecord.flight_date,
 			start_time: $FlightRecord.start_time,

@@ -41,7 +41,6 @@ export const POST: RequestHandler = async (ev) => {
 		'INSERT INTO logs (location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id)' +
 		` VALUES (${vals.join(', ')})`;
 	
-	console.log(query);
 	const { success } = await env.DB.prepare(query).run();
 
 	return new Response(null, { status: success ? 201 : 500 });
