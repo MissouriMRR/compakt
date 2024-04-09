@@ -18,7 +18,7 @@
 	 *	@description
 	 * Creates a new log in the flight logs section and adds it to the database
 	 *	with all of the information pulled from the API and manually entered.
-	 */
+	*/
 	async function addNewLog() {
 		const newLog = {
 			id: $LogArray.length,
@@ -66,7 +66,7 @@
 	/**
 	 * @description
 	 * Fetches weather data from the API in JSON format
-	 */
+	*/
 	async function loadWeatherData() {
 		try {
 			const response = await fetch('/api/weather', {
@@ -97,16 +97,32 @@
 		}
 	}
 
-	function pad(num: number) {
-		return num.toString().padStart(2, '0');
+	/**
+	 * @description
+	 * Pads a number with a specified number of zeroes
+	 * @param {number} num Number to pad
+	 * @param {number} zeroes Number of zeroes to pad with
+	*/
+	function pad(num: number, zeroes: number) {
+		return num.toString().padStart(zeroes, '0');
 	}
 
+	/**
+	 * @description
+	 * Extracts the date string from a date object in YYYY-MM-DD format
+	 * @param {Date} date Date to extract string from
+	*/
 	function extractDate(date: Date) {
-		return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+		return `${date.getFullYear()}-${pad(date.getMonth() + 1, 2)}-${pad(date.getDate(), 2)}`;
 	}
 
+	/**
+	 * @description
+	 * Extracts the time string from a date object in HH:MM:SS format
+	 * @param {Date} date Date to extract string from
+	*/
 	function extractTime(date: Date) {
-		return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+		return `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
 	}
 
 	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));

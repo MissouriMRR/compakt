@@ -7,7 +7,7 @@
 	/**
 	 * @description
 	 * Deletes the selected logs from both the flight log page and subsequently the connected database
-	 */
+	*/
 	async function deleteSelectedLogs() {
 		const confirmation = confirm(
 			'Are you sure you want to delete these logs? They cannot be recovered.'
@@ -43,8 +43,8 @@
 
 	/**
 	 * @description
-	 *	Exports the selected logs in a CSV file
-	 */
+	 *	Exports the selected logs to a CSV file
+	*/
 	function exportSelectedLogs() {
 		const flightLogsExport = [];
 
@@ -63,7 +63,8 @@
 	/**
 	 * @description
 	 * Expands a flight log to show the full flight information
-	 */
+	 * @param {number} id Id of the flight log to expand
+	*/
 	function toggleExpansion(id: number) {
 		for (let i = 0; i < $LogArray.length; i++) {
 			if ($LogArray[i].id === id) {
@@ -73,6 +74,11 @@
 		}
 	}
 
+	/**
+	 * @description
+	 * Sorts a list of logs by their dates and start times
+	 * @param {FlightLog[]} logArray Copy of log array to sort
+	*/
 	function chronologicSort(logArray: FlightLog[]) {
 		logArray.sort((flight_a, flight_b) => {
 			const dateStringA = `${flight_a.flight_date}T${flight_a.start_time}`;

@@ -9,12 +9,8 @@
 
   let checklistVisible = true;
   let checks = [false, false];
-  
-  function onConfirm() {
-    if(checks.every(Boolean)) {
-      checklistVisible = false;
-    }
-  }
+
+  const onConfirm = () => (checklistVisible = !checks.every(Boolean));
 </script>
 
 {#if checklistVisible}
