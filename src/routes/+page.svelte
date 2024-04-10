@@ -20,7 +20,7 @@
 		<h1 style="font-size: 35px; margin-top:4ch">Key Information</h1>
 		<h1 style="font-size: 20px; margin-top:-1ch">
 			- Compakt is compatible with both mobile and desktop platforms that have a connection to the internet. <br>
-			- The weather API used to gather data is based on the general Rolla area, not specifically our testing location <br>
+			- The weather API used to gather data is based on the general area of the city provided, not specifically the testing location <br>
 			- The database is updated in real time when a flight is recorded and will display the flight in the logs page <br> 
 			- Flight logs are exported as .CSV files from the logs page by selecting the logs you need and then clicking the download button <br>
 			- The proper authorities / personnel are required to be contacted and notified before the drone is flown <br>
