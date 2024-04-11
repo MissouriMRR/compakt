@@ -19,10 +19,7 @@
 
 		for (const log of $LogArray) {
 			if (!log.v_props.selected) {
-				flightLogsNext.push({
-					...log,
-					id: flightLogsNext.length
-				});
+				flightLogsNext.push(log);
 			} else {
 				deletedIds.push(log.id);
 			}
