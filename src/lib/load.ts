@@ -18,6 +18,7 @@ export async function init() {
   if(data.results.length == 0) return;
 
   for (const row of data.results) {
+    console.log(JSON.stringify(row));
     const newLog = {
       id: parseInt(row.id),
       location: row.location,
