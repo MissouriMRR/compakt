@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { FlightRecord, LogArray, FlagInvalid } from '$lib/stores';
+	import { FlightRecord, LogArray, FlagInvalid, ReservedId } from '$lib/stores';
 	import type { FlightLog, FlightLogKey } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 	import { dev } from '$app/environment';
@@ -8,14 +8,14 @@
 	let weatherRetrieved = false;
 
 	/**
-	 *	@description
+	 * @description
 	 * Creates a new log in the flight logs section and adds it to the database
-	 *	with all of the information pulled from the API and manually entered.
+	 * with all of the information pulled from the API and manually entered.
 	*/
 	async function addNewLog() {
 		const newLog = {
 			...$FlightRecord,
-			id: $LogArray.length,
+			id: ++$ReservedId,
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
 
@@ -315,7 +315,11 @@
 		</div>
 	</div>
 
-	<button on:click={addNewLog} id="add-log-button">Add New Log</button>
+	<button
+		class:invalid-input={$FlagInvalid}
+		id="add-log-button"
+		on:click={addNewLog}
+	>Add New Log</button>
 </div>
 
 <style>

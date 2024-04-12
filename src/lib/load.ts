@@ -1,6 +1,6 @@
 import { LogVisualProps } from '$lib/structs';
 import type { FlightLog } from '$lib/structs';
-import { LogArray } from '$lib/stores';
+import { LogArray, ReservedId } from '$lib/stores';
 
 let initialized = false;
 
@@ -20,5 +20,6 @@ export async function init() {
   for (const row of data.results) {
     const newLog = {...row, v_props: { ...LogVisualProps }} as FlightLog;
     LogArray.update(a => [...a, newLog]);
+    ReservedId.update(a => Math.max(a, parseInt(row.id)));
   }
 }
