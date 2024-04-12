@@ -89,6 +89,7 @@
   }
   .checklist-item input {
     height: auto;
+    min-width: 20px;
     width: 20px;
   }
   .checklist button {

@@ -18,7 +18,6 @@ export async function init() {
   if(data.results.length == 0) return;
 
   for (const row of data.results) {
-    console.log(row);
     const newLog = {...row, v_props: { ...LogVisualProps }} as FlightLog;
     LogArray.update(a => [...a, newLog]);
   }
