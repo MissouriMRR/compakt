@@ -104,6 +104,7 @@
 			<div id={`${log.id}`} class="flight-log">
 				<div class="log-header">
 					<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
+					<span>{log.id}</span>
 					<span>{log.location}</span>
 					<span>{log.flight_date}</span>
 					<span>{log.start_time}</span>
