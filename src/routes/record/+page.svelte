@@ -331,7 +331,8 @@
 		font-family: 'IBMPlexSans-Regular';
 		height: calc(90vh - 2em);
 		justify-content: left;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 		padding: 1em;
 	}
 	.invalid-input {

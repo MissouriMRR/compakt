@@ -101,7 +101,6 @@
 			<div id={`${log.id}`} class="flight-log">
 				<div class="log-header">
 					<input class="select-checkbox" type="checkbox" bind:checked={log.v_props.selected} />
-					<span>{log.id}</span>
 					<span>{log.location}</span>
 					<span>{log.flight_date}</span>
 					<span>{log.start_time}</span>
@@ -145,7 +144,8 @@
 		font-family: 'IBMPlexSans-Regular';
 		justify-content: left;
 		height: 90vh;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 	h1 {
 		font-size: min(40px, 8vw);
