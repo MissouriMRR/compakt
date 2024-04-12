@@ -32,6 +32,13 @@ export async function init() {
       humidity: parseFloat(row.humidity),
       pilot_id: row.pilot_id,
       remote_id: row.remote_id,
+      max_altitude_ft: parseFloat(row.max_altitude_ft),
+      ground_station_op: row.ground_station_op,
+      visual_observer: row.visual_observer,
+      terrain: row.terrain,
+      bystanders: parseInt(row.bystanders) === 1,
+      airspace_class: row.airspace_class,
+      pilot_in_command: row.pilot_in_command,
       v_props: { ...LogVisualProps }
     } as FlightLog;
 

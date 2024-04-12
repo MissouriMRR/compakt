@@ -34,6 +34,13 @@
 			humidity: $FlightRecord.weather?.humidity,
 			pilot_id: $FlightRecord.pilot_id,
 			remote_id: $FlightRecord.remote_id,
+			max_altitude_ft: $FlightRecord.max_altitude_ft,
+			ground_station_op: $FlightRecord.ground_station_op,
+			visual_observer: $FlightRecord.visual_observer,
+			terrain: $FlightRecord.terrain,
+			bystanders: $FlightRecord.bystanders,
+			airspace_class: $FlightRecord.airspace_class,
+			pilot_in_command: $FlightRecord.pilot_in_command,
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
 

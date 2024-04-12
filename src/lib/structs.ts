@@ -19,6 +19,13 @@ export interface FlightData {
 	weather?: WeatherData;
 	pilot_id?: number;
 	remote_id?: string;
+	max_altitude_ft?: number;
+	ground_station_op?: string;
+	visual_observer?: string;
+	terrain?: string;
+	bystanders?: boolean;
+	airspace_class?: string;
+	pilot_in_command?: string;
 }
 
 export interface FlightLog {
@@ -35,6 +42,13 @@ export interface FlightLog {
 	humidity?: number;
 	pilot_id?: string;
 	remote_id?: string;
+	max_altitude_ft?: number;
+	ground_station_op?: string;
+	visual_observer?: string;
+	terrain?: string;
+	bystanders?: boolean;
+	airspace_class?: string;
+	pilot_in_command?: string;
 	v_props: VisualProperties;
 }
 
