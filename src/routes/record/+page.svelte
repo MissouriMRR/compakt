@@ -1,18 +1,11 @@
 <script lang="ts">
 	import { FlightRecord, LogArray, FlagInvalid } from '$lib/stores';
-	import type { FlightData, WeatherData, FlightLog } from '$lib/structs';
+	import type { FlightLog, FlightLogKey } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 	import { dev } from '$app/environment';
+	import { LOG_KEYS } from '$lib/structs';
 
-	const DEFAULT_LOC = 'Rolla, MO';
-
-	if (!$FlightRecord.initialized) {
-		$FlightRecord = {
-			initialized: true,
-			location: DEFAULT_LOC,
-			flight_date: extractDate(new Date())
-		} as FlightData;
-	}
+	let weatherRetrieved = false;
 
 	/**
 	 *	@description
@@ -21,35 +14,20 @@
 	*/
 	async function addNewLog() {
 		const newLog = {
+			...$FlightRecord,
 			id: $LogArray.length,
-			location: $FlightRecord.location,
-			flight_date: $FlightRecord.flight_date,
-			start_time: $FlightRecord.start_time,
-			stop_time: $FlightRecord.stop_time,
-			temp_f: $FlightRecord.weather?.temp_f,
-			wind_speed_mph: $FlightRecord.weather?.wind_speed,
-			wind_direction: $FlightRecord.weather?.wind_direction,
-			wind_degree: $FlightRecord.weather?.wind_degree,
-			gust_speed_mph: $FlightRecord.weather?.gust_speed,
-			humidity: $FlightRecord.weather?.humidity,
-			pilot_id: $FlightRecord.pilot_id,
-			remote_id: $FlightRecord.remote_id,
-			max_altitude_ft: $FlightRecord.max_altitude_ft,
-			ground_station_op: $FlightRecord.ground_station_op,
-			visual_observer: $FlightRecord.visual_observer,
-			terrain: $FlightRecord.terrain,
-			bystanders: $FlightRecord.bystanders,
-			airspace_class: $FlightRecord.airspace_class,
-			pilot_in_command: $FlightRecord.pilot_in_command,
 			v_props: { ...LogVisualProps }
 		} as FlightLog;
 
 		let invalid = false;
-		for(const value of Object.values(newLog)) {
-			if(value === undefined) {
+
+		LOG_KEYS.forEach((key) => {
+			const value = newLog[key as FlightLogKey];
+			
+			if(value === null || value === undefined) {
 				invalid = true;
 			}
-		}
+		});
 
 		if(invalid) {
 			$FlagInvalid = true;
@@ -88,17 +66,14 @@
 				return;
 			}
 
-			$FlightRecord.weather = {
-				condition: data.current.condition.text,
-				icon: data.current.condition.icon,
-				temp_f: data.current.temp_f,
-				temp_c: data.current.temp_c,
-				wind_speed: data.current.wind_mph,
-				wind_direction: data.current.wind_dir,
-				wind_degree: data.current.wind_degree,
-				gust_speed: data.current.gust_mph,
-				humidity: data.current.humidity
-			} as WeatherData;
+			$FlightRecord.temp_f = data.current.temp_f;
+			$FlightRecord.wind_speed_mph = data.current.wind_mph;
+			$FlightRecord.wind_direction = data.current.wind_dir;
+			$FlightRecord.wind_degree = data.current.wind_degree;
+			$FlightRecord.gust_speed_mph = data.current.gust_mph;
+			$FlightRecord.humidity = data.current.humidity;
+
+			weatherRetrieved = true;
 		} catch (error) {
 			console.error('[Weather API]', error);
 		}
@@ -152,7 +127,7 @@
 					bind:value={$FlightRecord.location}
 				/>
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.weather}
+					class:invalid-input={$FlagInvalid && !weatherRetrieved}
 					class="field-button"
 					type="button"
 					value="Get Weather"
@@ -163,19 +138,17 @@
 		</div>
 	</div>
 
-	{#if $FlightRecord.weather}
+	{#if weatherRetrieved}
 		<div class="form-section">
 			<h2>Weather</h2>
-			<div class="weather-container">
-				<label for="location">Location: {$FlightRecord.location}</label>
-			</div>
-
-			<div class="weather-container">
-				<label for="temperature">Temperature: {$FlightRecord.weather.temp_f + '°F'}</label>
-			</div>
-			<div class="weather-container">
-				<label for="condition">Condition: {$FlightRecord.weather.condition}</label>
-			</div>
+			<table id="weather-table">
+				<tr><td>Temperature</td><td class='right'>{$FlightRecord.temp_f + '°F'}</td></tr>
+				<tr><td>Wind Speed</td><td class='right'>{$FlightRecord.wind_speed_mph + 'MPH'}</td></tr>
+				<tr><td>Wind Direction</td><td class='right'>{$FlightRecord.wind_direction}</td></tr>
+				<tr><td>Wind Degree</td><td class='right'>{$FlightRecord.wind_degree + '°'}</td></tr>
+				<tr><td>Gust Speed</td><td class='right'>{$FlightRecord.gust_speed_mph + 'MPH'}</td></tr>
+				<tr><td>Humidity</td><td class='right'>{$FlightRecord.humidity + '%'}</td></tr>
+			</table>
 		</div>
 	{/if}
 
@@ -227,7 +200,7 @@
 	</div>
 
 	<div class="form-section">
-		<h2>Flight IDs</h2>
+		<h2>Flight Identifiers</h2>
 		<div class="data-field">
 			<label for="pilot-id">Pilot ID</label>
 			<div class="field-container">
@@ -252,19 +225,109 @@
 				/>
 			</div>
 		</div>
-		<button on:click={addNewLog} id="add-log-button">Add New Log</button>
+		<div class="data-field">
+			<label for="ground-station-op">Ground Station Operator</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.ground_station_op}
+					class="field-entree"
+					id="ground-station-op"
+					type="text"
+					bind:value={$FlightRecord.ground_station_op}
+				/>
+			</div>
+		</div>
+		<div class="data-field">
+			<label for="visual-observer">Visual Observer</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.visual_observer}
+					class="field-entree"
+					id="visual-observer"
+					type="text"
+					bind:value={$FlightRecord.visual_observer}
+				/>
+			</div>
+		</div>
+		<div class="data-field">
+			<label for="airspace-class">Airspace Class</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.airspace_class}
+					class="field-entree"
+					id="airspace-class"
+					type="text"
+					bind:value={$FlightRecord.airspace_class}
+				/>
+			</div>
+		</div>
+		<div class="data-field">
+			<label for="pilot-in-command">Pilot in Command</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.pilot_in_command}
+					class="field-entree"
+					id="pilot-in-command"
+					type="text"
+					bind:value={$FlightRecord.pilot_in_command}
+				/>
+			</div>
+		</div>
 	</div>
+
+	<div class="form-section">
+		<h2>Surroundings</h2>
+		<div class="data-field">
+			<label for="max-altitude-ft">Max Altitude (FT)</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.max_altitude_ft}
+					class="field-entree"
+					id="max-altitude-ft"
+					type="number"
+					bind:value={$FlightRecord.max_altitude_ft}
+				/>
+			</div>
+		</div>
+		<div class="data-field">
+			<label for="terrain">Terrain</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.terrain}
+					class="field-entree"
+					id="terrain"
+					type="text"
+					bind:value={$FlightRecord.terrain}
+				/>
+			</div>
+		</div>
+		<div class="data-field">
+			<label for="bystanders">Bystanders Present</label>
+			<div class="field-container">
+				<input
+					class:invalid-input={$FlagInvalid && !$FlightRecord.bystanders}
+					class="field-entree"
+					id="bystanders"
+					type="checkbox"
+					bind:checked={$FlightRecord.bystanders}
+				/>
+			</div>
+		</div>
+	</div>
+
+	<button on:click={addNewLog} id="add-log-button">Add New Log</button>
 </div>
 
 <style>
 	#flight-form {
+		align-items: center;
 		display: flex;
 		flex-direction: column;
 		font-family: 'IBMPlexSans-Regular';
-		height: 90vh;
+		height: calc(90vh - 2em);
 		justify-content: left;
 		overflow: auto;
-		padding: 10px;
+		padding: 1em;
 	}
 	.invalid-input {
 		color: red;
@@ -308,8 +371,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		margin: 0 10;
-		margin-bottom: 40px;
+		margin-bottom: 1em;
 		-webkit-text-stroke-color: rgb(0, 0, 0);
 		-webkit-text-stroke-width: 0.25px;
 	}
@@ -333,10 +395,20 @@
 		padding-left: 1ch;
 		padding-right: 1ch;
 	}
-	.weather-container {
-		margin-bottom: 15px;
-		margin-top: 10px;
+	#weather-table {
+		border-top: 2px solid black;
+		border-bottom: 2px solid black;
+		width: 90vw;
+	}
+	#weather-table tr {
+		display: flex;
 		flex-direction: row;
-		align-items: 'center';
+	}
+	#weather-table td {
+		display: flex;
+		flex: 1;
+	}
+	#weather-table td.right {
+		justify-content: end;
 	}
 </style>
