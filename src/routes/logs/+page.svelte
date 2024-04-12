@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
-	import { LogArray } from '$lib/stores';
+	import { LogArray, ReservedId } from '$lib/stores';
 	import { dev } from '$app/environment';
 
 	/**
@@ -36,6 +36,7 @@
 		}
 
 		$LogArray = [...flightLogsNext];
+		$ReservedId = Math.max(...flightLogsNext.map((log) => log.id))
 	}
 
 	/**
