@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { FlightRecord, LogArray, FlagInvalid, ReservedId } from '$lib/stores';
-	import type { FlightLog, FlightLogKey } from '$lib/structs';
+	import { FlightLog } from '$lib/structs';
+	import type { FlightLogKey } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 	import { dev } from '$app/environment';
-	import { LOG_KEYS } from '$lib/structs';
 
 	let weatherRetrieved = false;
 
@@ -21,9 +21,11 @@
 
 		let invalid = false;
 
-		LOG_KEYS.forEach((key) => {
+		console.log(FlightLog.keys)
+
+		FlightLog.keys.forEach((key) => {
 			const value = newLog[key as FlightLogKey];
-			
+			console.log(value);
 			if(value === null || value === undefined) {
 				invalid = true;
 			}
@@ -120,7 +122,7 @@
 			<label for="location">City</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.location}
+					class:invalid-input={$FlagInvalid && $FlightRecord.location === undefined}
 					class="field-entree"
 					id="location"
 					type="text"
@@ -158,7 +160,7 @@
 			<label for="date">Date</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.flight_date}
+					class:invalid-input={$FlagInvalid && $FlightRecord.flight_date === undefined}
 					class="field-entree"
 					id="date"
 					type="date"
@@ -172,7 +174,7 @@
 			<label for="time-start">Start Time</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.start_time}
+					class:invalid-input={$FlagInvalid && $FlightRecord.start_time === undefined}
 					class="field-entree"
 					type="time"
 					id="time-start"
@@ -187,7 +189,7 @@
 			<label for="time-end">End Time</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.stop_time}
+					class:invalid-input={$FlagInvalid && $FlightRecord.stop_time === undefined}
 					class="field-entree"
 					type="time"
 					id="time-end"
@@ -205,7 +207,7 @@
 			<label for="pilot-id">Pilot ID</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.pilot_id}
+					class:invalid-input={$FlagInvalid && $FlightRecord.pilot_id === undefined}
 					class="field-entree"
 					id="pilot-id"
 					type="text"
@@ -217,7 +219,7 @@
 			<label for="remote-id">Remote ID</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.remote_id}
+					class:invalid-input={$FlagInvalid && $FlightRecord.remote_id === undefined}
 					class="field-entree"
 					id="remote-id"
 					type="text"
@@ -229,7 +231,7 @@
 			<label for="ground-station-op">Ground Station Operator</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.ground_station_op}
+					class:invalid-input={$FlagInvalid && $FlightRecord.ground_station_op === undefined}
 					class="field-entree"
 					id="ground-station-op"
 					type="text"
@@ -241,7 +243,7 @@
 			<label for="visual-observer">Visual Observer</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.visual_observer}
+					class:invalid-input={$FlagInvalid && $FlightRecord.visual_observer === undefined}
 					class="field-entree"
 					id="visual-observer"
 					type="text"
@@ -253,7 +255,7 @@
 			<label for="airspace-class">Airspace Class</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.airspace_class}
+					class:invalid-input={$FlagInvalid && $FlightRecord.airspace_class === undefined}
 					class="field-entree"
 					id="airspace-class"
 					type="text"
@@ -265,7 +267,7 @@
 			<label for="pilot-in-command">Pilot in Command</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.pilot_in_command}
+					class:invalid-input={$FlagInvalid && $FlightRecord.pilot_in_command === undefined}
 					class="field-entree"
 					id="pilot-in-command"
 					type="text"
@@ -281,7 +283,7 @@
 			<label for="max-altitude-ft">Max Altitude (FT)</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.max_altitude_ft}
+					class:invalid-input={$FlagInvalid && $FlightRecord.max_altitude_ft === undefined}
 					class="field-entree"
 					id="max-altitude-ft"
 					type="number"
@@ -293,7 +295,7 @@
 			<label for="terrain">Terrain</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.terrain}
+					class:invalid-input={$FlagInvalid && $FlightRecord.terrain === undefined}
 					class="field-entree"
 					id="terrain"
 					type="text"
@@ -305,7 +307,6 @@
 			<label for="bystanders">Bystanders Present</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && !$FlightRecord.bystanders}
 					class="field-entree"
 					id="bystanders"
 					type="checkbox"

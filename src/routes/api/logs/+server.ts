@@ -1,6 +1,6 @@
 import type { RequestHandler } from '../weather/$types';
 import { env } from '$env/dynamic/private';
-import { LOG_KEYS } from '$lib/structs';
+import { FlightLog } from '$lib/structs';
 
 /**
  * @description
@@ -8,7 +8,7 @@ import { LOG_KEYS } from '$lib/structs';
 */
 export const GET: RequestHandler = async (ev) => {
 	const query =
-		`SELECT ${LOG_KEYS.filter(key => !(['v_props'].includes(key))).join(', ')} ` +
+		`SELECT ${FlightLog.keys.filter(key => !(['v_props'].includes(key))).join(', ')} ` +
 		'FROM logs LIMIT 50 OFFSET 0';
 
 	const stmt = env.DB.prepare(query);
@@ -24,7 +24,7 @@ export const GET: RequestHandler = async (ev) => {
 */
 export const POST: RequestHandler = async (ev) => {
 	const props = await ev.request.json();
-	const keys = LOG_KEYS.filter(key => !(['id', 'v_props'].includes(key)));
+	const keys = FlightLog.keys.filter(key => !(['id', 'v_props'].includes(key)));
 	const values = keys.map((key) => typeof props[key] === 'number' ? props[key] : `"${props[key]}"`);
 
 	const query =
