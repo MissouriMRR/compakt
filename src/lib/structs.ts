@@ -1,4 +1,5 @@
 export const LOG_KEYS = [
+	"id",
 	"location",
 	"flight_date",
 	"start_time",

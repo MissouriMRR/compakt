@@ -8,7 +8,7 @@ import { LOG_KEYS } from '$lib/structs';
 */
 export const GET: RequestHandler = async (ev) => {
 	const query =
-		`SELECT ${LOG_KEYS.filter(key => !(['id', 'v_props'].includes(key))).join(', ')} ` +
+		`SELECT ${LOG_KEYS.filter(key => !(['v_props'].includes(key))).join(', ')} ` +
 		'FROM logs LIMIT 50 OFFSET 0';
 
 	const stmt = env.DB.prepare(query);
