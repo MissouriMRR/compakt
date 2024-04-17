@@ -9,7 +9,7 @@ import { FlightLog } from '$lib/structs';
 export const GET: RequestHandler = async (ev) => {
 	const query =
 		`SELECT ${FlightLog.keys.filter(key => !(['v_props'].includes(key))).join(', ')} ` +
-		'FROM logs LIMIT 50 OFFSET 0';
+		`FROM ${env.DB_TABLE_NAME} LIMIT 50 OFFSET 0`;
 
 	const stmt = env.DB.prepare(query);
 
@@ -28,7 +28,7 @@ export const POST: RequestHandler = async (ev) => {
 	const values = keys.map((key) => typeof props[key] === 'number' ? props[key] : `"${props[key]}"`);
 
 	const query =
-		`INSERT INTO logs (${keys.join(', ')}) VALUES (${values.join(', ')})`;
+		`INSERT INTO ${env.DB_TABLE_NAME} (${keys.join(', ')}) VALUES (${values.join(', ')})`;
 	
 	const { success } = await env.DB.prepare(query).run();
 
@@ -46,7 +46,8 @@ export const DELETE: RequestHandler = async (ev) => {
 		return new Response(null, { status: 200 });
 	}
 
-	const query = `DELETE FROM logs WHERE id IN (${ids.join(',')})`;
+	const query =
+		`DELETE FROM ${env.DB_TABLE_NAME} WHERE id IN (${ids.join(',')})`;
 
 	const { success } = await env.DB.prepare(query).run();
 

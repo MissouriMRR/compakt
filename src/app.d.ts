@@ -11,6 +11,7 @@ declare global {
 		interface Platform {
 			env: {
 				WEATHER_API_KEY: string;
+				DB_TABLE_NAME: string;
 				DB: Cloudflare.D1Database;
 			};
 			context: {
