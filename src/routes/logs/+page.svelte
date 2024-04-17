@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { CsvDataService } from '$lib/data';
 	import type { FlightLog } from '$lib/structs';
-	import { LogArray } from '$lib/stores';
+	import { LogArray, ReservedId } from '$lib/stores';
 	import { dev } from '$app/environment';
 
 	/**
@@ -36,6 +36,7 @@
 		}
 
 		$LogArray = [...flightLogsNext];
+		$ReservedId = Math.max(...flightLogsNext.map((log) => log.id))
 	}
 
 	/**
@@ -121,8 +122,15 @@
 						<tr><td class="key-col">Wind Direction</td><td>{log.wind_direction}</td></tr>
 						<tr><td class="key-col">Gust Speed</td><td>{log.gust_speed_mph} MPH</td></tr>
 						<tr><td class="key-col">Humidity</td><td>{log.humidity}%</td></tr>
-						<tr><td class="key-col">Remote ID</td><td>{log.remote_id}</td></tr>
 						<tr><td class="key-col">Pilot ID</td><td>{log.pilot_id}</td></tr>
+						<tr><td class="key-col">Remote ID</td><td>{log.remote_id}</td></tr>
+						<tr><td class="key-col">Max Altitude</td><td>{log.max_altitude_ft} FT</td></tr>
+						<tr><td class="key-col">Ground Station Operator</td><td>{log.ground_station_op}</td></tr>
+						<tr><td class="key-col">Visual Operator</td><td>{log.visual_observer}</td></tr>
+						<tr><td class="key-col">Terrain</td><td>{log.terrain}</td></tr>
+						<tr><td class="key-col">Bystanders Present</td><td>{log.bystanders}</td></tr>
+						<tr><td class="key-col">Airspace Class</td><td>{log.airspace_class}</td></tr>
+						<tr><td class="key-col">Pilot in Command</td><td>{log.pilot_in_command}</td></tr>
 					</table>
 				{/if}
 			</div>
@@ -137,7 +145,8 @@
 		font-family: 'IBMPlexSans-Regular';
 		justify-content: left;
 		height: 90vh;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 	}
 	h1 {
 		font-size: min(40px, 8vw);

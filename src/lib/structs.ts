@@ -1,42 +1,34 @@
-export interface WeatherData {
-	condition: string;
-	icon: string;
-	temp_f: number;
-	temp_c: number;
-	wind_speed: number;
-	wind_direction: string;
-	wind_degree: number;
-	gust_speed: number;
-	humidity: number;
+export class FlightLog {
+	id: number = -1;
+	location: string = '';
+	flight_date: string = '';
+	start_time: string = '';
+	stop_time: string = '';
+	temp_f: number = -1;
+	wind_speed_mph: number = -1;
+	wind_direction: string = '';
+	wind_degree: number = -1;
+	gust_speed_mph: number = -1;
+	humidity: number = -1;
+	pilot_id: string = '';
+	remote_id: string = '';
+	max_altitude_ft: number = -1;
+	ground_station_op: string = '';
+	visual_observer: string = '';
+	terrain: string = '';
+	bystanders: boolean = false;
+	airspace_class: string = '';
+	pilot_in_command: string = '';
+	v_props: VisualProperties = {expanded: false, selected: false};
+
+	static get keys() {
+		return Object.keys(ref_log);
+	}
 }
 
-export interface FlightData {
-	initialized: boolean;
-	location?: string;
-	flight_date?: string;
-	start_time?: string;
-	stop_time?: string;
-	weather?: WeatherData;
-	pilot_id?: number;
-	remote_id?: string;
-}
+const ref_log = new FlightLog();
 
-export interface FlightLog {
-	id: number;
-	location: string;
-	flight_date: string;
-	start_time: string;
-	stop_time: string;
-	temp_f?: number;
-	wind_speed_mph?: number;
-	wind_direction?: string;
-	wind_degree?: number;
-	gust_speed_mph?: number;
-	humidity?: number;
-	pilot_id?: string;
-	remote_id?: string;
-	v_props: VisualProperties;
-}
+export type FlightLogKey = keyof FlightLog;
 
 interface VisualProperties {
 	expanded: boolean;

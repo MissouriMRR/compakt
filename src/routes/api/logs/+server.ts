@@ -1,5 +1,6 @@
 import type { RequestHandler } from '../weather/$types';
 import { env } from '$env/dynamic/private';
+import { FlightLog } from '$lib/structs';
 
 /**
  * @description
@@ -7,7 +8,8 @@ import { env } from '$env/dynamic/private';
 */
 export const GET: RequestHandler = async (ev) => {
 	const query =
-		'SELECT id, location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id FROM logs ORDER BY start_time LIMIT 50 OFFSET 0';
+		`SELECT ${FlightLog.keys.filter(key => !(['v_props'].includes(key))).join(', ')} ` +
+		'FROM logs LIMIT 50 OFFSET 0';
 
 	const stmt = env.DB.prepare(query);
 
@@ -22,24 +24,11 @@ export const GET: RequestHandler = async (ev) => {
 */
 export const POST: RequestHandler = async (ev) => {
 	const props = await ev.request.json();
-	const vals = [
-		'"'+props.location+'"',
-		'"'+props.flight_date+'"',
-		'"'+props.start_time+'"',
-		'"'+props.stop_time+'"',
-		props.temp_f,
-		props.wind_speed_mph,
-		'"'+props.wind_direction+'"',
-		props.wind_degree,
-		props.gust_speed_mph,
-		props.humidity,
-		'"'+props.pilot_id+'"',
-		'"'+props.remote_id+'"'
-	];
+	const keys = FlightLog.keys.filter(key => !(['id', 'v_props'].includes(key)));
+	const values = keys.map((key) => typeof props[key] === 'number' ? props[key] : `"${props[key]}"`);
 
 	const query =
-		'INSERT INTO logs (location, flight_date, start_time, stop_time, temp_f, wind_speed_mph, wind_direction, wind_degree, gust_speed_mph, humidity, pilot_id, remote_id)' +
-		` VALUES (${vals.join(', ')})`;
+		`INSERT INTO logs (${keys.join(', ')}) VALUES (${values.join(', ')})`;
 	
 	const { success } = await env.DB.prepare(query).run();
 
@@ -51,13 +40,13 @@ export const POST: RequestHandler = async (ev) => {
  * Removes a target flight log from the database
 */
 export const DELETE: RequestHandler = async (ev) => {
-	const query_data = await ev.request.json();
+	const ids = await ev.request.json();
 
-	if (query_data.length === 0) {
+	if (ids.length === 0) {
 		return new Response(null, { status: 200 });
 	}
 
-	const query = `DELETE FROM logs WHERE id IN (${query_data.join(',')})`;
+	const query = `DELETE FROM logs WHERE id IN (${ids.join(',')})`;
 
 	const { success } = await env.DB.prepare(query).run();
 
