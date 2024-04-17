@@ -89,7 +89,8 @@
   }
   .checklist-item input {
     height: auto;
-    width: 2em;
+    min-width: 20px;
+    width: 20px;
   }
   .checklist button {
     border-radius: 100px;
