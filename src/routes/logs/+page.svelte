@@ -3,6 +3,7 @@
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray, ReservedId } from '$lib/stores';
 	import { dev } from '$app/environment';
+	import { env } from '$env/dynamic/private';
 
 	/**
 	 * @description
@@ -90,9 +91,11 @@
 <div id="logs-container">
 	<h1>Flight Logs</h1>
 	<div class="logs-action-container">
+		{#if env.DB_TABLE_NAME !== 'logs'}
 		<button on:click={deleteSelectedLogs} id="delete">
 			<img alt="Delete target data" src="feather/trash-2.svg"/>
 		</button>
+		{/if}
 		<button on:click={exportSelectedLogs} id="export">
 		<img alt="Export target data" src="feather/download.svg"/>
 		</button>
