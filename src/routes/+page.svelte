@@ -30,7 +30,7 @@
 					- After a flight is recorded, Compakt will update in real time to display the data in the logs page <br><br>
 					- Flight logs can be exported as .CSV files from the logs page by selecting the logs you need and then clicking the download button <br><br>
 					- The proper authorities / personnel are required to be contacted and notified before the drone is flown <br><br>
-					- All entry fields must be filled out in the record page in order for a log to be created.
+					- All entry fields must be filled out in the record page in order for a log to be created
 				</div>
 			</div>
 		</h1>
