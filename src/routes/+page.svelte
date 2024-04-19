@@ -60,7 +60,7 @@
 		padding-bottom: 0.25em;
 		padding-top: 0.25em;
 		text-align: center;
-		width: calc(81vw - 50em);
+		width: 30rem;
 	}
 	.text-box-info {
 		border: 2px solid #000000;
@@ -69,7 +69,7 @@
 		padding-bottom: 0.25em;
 		padding-top: 0.25em;
 		text-align: left;
-		width: calc(85vw - 50em);
+		width: 40rem;
 	}
 	.text-box-container {
 		display: flex;
