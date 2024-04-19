@@ -21,11 +21,8 @@
 
 		let invalid = false;
 
-		console.log(FlightLog.keys)
-
 		FlightLog.keys.forEach((key) => {
 			const value = newLog[key as FlightLogKey];
-			console.log(value);
 			if(value === null || value === undefined) {
 				invalid = true;
 			}
