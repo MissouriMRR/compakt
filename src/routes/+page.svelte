@@ -16,7 +16,7 @@
 					Record does exactly what the name suggests, that is where you will go to enter information
 					and record your flight. <br><br> Once a flight has been recorded, the information will be used to create a record in our database
 					where it can be viewed via the logs page. Within the logs page, you can manage any previously recorded
-					flight log with options for exporting or deleting flight logs. <br><br> The created logs are sorted
+					flight log with various options. <br><br> The created logs are sorted
 					by most recent to oldest by default and can be expanded to show more detailed weather data.
 				</div>
 			</div>
