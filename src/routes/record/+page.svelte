@@ -28,6 +28,14 @@
 			}
 		});
 
+		if(newLog.max_altitude_ft < 0) {
+			invalid = true;
+		}
+
+		if(Date.parse(`0000T${newLog.start_time}`) > Date.parse(`0000T${newLog.stop_time}`)) {
+			invalid = true;
+		}
+
 		if(invalid) {
 			$FlagInvalid = true;
 			return;
@@ -173,7 +181,11 @@
 			<label for="time-start">Start Time</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && $FlightRecord.start_time === undefined}
+					class:invalid-input={$FlagInvalid && (
+						$FlightRecord.start_time === undefined ||
+						Date.parse(`0000T${$FlightRecord.start_time}`) >
+						Date.parse(`0000T${$FlightRecord.stop_time}`)
+					)}
 					class="field-entree"
 					type="time"
 					id="time-start"
@@ -188,7 +200,11 @@
 			<label for="time-end">End Time</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && $FlightRecord.stop_time === undefined}
+					class:invalid-input={$FlagInvalid && (
+						$FlightRecord.stop_time === undefined ||
+						Date.parse(`0000T${$FlightRecord.start_time}`) >
+						Date.parse(`0000T${$FlightRecord.stop_time}`)
+					)}
 					class="field-entree"
 					type="time"
 					id="time-end"
@@ -282,7 +298,10 @@
 			<label for="max-altitude-ft">Max Altitude (FT)</label>
 			<div class="field-container">
 				<input
-					class:invalid-input={$FlagInvalid && $FlightRecord.max_altitude_ft === undefined}
+					class:invalid-input={$FlagInvalid && (
+						$FlightRecord.max_altitude_ft === undefined ||
+						$FlightRecord.max_altitude_ft < 0
+					)}
 					class="field-entree"
 					id="max-altitude-ft"
 					type="number"
