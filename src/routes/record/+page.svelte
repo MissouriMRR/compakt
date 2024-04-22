@@ -41,6 +41,8 @@
 			return;
 		}
 
+		if(!confirm("Add new log? This will clear the currently recorded log.")) return;
+
 		if(!dev) {
 			await fetch('/api/logs', {
 				method: 'POST',
