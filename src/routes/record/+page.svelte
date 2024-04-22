@@ -45,6 +45,8 @@
 
 		$LogArray = [...$LogArray, newLog];
 		$FlagInvalid = false;
+		$FlightRecord = { location: 'Rolla, MO', bystanders: false } as FlightLog;
+		weatherRetrieved = false;
 	}
 
 	/**
