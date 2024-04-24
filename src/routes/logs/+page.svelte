@@ -55,7 +55,7 @@
 			flightLogsExport.push(logEntry);
 		}
 
-		CsvDataService.exportToCsv('log_data.csv', flightLogsExport);
+		CsvDataService.exportToCsv('log_data.csv', flightLogsExport, ['v_props']);
 	}
 
 	/**
