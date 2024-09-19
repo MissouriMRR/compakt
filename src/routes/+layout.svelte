@@ -50,6 +50,27 @@
     width: min(9vw, 9vh);
     height: auto;
   }
+  #logo {
+		animation-name: spin;
+		animation-duration: 4000ms;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+  }
+  #logo:hover {
+    content: url("/favicon_blurred.png");
+		animation-name: spin;
+		animation-duration: 400ms;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+  }
+  @keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+  }
   .checklist-container {
     align-items: center;
     background-color: #00000077;
@@ -58,6 +79,7 @@
     justify-content: center;
     position: absolute;
     width: 100vw;
+    z-index: 10000000;
   }
   .checklist {
     align-items: center;
