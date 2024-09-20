@@ -133,6 +133,7 @@
 						<tr><td class="key-col">Bystanders Present</td><td>{log.bystanders}</td></tr>
 						<tr><td class="key-col">Airspace Class</td><td>{log.airspace_class}</td></tr>
 						<tr><td class="key-col">Pilot in Command</td><td>{log.pilot_in_command}</td></tr>
+						<tr><td class="key-col">Officer Signature</td><td>{log.officer_signature}</td><tr></tr>
 					</table>
 				{/if}
 			</div>

@@ -4,6 +4,8 @@
 	import type { FlightLogKey } from '$lib/structs';
 	import { LogVisualProps } from '$lib/structs';
 	import { dev } from '$app/environment';
+	import { onMount } from 'svelte';
+	import SignaturePad from 'signature_pad';
 
 	let weatherRetrieved = false;
 
@@ -21,12 +23,13 @@
 
 		let invalid = false;
 
+		/*
 		FlightLog.keys.forEach((key) => {
 			const value = newLog[key as FlightLogKey];
 			if(value === null || value === undefined) {
 				invalid = true;
 			}
-		});
+		}); */
 
 		if(newLog.max_altitude_ft < 0) {
 			invalid = true;
@@ -41,6 +44,9 @@
 			return;
 		}
 
+		{save}
+		alert(signatureBlob)
+
 		if(!confirm("Add new log? This will clear the currently recorded log.")) return;
 
 		if(!dev) {
@@ -52,6 +58,8 @@
 				}
 			});
 		}
+
+		{clear}
 
 		$LogArray = [...$LogArray, newLog];
 		$FlagInvalid = false;
@@ -121,6 +129,50 @@
 	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
 	const updateStart = (time: Date) => ($FlightRecord.start_time = extractTime(time));
 	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
+
+	let canvas: any;
+  let signaturePad: any;
+  let signatureBlob: Blob = new Blob();
+
+  onMount(() => {
+    signaturePad = new SignaturePad(canvas, {
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+    });
+
+	const savedSignature = localStorage.getItem('signature');
+    if (savedSignature) {
+      signaturePad.fromDataURL(savedSignature);
+    }
+  });
+
+  function clear() {
+    signaturePad.clear();
+    localStorage.removeItem('signature');
+  }
+
+  function save() {
+    if (!signaturePad.isEmpty()) {
+      const dataURL = signaturePad.toDataURL();
+	  signatureBlob = dataURL
+	  $FlightRecord.officer_signature = signatureBlob;
+      localStorage.setItem('signature', dataURL);
+      /*signatureBlob = dataURLtoBlob(dataURL); // Store the blob in the variable */
+    } else {
+      alert('Please provide a signature.');
+    }
+  }
+  
+  /* function dataURLtoBlob(dataURL) {
+    const [header, data] = dataURL.split(',');
+    const mime = header.split(':')[1].split(';')[0];
+    const binary = atob(data);
+    const array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: mime });
+  } */
+
 </script>
 
 <div id="flight-form">
@@ -335,6 +387,19 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="data-field">
+		<label for="signature">Officer Signature</label>
+			<canvas bind:this={canvas} width="500" height="200" style="border:1px solid #000;"
+			class:invalid-input={$FlagInvalid && $FlightRecord.officer_signature === undefined}
+			class="field-entree"
+			id="signature">
+		</canvas>
+	</div>
+
+	<button on:click={clear}>Clear</button>
+	<button on:click={save}>Save</button>
+
 
 	<button
 		class:invalid-input={$FlagInvalid}
