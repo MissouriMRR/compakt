@@ -44,7 +44,6 @@
 			return;
 		}
 
-		{save}
 		alert(signatureBlob)
 
 		if(!confirm("Add new log? This will clear the currently recorded log.")) return;
@@ -59,7 +58,8 @@
 			});
 		}
 
-		{clear}
+		signaturePad.clear();
+    	localStorage.removeItem('signature');
 
 		$LogArray = [...$LogArray, newLog];
 		$FlagInvalid = false;
@@ -133,6 +133,8 @@
 	let canvas: any;
   let signaturePad: any;
   let signatureBlob: Blob = new Blob();
+  let url: any;
+
 
   onMount(() => {
     signaturePad = new SignaturePad(canvas, {
@@ -156,22 +158,32 @@
 	  signatureBlob = dataURL
 	  $FlightRecord.officer_signature = signatureBlob;
       localStorage.setItem('signature', dataURL);
-      /*signatureBlob = dataURLtoBlob(dataURL); // Store the blob in the variable */
+	  blobToImage(dataURL)
     } else {
       alert('Please provide a signature.');
     }
   }
-  
-  /* function dataURLtoBlob(dataURL) {
-    const [header, data] = dataURL.split(',');
-    const mime = header.split(':')[1].split(';')[0];
-    const binary = atob(data);
-    const array = [];
-    for (let i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
+
+
+  function blobToImage(dataURL) {
+	try {
+      // Convert the data URL to a Blob
+      const byteString = atob(dataURL.split(',')[1]);
+      const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+        ab[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([ab], { type: mimeString });
+      
+      // Create a Blob URL
+      url = URL.createObjectURL(blob);
+      alert("Blob URL created");
+    } catch (error) {
+      alert("Error creating Blob URL");
+      console.error(error);
     }
-    return new Blob([new Uint8Array(array)], { type: mime });
-  } */
+}
 
 </script>
 
@@ -399,7 +411,6 @@
 
 	<button on:click={clear}>Clear</button>
 	<button on:click={save}>Save</button>
-
 
 	<button
 		class:invalid-input={$FlagInvalid}

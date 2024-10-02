@@ -3,6 +3,7 @@
 	import type { FlightLog } from '$lib/structs';
 	import { LogArray, ReservedId } from '$lib/stores';
 	import { dev } from '$app/environment';
+	import { page } from '$app/stores';
 
 	/**
 	 * @description
@@ -85,6 +86,30 @@
 		});
 		return logArray;
 	}
+
+	let imageURL: any;
+
+	function logBlobToImage(log_blob) {
+	try {
+      // Convert the data URL to a Blob
+      const byteString = atob(log_blob.split(',')[1]);
+      const mimeString = log_blob.split(',')[0].split(':')[1].split(';')[0];
+      const ab = new Uint8Array(byteString.length);
+      for (let i = 0; i < byteString.length; i++) {
+        ab[i] = byteString.charCodeAt(i);
+      }
+      const blob = new Blob([ab], { type: mimeString });
+      
+      // Create a Blob URL
+      imageURL = URL.createObjectURL(blob);
+      alert("Blob URL created");
+	  return("")
+    } catch (error) {
+	  alert(imageURL)
+      alert("Error creating Blob URL");
+    }
+}
+
 </script>
 
 <div id="logs-container">
@@ -133,7 +158,7 @@
 						<tr><td class="key-col">Bystanders Present</td><td>{log.bystanders}</td></tr>
 						<tr><td class="key-col">Airspace Class</td><td>{log.airspace_class}</td></tr>
 						<tr><td class="key-col">Pilot in Command</td><td>{log.pilot_in_command}</td></tr>
-						<tr><td class="key-col">Officer Signature</td><td>{log.officer_signature}</td><tr></tr>
+						<tr><td class="key-col">Officer Signature</td><td>{logBlobToImage(log.officer_signature)}<img alt="Signature" src={imageURL}/></td><tr></tr>
 					</table>
 				{/if}
 			</div>
