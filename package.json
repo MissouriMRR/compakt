@@ -33,7 +33,6 @@
 	"type": "module",
 	"dependencies": {
 		"perfect-freehand": "^1.2.2",
-		"signature_pad": "^5.0.3",
-		"svelte-signature-pad": "^0.0.2"
+		"signature_pad": "^5.0.3"
 	}
 }
