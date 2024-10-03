@@ -102,7 +102,7 @@
       
       // Create a Blob URL
       imageURL = URL.createObjectURL(blob);
-      alert("Blob URL created");
+      /* alert("Blob URL created"); */
 	  return("")
     } catch (error) {
 	  alert(imageURL)

@@ -44,9 +44,9 @@
 			return;
 		}
 
-		alert(signatureBlob)
+		/* alert(signatureBlob) */
 
-		if(!confirm("Add new log? This will clear the currently recorded log.")) return;
+		if(!confirm("Add new log? This will clear the currently entered data.")) return;
 
 		if(!dev) {
 			await fetch('/api/logs', {
@@ -131,14 +131,14 @@
 	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
 
 	let canvas: any;
-  let signaturePad: any;
-  let signatureBlob: Blob = new Blob();
-  let url: any;
+  	let signaturePad: any;
+  	let signatureBlob: Blob = new Blob();
+  	let url: any;
 
 
   onMount(() => {
     signaturePad = new SignaturePad(canvas, {
-      backgroundColor: 'rgba(255, 255, 255, 0)',
+      backgroundColor: 'rgba(255, 255, 255, 1)',
     });
 
 	const savedSignature = localStorage.getItem('signature');
@@ -178,7 +178,7 @@
       
       // Create a Blob URL
       url = URL.createObjectURL(blob);
-      alert("Blob URL created");
+      /* alert("Blob URL created"); */
     } catch (error) {
       alert("Error creating Blob URL");
       console.error(error);
@@ -402,15 +402,18 @@
 
 	<div class="data-field">
 		<label for="signature">Officer Signature</label>
-			<canvas bind:this={canvas} width="500" height="200" style="border:1px solid #000;"
+	</div>
+	<div class="signature-canvas">
+			<canvas bind:this={canvas} width="700" height="200" style="border:1px solid #000;"
 			class:invalid-input={$FlagInvalid && $FlightRecord.officer_signature === undefined}
-			class="field-entree"
 			id="signature">
 		</canvas>
 	</div>
 
-	<button on:click={clear}>Clear</button>
-	<button on:click={save}>Save</button>
+	<div class="signature-button">
+		<button on:click={clear}>Clear</button>
+		<button on:click={save}>Save</button>
+	</div>
 
 	<button
 		class:invalid-input={$FlagInvalid}
@@ -496,6 +499,14 @@
 		margin-right: 0.5em;
 		padding-left: 1ch;
 		padding-right: 1ch;
+	}
+	.signature-button {
+		padding-top: 1 ch;
+		padding-bottom: 1 ch;
+	}
+	.signature-canvas {
+		padding-top: 1 ch;
+		padding-bottom: 1 ch;
 	}
 	#weather-table {
 		border-top: 2px solid black;
