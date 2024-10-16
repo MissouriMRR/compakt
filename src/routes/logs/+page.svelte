@@ -117,11 +117,11 @@
 	<div class="logs-action-container">
 		{#if dev}
 		<button on:click={deleteSelectedLogs} id="delete">
-			<img alt="Delete target data" src="feather/trash-2.svg"/>
+			<img alt="Delete target data" src="/feather/trash-2.svg"/>
 		</button>
 		{/if}
 		<button on:click={exportSelectedLogs} id="export">
-		<img alt="Export target data" src="feather/download.svg"/>
+		<img alt="Export target data" src="/feather/download.svg"/>
 		</button>
 	</div>
 	<div>
@@ -135,9 +135,9 @@
 				</div>
 				<button class="expand-button" on:click={() => toggleExpansion(log.id)}>
 					{#if log.v_props.expanded}
-						<img alt="Collapse" src="feather/chevron-up.svg"/>
+						<img alt="Collapse" src="/feather/chevron-up.svg"/>
 					{:else}
-						<img alt="Expand" src="feather/chevron-down.svg"/>
+						<img alt="Expand" src="/feather/chevron-down.svg"/>
 					{/if}
 				</button>
 				{#if log.v_props.expanded}
