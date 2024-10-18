@@ -81,16 +81,22 @@
   .checklist label {
     font-family: 'IBMPlexSans-Bold';
     font-size: 19px;
-    margin: 0.5em;
+    flex-grow: 1;
+    text-align: center;
   }
   .checklist .checklist-item {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin-bottom: 0.75em;
   }
   .checklist-item input {
-    height: auto;
-    min-width: 20px;
-    width: 20px;
+    align-items: center;
+    height: 3vh;
+    width: 3vh;
+    max-height: 40px;
+    max-width: 40px;
   }
   .checklist button {
     border-radius: 100px;
