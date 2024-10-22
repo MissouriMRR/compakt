@@ -441,12 +441,13 @@
 	}
 	#add-log-button {
 		border-radius: 100px;
+		display: flex;
 		font-weight: bold;
 		font-size: 20px;
-		height: 40px;
+		height: fit-content;
 		margin-top: 2em;
-		text-align: center;
-		width: 150px;
+    	width: fit-content;
+    	margin-bottom: 0.75em;
 	}
 	label {
 		font-size: 19px;
