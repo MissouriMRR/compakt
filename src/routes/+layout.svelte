@@ -80,7 +80,7 @@
   }
   .checklist label {
     font-family: 'IBMPlexSans-Bold';
-    font-size: 19px;
+    font-size: 3vh;
     flex-grow: 1;
     text-align: center;
   }
