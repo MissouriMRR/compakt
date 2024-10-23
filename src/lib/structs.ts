@@ -19,6 +19,7 @@ export class FlightLog {
 	bystanders: boolean = false;
 	airspace_class: string = '';
 	pilot_in_command: string = '';
+	officer_signature: Blob = new Blob();
 	v_props: VisualProperties = {expanded: false, selected: false};
 
 	static get keys() {
