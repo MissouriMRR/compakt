@@ -82,7 +82,6 @@
 			100% 100%,
 			0 100%
 		);
-		/* clip-path: path('M 0,0 H 1000 V 66 H 179.5 V 149.5 H 1000 V 1000 H 0 Z'); */
 	}
 
 	#animated-logo-icon {
