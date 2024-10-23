@@ -66,10 +66,10 @@
     border-radius: 1em;
     display: flex;
     flex-direction: column;
-    height: auto;
+    height: fit-content;
     padding: 1.5em;
     text-align: center;
-    width: 40vh;
+    width: fit-content;
   }
   .checklist h1 {
     font-family: 'IBMPlexSans-Bold';
@@ -93,10 +93,11 @@
   }
   .checklist-item input {
     align-items: center;
-    height: 3vh;
-    width: 3vh;
-    max-height: 40px;
-    max-width: 40px;
+    min-height: 5vh;
+    min-width: 5vh;
+    max-height: 50px;
+    max-width: 50px;
+    margin-right: 4vh;
   }
   .checklist button {
     border-radius: 100px;
