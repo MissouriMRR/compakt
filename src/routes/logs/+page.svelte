@@ -87,8 +87,6 @@
 		return logArray;
 	}
 
-	let imageURL: any;
-
 	function logBlobToImage(log_blob) {
 	try {
       // Convert the data URL to a Blob
@@ -100,13 +98,13 @@
       }
       const blob = new Blob([ab], { type: mimeString });
       
-      // Create a Blob URL
-      imageURL = URL.createObjectURL(blob);
-      /* alert("Blob URL created"); */
-	  return("")
+      // Creates The Blob URL
+      const imageURL = URL.createObjectURL(blob);
+	  return(imageURL)
+
     } catch (error) {
-	  alert(imageURL)
       alert("Error creating Blob URL");
+	  return null;
     }
 }
 
@@ -156,7 +154,8 @@
 						<tr><td class="key-col">Bystanders Present</td><td>{log.bystanders}</td></tr>
 						<tr><td class="key-col">Airspace Class</td><td>{log.airspace_class}</td></tr>
 						<tr><td class="key-col">Pilot in Command</td><td>{log.pilot_in_command}</td></tr>
-						<tr><td class="key-col">Officer Signature</td><td>{logBlobToImage(log.officer_signature)}<img alt="Signature" src={imageURL}/></td><tr></tr>
+						<tr><td class="key-col">Officer Signature</td><td>
+							<img alt="Signature" src={logBlobToImage(log.officer_signature)}/></td><tr></tr>
 					</table>
 				{/if}
 			</div>
