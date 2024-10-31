@@ -34,9 +34,8 @@
 
 <div id="navbar">
   <div id="title">
-    <a href="https://multirotor.mst.edu/" target="_blank"
-      ><img src="/favicon.png" id="logo" alt="logo" style="margin-right: 1ch"
-    /></a>
+      <img src="/favicon.png" id="logo" alt="logo" style="margin-right: 1ch"
+    />
     <a class="tab-link" id="title-tab" href="/">Compakt</a>
   </div>
   <div id="tabs">
