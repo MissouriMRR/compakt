@@ -6,7 +6,14 @@
 	import { dev } from '$app/environment';
 	import { onMount } from 'svelte';
 	import SignaturePad from 'signature_pad';
+	import { DateInput } from 'date-picker-svelte'
 
+	let currentDate = new Date()
+	let selectedDate = new Date()
+	let startTime = new Date()
+	let selectedStart = new Date();
+	let stopTime = new Date()
+	let selectedStop = new Date();
 	let weatherRetrieved = false;
 
 	/**
@@ -43,8 +50,6 @@
 			$FlagInvalid = true;
 			return;
 		}
-
-		/* alert(signatureBlob) */
 
 		if(!confirm("Add new log? This will clear the currently entered data.")) return;
 
@@ -122,13 +127,45 @@
 	 * Extracts the time string from a date object in HH:MM:SS format
 	 * @param {Date} date Date to extract string from
 	*/
-	function extractTime(date: Date) {
-		return `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+	// function extractTime(date: Date) {
+		// return `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
+	// }
+
+	function setCurrentDate() {
+		currentDate = new Date();
+		$FlightRecord.flight_date = currentDate.toDateString();
 	}
 
-	const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
+	function setSelectedDate() {
+		selectedDate = new Date();
+		$FlightRecord.flight_date = currentDate.toDateString();
+	}
+
+	function setStartTime() {
+		startTime = new Date();
+		const formattedStart = startTime;
+		$FlightRecord.start_time = startTime.toLocaleTimeString();
+		selectedStart = formattedStart;
+	}
+
+	$: if (selectedStart) {
+    	$FlightRecord.start_time = selectedStart.toLocaleTimeString();
+  	}
+	
+	function setStopTime() {
+		stopTime = new Date();
+		const formattedStop = stopTime;
+		$FlightRecord.stop_time = stopTime.toLocaleTimeString();
+		selectedStop = formattedStop;
+	}
+
+	$: if (selectedStop) {
+    	$FlightRecord.stop_time = selectedStop.toLocaleTimeString();
+  	}
+
+	/* const updateDate = (date: Date) => ($FlightRecord.flight_date = extractDate(date));
 	const updateStart = (time: Date) => ($FlightRecord.start_time = extractTime(time));
-	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time));
+	const updateEnd = (time: Date) => ($FlightRecord.stop_time = extractTime(time)); */
 
 	let canvas: any;
   	let signaturePad: any;
@@ -136,10 +173,11 @@
   	let url: any;
 
 
-  onMount(() => {
+  	onMount(() => {
     signaturePad = new SignaturePad(canvas, {
       backgroundColor: 'rgba(255, 255, 255, 1)',
     });
+
 
 	const savedSignature = localStorage.getItem('signature');
     if (savedSignature) {
@@ -184,6 +222,16 @@
       console.error(error);
     }
 }
+
+let deg = 0;
+	onMount(() => {
+		const interval = setInterval(() => {
+			deg += 2;
+			if (deg >= 360) deg = 0;
+			document.body.style.setProperty('--deg', deg);
+		}, 60);
+		return () => clearInterval(interval);
+	});
 
 </script>
 
@@ -230,54 +278,99 @@
 	<div class="form-section">
 		<h2>Time & Date</h2>
 		<div class="data-field">
+
+
+			<!-- <label for="date">Date</label> -->
+			<!-- <div class="field-container"> -->
+				<!-- <input -->
+					<!-- class:invalid-input={$FlagInvalid && $FlightRecord.flight_date === undefined} -->
+					<!-- class="field-entree" -->
+					<!-- id="date" -->
+					<!-- type="date" -->
+					<!-- value={$FlightRecord.flight_date} -->
+				<!-- /> -->
+				<!-- <button class="field-button" on:click={() => updateDate(new Date())}>Today</button> -->
+			<!-- </div> -->
+
 			<label for="date">Date</label>
 			<div class="field-container">
-				<input
-					class:invalid-input={$FlagInvalid && $FlightRecord.flight_date === undefined}
-					class="field-entree"
-					id="date"
-					type="date"
-					value={$FlightRecord.flight_date}
-				/>
-				<button class="field-button" on:click={() => updateDate(new Date())}>Today</button>
+				<div class="date-picker-container">
+					<DateInput id="current-date" 
+					format="yyyy/MM/dd"
+					bind:value={currentDate}
+					on:select={setSelectedDate}
+					placeholder="Select Date" 
+					/>
+				</div>
+				<button on:click={setCurrentDate}>Now</button>
 			</div>
 		</div>
 
+		<!-- <div class="data-field"> -->
+			<!-- <label for="time-start">Start Time</label> -->
+			<!-- <div class="field-container"> -->
+				<!-- <input -->
+					<!-- class:invalid-input={$FlagInvalid && ( -->
+						<!-- $FlightRecord.start_time === undefined || -->
+						<!-- Date.parse(`0000T${$FlightRecord.start_time}`) > -->
+						<!-- Date.parse(`0000T${$FlightRecord.stop_time}`) -->
+					<!-- )} -->
+					<!-- class="field-entree" -->
+					<!-- type="time" -->
+					<!-- id="time-start" -->
+					<!-- value={$FlightRecord.start_time || ''} -->
+					<!-- step="1" -->
+				<!-- /> -->
+				<!-- <button class="field-button" on:click={() => updateStart(new Date())}>Now</button> -->
+			<!-- </div> -->
+		<!-- </div> -->
+
 		<div class="data-field">
-			<label for="time-start">Start Time</label>
-			<div class="field-container">
-				<input
-					class:invalid-input={$FlagInvalid && (
-						$FlightRecord.start_time === undefined ||
-						Date.parse(`0000T${$FlightRecord.start_time}`) >
-						Date.parse(`0000T${$FlightRecord.stop_time}`)
-					)}
-					class="field-entree"
-					type="time"
-					id="time-start"
-					value={$FlightRecord.start_time || ''}
-					step="1"
-				/>
-				<button class="field-button" on:click={() => updateStart(new Date())}>Now</button>
+			<label for="time-start">Start Time:</label>
+				<div class="field-container">
+					<div class="date-picker-container">
+						<DateInput id="start-time" 
+							format="HH:mm:ss"
+							bind:value={selectedStart} 
+							timePrecision="second" 
+							placeholder="Select Start Time" 
+						/>
+					</div>
+				<button on:click={setStartTime}>Now</button>
 			</div>
 		</div>
 
+		<!-- <div class="data-field"> -->
+			<!-- <label for="time-end">End Time</label> -->
+			<!-- <div class="field-container"> -->
+				<!-- <input -->
+					<!-- class:invalid-input={$FlagInvalid && ( -->
+						<!-- $FlightRecord.stop_time === undefined || -->
+						<!-- Date.parse(`0000T${$FlightRecord.start_time}`) > -->
+						<!-- Date.parse(`0000T${$FlightRecord.stop_time}`) -->
+					<!-- )} -->
+					<!-- class="field-entree" -->
+					<!-- type="time" -->
+					<!-- id="time-end" -->
+					<!-- value={$FlightRecord.stop_time || ''} -->
+					<!-- step="1" -->
+				<!-- /> -->
+				<!-- <button class="field-button" on:click={() => updateEnd(new Date())}>Now</button> -->
+			<!-- </div> -->
+		<!-- </div> -->
+
 		<div class="data-field">
-			<label for="time-end">End Time</label>
+			<label for="stop-time">End Time:</label>
 			<div class="field-container">
-				<input
-					class:invalid-input={$FlagInvalid && (
-						$FlightRecord.stop_time === undefined ||
-						Date.parse(`0000T${$FlightRecord.start_time}`) >
-						Date.parse(`0000T${$FlightRecord.stop_time}`)
-					)}
-					class="field-entree"
-					type="time"
-					id="time-end"
-					value={$FlightRecord.stop_time || ''}
-					step="1"
-				/>
-				<button class="field-button" on:click={() => updateEnd(new Date())}>Now</button>
+				<div class="date-picker-container">
+					<DateInput id="stop-time" 
+						format="HH:mm:ss"
+						bind:value={selectedStop} 
+						timePrecision="second" 
+						placeholder="Select Stop Time" 
+					/>
+				</div>
+				<button on:click={setStopTime}>Now</button>
 			</div>
 		</div>
 	</div>
@@ -494,12 +587,23 @@
 	.field-container {
 		display: flex;
 		flex-direction: row;
-		height: 2em;
+		height: 3.25vh;
+		padding-bottom: 1em;
 	}
 	.field-entree {
 		margin-right: 0.5em;
 		padding-left: 1ch;
 		padding-right: 1ch;
+	}
+	.date-picker-container {
+		--date-picker-foreground: #000000;
+		--date-picker-background: #ffffff;
+		--date-picker-highlight-border: hsl(var(--deg), 98%, 49%);
+		--date-picker-highlight-shadow: hsla(var(--deg), 98%, 49%, 50%);
+		--date-picker-selected-color: hsl(var(--deg), 100%, 85%);
+		--date-picker-selected-background: hsla(var(--deg), 98%, 49%, 20%);
+		transition: all 80ms ease-in-out;
+		margin-right: 0.25em;
 	}
 	.signature-button {
 		padding-top: 1 ch;
