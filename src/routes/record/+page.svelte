@@ -8,11 +8,11 @@
 	import SignaturePad from 'signature_pad';
 	import { DateInput } from 'date-picker-svelte'
 
-	let currentDate = new Date()
-	let selectedDate = new Date()
-	let startTime = new Date()
+	let currentDate = new Date();
+	let selectedDate = new Date();
+	let startTime = new Date();
 	let selectedStart = new Date();
-	let stopTime = new Date()
+	let stopTime = new Date();
 	let selectedStop = new Date();
 	let weatherRetrieved = false;
 
@@ -103,43 +103,14 @@
 		}
 	}
 
-	/**
-	 * @description
-	 * Pads a number with a specified number of zeroes
-	 * @param {number} num Number to pad
-	 * @param {number} zeroes Number of zeroes to pad with
-	*/
-	function pad(num: number, zeroes: number) {
-		return num.toString().padStart(zeroes, '0');
-	}
-
-	/**
-	 * @description
-	 * Extracts the date string from a date object in YYYY-MM-DD format
-	 * @param {Date} date Date to extract string from
-	*/
-	function extractDate(date: Date) {
-		return `${date.getFullYear()}-${pad(date.getMonth() + 1, 2)}-${pad(date.getDate(), 2)}`;
-	}
-
-	/**
-	 * @description
-	 * Extracts the time string from a date object in HH:MM:SS format
-	 * @param {Date} date Date to extract string from
-	*/
-	// function extractTime(date: Date) {
-		// return `${pad(date.getHours(), 2)}:${pad(date.getMinutes(), 2)}:${pad(date.getSeconds(), 2)}`;
-	// }
-
 	function setCurrentDate() {
 		currentDate = new Date();
 		$FlightRecord.flight_date = currentDate.toDateString();
 	}
 
-	function setSelectedDate() {
-		selectedDate = new Date();
-		$FlightRecord.flight_date = currentDate.toDateString();
-	}
+	$: if (selectedDate) {
+    	$FlightRecord.flight_date = selectedDate.toDateString();
+  	}
 
 	function setStartTime() {
 		startTime = new Date();
@@ -297,8 +268,7 @@ let deg = 0;
 				<div class="date-picker-container">
 					<DateInput id="current-date" 
 					format="yyyy/MM/dd"
-					bind:value={currentDate}
-					on:select={setSelectedDate}
+					bind:value={selectedDate}
 					placeholder="Select Date" 
 					/>
 				</div>
