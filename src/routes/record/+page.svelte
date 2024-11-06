@@ -250,19 +250,6 @@ let deg = 0;
 		<h2>Time & Date</h2>
 		<div class="data-field">
 
-
-			<!-- <label for="date">Date</label> -->
-			<!-- <div class="field-container"> -->
-				<!-- <input -->
-					<!-- class:invalid-input={$FlagInvalid && $FlightRecord.flight_date === undefined} -->
-					<!-- class="field-entree" -->
-					<!-- id="date" -->
-					<!-- type="date" -->
-					<!-- value={$FlightRecord.flight_date} -->
-				<!-- /> -->
-				<!-- <button class="field-button" on:click={() => updateDate(new Date())}>Today</button> -->
-			<!-- </div> -->
-
 			<label for="date">Date</label>
 			<div class="field-container">
 				<div class="date-picker-container">
@@ -275,25 +262,6 @@ let deg = 0;
 				<button on:click={setCurrentDate}>Now</button>
 			</div>
 		</div>
-
-		<!-- <div class="data-field"> -->
-			<!-- <label for="time-start">Start Time</label> -->
-			<!-- <div class="field-container"> -->
-				<!-- <input -->
-					<!-- class:invalid-input={$FlagInvalid && ( -->
-						<!-- $FlightRecord.start_time === undefined || -->
-						<!-- Date.parse(`0000T${$FlightRecord.start_time}`) > -->
-						<!-- Date.parse(`0000T${$FlightRecord.stop_time}`) -->
-					<!-- )} -->
-					<!-- class="field-entree" -->
-					<!-- type="time" -->
-					<!-- id="time-start" -->
-					<!-- value={$FlightRecord.start_time || ''} -->
-					<!-- step="1" -->
-				<!-- /> -->
-				<!-- <button class="field-button" on:click={() => updateStart(new Date())}>Now</button> -->
-			<!-- </div> -->
-		<!-- </div> -->
 
 		<div class="data-field">
 			<label for="time-start">Start Time:</label>
@@ -309,25 +277,6 @@ let deg = 0;
 				<button on:click={setStartTime}>Now</button>
 			</div>
 		</div>
-
-		<!-- <div class="data-field"> -->
-			<!-- <label for="time-end">End Time</label> -->
-			<!-- <div class="field-container"> -->
-				<!-- <input -->
-					<!-- class:invalid-input={$FlagInvalid && ( -->
-						<!-- $FlightRecord.stop_time === undefined || -->
-						<!-- Date.parse(`0000T${$FlightRecord.start_time}`) > -->
-						<!-- Date.parse(`0000T${$FlightRecord.stop_time}`) -->
-					<!-- )} -->
-					<!-- class="field-entree" -->
-					<!-- type="time" -->
-					<!-- id="time-end" -->
-					<!-- value={$FlightRecord.stop_time || ''} -->
-					<!-- step="1" -->
-				<!-- /> -->
-				<!-- <button class="field-button" on:click={() => updateEnd(new Date())}>Now</button> -->
-			<!-- </div> -->
-		<!-- </div> -->
 
 		<div class="data-field">
 			<label for="stop-time">End Time:</label>
@@ -584,6 +533,7 @@ let deg = 0;
 		padding-bottom: 1 ch;
 	}
 	#weather-table {
+		background-color: white;
 		border-top: 2px solid black;
 		border-bottom: 2px solid black;
 		width: 90vw;

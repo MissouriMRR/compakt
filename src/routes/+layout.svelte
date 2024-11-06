@@ -78,7 +78,7 @@
     justify-content: center;
     position: absolute;
     width: 100vw;
-    z-index: 10000000;
+    z-index: 100000;
   }
   .checklist {
     align-items: center;
