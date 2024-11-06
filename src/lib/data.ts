@@ -6,12 +6,12 @@ export class CsvDataService {
 	 * @param {string} filename The object to parse and export
 	 * @param {object[]} rows The filename of the exported file
 	*/
-	static exportToCsv(filename: string, rows: object[]) {
+	static exportToCsv(filename: string, rows: object[], excluded: string[] = []) {
 		if (!rows || !rows.length) {
 			return;
 		}
 		const separator = ',';
-		const keys = Object.keys(rows[0]);
+		const keys = Object.keys(rows[0]).filter(k => !excluded.includes(k));
 		const csvContent =
 			keys.join(separator) +
 			'\n' +
