@@ -171,7 +171,7 @@
 		flex-direction: column;
 		font-family: 'IBMPlexSans-Regular';
 		justify-content: left;
-		height: 90vh;
+		height: 85vh;
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
