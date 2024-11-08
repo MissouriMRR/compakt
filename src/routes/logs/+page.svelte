@@ -56,7 +56,7 @@
 			flightLogsExport.push(logEntry);
 		}
 
-		CsvDataService.exportToCsv('log_data.csv', flightLogsExport, ['v_props']);
+		CsvDataService.exportToCsv('log_data.csv', flightLogsExport);
 	}
 
 	/**
@@ -113,9 +113,11 @@
 <div id="logs-container">
 	<h1>Flight Logs</h1>
 	<div class="logs-action-container">
+		{#if dev}
 		<button on:click={deleteSelectedLogs} id="delete">
 			<img alt="Delete target data" src="/feather/trash-2.svg"/>
 		</button>
+		{/if}
 		<button on:click={exportSelectedLogs} id="export">
 		<img alt="Export target data" src="/feather/download.svg"/>
 		</button>
@@ -169,7 +171,7 @@
 		flex-direction: column;
 		font-family: 'IBMPlexSans-Regular';
 		justify-content: left;
-		height: 85vh;
+		height: 80vh;
 		overflow-y: auto;
 		overflow-x: hidden;
 	}
@@ -203,6 +205,7 @@
 		padding-bottom: 0;
 		text-align: center;
 		width: calc(100vw - 3em);
+		font-size: 1.4vmax;
 	}
 	.log-header {
 		align-items: center;

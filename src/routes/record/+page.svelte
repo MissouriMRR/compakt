@@ -416,10 +416,7 @@ let deg = 0;
 		<label for="signature">Officer Signature</label>
 	</div>
 	<div class="signature-canvas">
-			<canvas bind:this={canvas} 
-			width="auto;"
-			height="100%;" 
-			style= "border:1px solid #000;"
+			<canvas bind:this={canvas} width="700" height="200" style="border:1px solid #000;"
 			class:invalid-input={$FlagInvalid && $FlightRecord.officer_signature === undefined}
 			id="signature">
 		</canvas>
@@ -435,6 +432,10 @@ let deg = 0;
 		id="add-log-button"
 		on:click={addNewLog}
 	>Add New Log</button>
+
+	<div class="h1">
+		<br><br><br><br><br><br><br><br>
+	</div>
 </div>
 
 <style>
@@ -534,14 +535,6 @@ let deg = 0;
 	.signature-canvas {
 		padding-top: 1 ch;
 		padding-bottom: 1 ch;
-		width: 100%;
-		height: auto;
-		max-width: 700px;
-		margin: 0 auto;
-	}
-	canvas {
-		width: 100%;
-		height: auto;
 	}
 	#weather-table {
 		background-color: white;
