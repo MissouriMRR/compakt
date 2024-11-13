@@ -205,13 +205,11 @@
 		padding-bottom: 0;
 		text-align: center;
 		width: calc(100vw - 3em);
-		font-size: 1.4vmax;
 	}
 	.log-header {
 		align-items: center;
 		display: flex;
 		flex-direction: row;
-		flex-wrap: wrap;
 		font-weight: bold;
 		justify-content: space-between;
 	}
